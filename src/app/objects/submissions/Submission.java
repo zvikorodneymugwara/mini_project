@@ -1,5 +1,11 @@
 package app.objects.submissions;
 
-public abstract class Submission {
-    
+import acsse.csc03a3.Block;
+import app.objects.Company;
+
+public class Submission{
+    Block<MedicalSubmission> medicalSubmissions;
+    Block<Affidavit> affidavits;
+    Block<Company> verifiedCompanies;
+
 }
