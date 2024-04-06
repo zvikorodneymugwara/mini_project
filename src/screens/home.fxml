@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="842.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.HomeScreenController">
+   <children>
+      <VBox prefHeight="501.0" prefWidth="192.0" style="-fx-alignment: center; -fx-spacing: 15px; -fx-background-color: #e75425;">
+         <children>
+            <ImageView fitHeight="162.0" fitWidth="162.0">
+               <image>
+                  <Image url="@../img/profile_img.jpg" />
+               </image>
+            </ImageView>
+            <Hyperlink fx:id="homeLink" onAction="#homeLinkClicked" text="Home" textFill="WHITE">
+               <font>
+                  <Font name="Impact" size="21.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="submissionsLink" onAction="#submissionsLinkClicked" text="Submissions" textFill="WHITE">
+               <font>
+                  <Font name="Impact" size="21.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="pollsVotesLink" onAction="#pollsVotesLinkClicked" text="Polls and Votes" textFill="WHITE">
+               <font>
+                  <Font name="Impact" size="21.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="noticesLink" onAction="#noticesLinkClicked" text="Notices" textFill="WHITE">
+               <font>
+                  <Font name="Impact" size="21.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink fx:id="myCourseLink" onAction="#myCourseLinkClicked" text="My Course" textFill="WHITE">
+               <font>
+                  <Font name="Impact" size="21.0" />
+               </font>
+            </Hyperlink>
+         </children>
+      </VBox>
+      <VBox prefHeight="531.0" prefWidth="652.0" style="-fx-padding: 25px; -fx-background-color: #141414;">
+         <children>
+            <Label fx:id="welcomeLbl" text="Welcome Timothy..." textFill="WHITE">
+               <font>
+                  <Font name="Forte" size="24.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="401.0" prefWidth="601.0" style="-fx-spacing: 30px; -fx-alignment: center_left;">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 20px;">
+                     <children>
+                        <HBox prefHeight="178.0" prefWidth="326.0" style="-fx-alignment: center_left; -fx-background-color: rgba(107,107,107,0.4); -fx-background-radius: 5px; -fx-border-color: #fff; -fx-border-radius: 5px; -fx-spacing: 10px; -fx-padding: 10px;">
+                           <children>
+                              <FontAwesomeIconView glyphName="USER_CIRCLE" size="64" />
+                              <Hyperlink fx:id="personalizeLink" onAction="#personalizeLinkClicked" text="Personalize" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="30.0" />
+                                 </font>
+                              </Hyperlink>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="178.0" prefWidth="326.0" style="-fx-alignment: center_left; -fx-background-color: rgba(107,107,107,0.4); -fx-background-radius: 5px; -fx-border-color: #fff; -fx-border-radius: 5px; -fx-spacing: 10px; -fx-padding: 10px;">
+                           <children>
+                              <FontAwesomeIconView glyphName="INFO_CIRCLE" size="64" />
+                              <Hyperlink fx:id="studentInfoLink" onAction="#studentInfoLinkClicked" text="Student Info" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="30.0" />
+                                 </font>
+                              </Hyperlink>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <Line endX="501.29290771484375" endY="0.7928932309150696" startX="-100.0" stroke="WHITE" style="-fx-stroke-width: 2px;" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 20px;">
+                     <children>
+                        <HBox prefHeight="178.0" prefWidth="326.0" style="-fx-alignment: center_left; -fx-background-color: rgba(107,107,107,0.4); -fx-background-radius: 5px; -fx-border-color: #fff; -fx-border-radius: 5px; -fx-spacing: 10px; -fx-padding: 10px;">
+                           <children>
+                              <FontAwesomeIconView glyphName="QUESTION_CIRCLE" size="64" />
+                              <Hyperlink fx:id="helpLink" onAction="#helpLinkClicked" text="Help" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="30.0" />
+                                 </font>
+                              </Hyperlink>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="178.0" prefWidth="326.0" style="-fx-alignment: center_left; -fx-background-color: rgba(107,107,107,0.4); -fx-background-radius: 5px; -fx-border-color: #fff; -fx-border-radius: 5px; -fx-spacing: 10px; -fx-padding: 10px;">
+                           <children>
+                              <FontAwesomeIconView glyphName="SIGN_OUT" size="64" />
+                              <Hyperlink fx:id="logoutLink" onAction="#logoutLinkClicked" text="Log Out" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="30.0" />
+                                 </font>
+                              </Hyperlink>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="50.0" prefWidth="448.0">
+               <children>
+                  <Label layoutX="309.0" layoutY="19.0" text="University of Johannesburg, All Rights Reserved" textFill="WHITE" />
+                  <ImageView fitHeight="43.0" fitWidth="45.0" layoutX="256.0" layoutY="6.0">
+                     <image>
+                        <Image url="@../img/uj.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</HBox>
