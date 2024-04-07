@@ -42,12 +42,6 @@ public abstract class MainScreenController extends SceneController {
     }
 
     @FXML
-    void pollsVotesLinkClicked(ActionEvent event) throws IOException {
-        switchScene(event, "/screens/polls_votes.fxml");
-
-    }
-
-    @FXML
     void submissionsLinkClicked(ActionEvent event) throws IOException {
         switchScene(event, "/screens/submissions.fxml");
 

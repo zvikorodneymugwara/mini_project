@@ -64,11 +64,6 @@ public class MyCourseScreenController extends MainScreenController {
     }
 
     @FXML
-    void pollsVotesLinkClicked(ActionEvent event) throws IOException {
-        super.pollsVotesLinkClicked(event);
-    }
-
-    @FXML
     void submissionsLinkClicked(ActionEvent event) throws IOException {
         super.submissionsLinkClicked(event);
     }

@@ -23,10 +23,6 @@ public class NoticesScreenController  extends MainScreenController{
         super.noticesLinkClicked(event);
     }
 
-    @FXML
-    void pollsVotesLinkClicked(ActionEvent event) throws IOException {
-        super.pollsVotesLinkClicked(event);
-    }
 
     @FXML
     void submissionsLinkClicked(ActionEvent event) throws IOException {

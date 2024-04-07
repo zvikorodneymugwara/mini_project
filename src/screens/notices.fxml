@@ -29,11 +29,6 @@
                   <Font name="Impact" size="21.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="pollsVotesLink" onAction="#pollsVotesLinkClicked" text="Polls and Votes" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="21.0" />
-               </font>
-            </Hyperlink>
             <Hyperlink fx:id="noticesLink" onAction="#noticesLinkClicked" text="Notices" textFill="WHITE">
                <font>
                   <Font name="Impact" size="21.0" />
@@ -53,7 +48,10 @@
                   <Font name="Impact" size="30.0" />
                </font>
             </Label>
-            <ScrollPane prefHeight="503.0" prefWidth="601.0" />
+            <ScrollPane prefHeight="503.0" prefWidth="601.0" style="-fx-background-color: #141414;">
+               <content>
+                  <VBox prefHeight="383.0" prefWidth="599.0" style="-fx-background-color: #141414;" />
+               </content></ScrollPane>
             <AnchorPane prefHeight="50.0" prefWidth="448.0">
                <children>
                   <Label layoutX="309.0" layoutY="19.0" text="University of Johannesburg, All Rights Reserved" textFill="WHITE" />

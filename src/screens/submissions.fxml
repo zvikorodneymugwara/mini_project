@@ -5,6 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,11 +33,6 @@
                   <Font name="Impact" size="21.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="pollsVotesLink" onAction="#pollsVotesLinkClicked" text="Polls and Votes" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="21.0" />
-               </font>
-            </Hyperlink>
             <Hyperlink fx:id="noticesLink" onAction="#noticesLinkClicked" text="Notices" textFill="WHITE">
                <font>
                   <Font name="Impact" size="21.0" />
@@ -58,60 +54,70 @@
             </Label>
             <HBox prefHeight="389.0" prefWidth="601.0" style="-fx-spacing: 10px; -fx-padding: 10px;">
                <children>
-                  <VBox prefHeight="352.0" prefWidth="300.0" style="-fx-padding: 10px; -fx-spacing: 10px; -fx-border-color: #fff; -fx-border-width: 2px; -fx-border-radius: 10px;">
-                     <children>
-                        <Label text="Medical" textFill="WHITE">
-                           <font>
-                              <Font name="Impact" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label text="Select Document Type" textFill="WHITE">
-                           <font>
-                              <Font name="Impact" size="16.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="docTypeComboBox" onAction="#docTypeComboBoxClick" prefHeight="25.0" prefWidth="285.0" style="-fx-background-color: rgba(255,255,255,0.15);" />
-                        <Label text="Enter Date of Issue" textFill="WHITE">
-                           <font>
-                              <Font name="Impact" size="16.0" />
-                           </font>
-                        </Label>
-                        <DatePicker fx:id="docDatePicker" onAction="#docDatePickerClick" prefHeight="25.0" prefWidth="351.0" />
-                        <Label text="Enter Practice Number" textFill="WHITE">
-                           <font>
-                              <Font name="Impact" size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="pracNumTxt" style="-fx-background-color: rgba(255,255,255,0.15); -fx-border-color: #007FFF; -fx-border-width: 0 0 2 0; -fx-text-fill: #fff; -fx-font-weight: bold;" />
-                        <Label text="Enter Document ID" textFill="WHITE">
-                           <font>
-                              <Font name="Impact" size="16.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="docIdTxt" style="-fx-background-color: rgba(255,255,255,0.15); -fx-border-color: #007FFF; -fx-border-width: 0 0 2 0; -fx-text-fill: #fff; -fx-font-weight: bold;" />
-                        <Button fx:id="submitMedicalBtn" mnemonicParsing="false" onAction="#submitMedicalBtnClick" style="-fx-font-family: Lucidia; -fx-background-color: #ec642c; -fx-text-fill: #fff;" text="Submit" />
-                     </children>
-                  </VBox>
+                  <ScrollPane prefHeight="365.0" prefWidth="331.0" style="-fx-background-color: #141414;">
+                     <content>
+                        <VBox prefHeight="352.0" prefWidth="285.0" style="-fx-padding: 10px; -fx-spacing: 10px; -fx-border-color: #fff; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-background-color: #141414;">
+                           <children>
+                              <Label text="Deffered Assesments" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Enter Module Code" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="moduleCodeTxt" style="-fx-background-color: rgba(255,255,255,0.15); -fx-border-color: #007FFF; -fx-border-width: 0 0 2 0; -fx-text-fill: #fff; -fx-font-weight: bold;" />
+                              <Label text="Select Document Type" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="16.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="docTypeComboBox" onAction="#docTypeComboBoxClick" prefHeight="25.0" prefWidth="285.0" style="-fx-background-color: rgba(255,255,255,0.15);" />
+                              <Label text="Enter Date of Issue" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="16.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="docDatePicker" onAction="#docDatePickerClick" prefHeight="25.0" prefWidth="351.0" />
+                              <Label text="Company Number" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="companyNumTxt" style="-fx-background-color: rgba(255,255,255,0.15); -fx-border-color: #007FFF; -fx-border-width: 0 0 2 0; -fx-text-fill: #fff; -fx-font-weight: bold;" />
+                              <Label text="Enter Document ID" textFill="WHITE">
+                                 <font>
+                                    <Font name="Impact" size="16.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="docIdTxt" style="-fx-background-color: rgba(255,255,255,0.15); -fx-border-color: #007FFF; -fx-border-width: 0 0 2 0; -fx-text-fill: #fff; -fx-font-weight: bold;" />
+                              <Button fx:id="submitNoteBtn" mnemonicParsing="false" onAction="#submitNoteBtnClick" style="-fx-font-family: Lucidia; -fx-background-color: #ec642c; -fx-text-fill: #fff;" text="Submit" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
                   <VBox prefHeight="352.0" prefWidth="301.0" style="-fx-padding: 10px; -fx-spacing: 10px; -fx-border-radius: 10px; -fx-border-color: #fff; -fx-border-width: 2px;">
                      <children>
-                        <Label prefHeight="16.0" prefWidth="262.0" style="-fx-wrap-text: true;" text="Special Assessments" textFill="WHITE">
+                        <Label prefHeight="16.0" prefWidth="262.0" style="-fx-wrap-text: true;" text="Voting" textFill="WHITE">
                            <font>
                               <Font name="Impact" size="24.0" />
                            </font>
                         </Label>
-                        <Label text="Enter Degree Code" textFill="WHITE">
+                        <Label text="Enter Your Phone Number" textFill="WHITE">
                            <font>
                               <Font name="Impact" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="degCodeTxt" style="-fx-background-color: rgba(255,255,255,0.15); -fx-border-color: #007FFF; -fx-border-width: 0 0 2 0; -fx-text-fill: #fff; -fx-font-weight: bold;" />
-                        <Label style="-fx-wrap-text: true;" text="Select a Reason to Write SSA" textFill="WHITE">
+                        <TextField fx:id="phoneNumTxt" style="-fx-background-color: rgba(255,255,255,0.15); -fx-border-color: #007FFF; -fx-border-width: 0 0 2 0; -fx-text-fill: #fff; -fx-font-weight: bold;" />
+                        <Label style="-fx-wrap-text: true;" text="Select a Candidate" textFill="WHITE">
                            <font>
                               <Font name="Impact" size="16.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="reasonComboBox" onAction="#reasonComboBoxClick" prefHeight="25.0" prefWidth="285.0" style="-fx-background-color: rgba(255,255,255,0.15);" />
-                        <Button fx:id="ssaBtn" mnemonicParsing="false" onAction="#ssaBtnClick" style="-fx-font-family: Lucidia; -fx-background-color: #ec642c; -fx-text-fill: #fff;" text="Submit" />
+                        <ComboBox fx:id="candidateComboBox" onAction="#candidateComboBoxClick" prefHeight="25.0" prefWidth="285.0" style="-fx-background-color: rgba(255,255,255,0.15);" />
+                        <Button fx:id="submitVoteBtn" mnemonicParsing="false" onAction="#submitVoteBtnClick" style="-fx-font-family: Lucidia; -fx-background-color: #ec642c; -fx-text-fill: #fff;" text="Submit" />
                      </children>
                   </VBox>
                </children>

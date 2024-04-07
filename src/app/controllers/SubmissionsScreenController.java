@@ -13,7 +13,10 @@ import javafx.scene.control.TextField;
 public class SubmissionsScreenController extends MainScreenController {
 
     @FXML
-    private TextField degCodeTxt;
+    private ComboBox<?> candidateComboBox;
+
+    @FXML
+    private TextField companyNumTxt;
 
     @FXML
     private DatePicker docDatePicker;
@@ -28,28 +31,30 @@ public class SubmissionsScreenController extends MainScreenController {
     private Hyperlink homeLink;
 
     @FXML
+    private TextField moduleCodeTxt;
+
+    @FXML
     private Hyperlink myCourseLink;
 
     @FXML
     private Hyperlink noticesLink;
 
     @FXML
-    private Hyperlink pollsVotesLink;
-
-    @FXML
-    private TextField pracNumTxt;
-
-    @FXML
-    private ComboBox<?> reasonComboBox;
-
-    @FXML
-    private Button ssaBtn;
+    private TextField phoneNumTxt;
 
     @FXML
     private Hyperlink submissionsLink;
 
     @FXML
-    private Button submitMedicalBtn;
+    private Button submitNoteBtn;
+
+    @FXML
+    private Button submitVoteBtn;
+
+    @FXML
+    void candidateComboBoxClick(ActionEvent event) {
+
+    }
 
     @FXML
     void docDatePickerClick(ActionEvent event) {
@@ -62,20 +67,14 @@ public class SubmissionsScreenController extends MainScreenController {
     }
 
     @FXML
-    void reasonComboBoxClick(ActionEvent event) {
+    void submitNoteBtnClick(ActionEvent event) {
 
     }
 
     @FXML
-    void ssaBtnClick(ActionEvent event) {
+    void submitVoteBtnClick(ActionEvent event) {
 
     }
-
-    @FXML
-    void submitMedicalBtnClick(ActionEvent event) {
-
-    }
-
     @FXML
     void homeLinkClicked(ActionEvent event) throws IOException {
         super.homeLinkClicked(event);
@@ -90,11 +89,6 @@ public class SubmissionsScreenController extends MainScreenController {
     @FXML
     void noticesLinkClicked(ActionEvent event) throws IOException {
         super.noticesLinkClicked(event);
-    }
-
-    @FXML
-    void pollsVotesLinkClicked(ActionEvent event) throws IOException {
-        super.pollsVotesLinkClicked(event);
     }
 
     @FXML

@@ -11,9 +11,6 @@ public class HomeScreenController extends MainScreenController{
     private Hyperlink personalizeLink;
 
     @FXML
-    private Hyperlink pollsVotesLink;
-
-    @FXML
     private Hyperlink studentInfoLink;
 
     @FXML

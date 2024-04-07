@@ -33,11 +33,6 @@
                   <Font name="Impact" size="21.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="pollsVotesLink" onAction="#pollsVotesLinkClicked" text="Polls and Votes" textFill="WHITE">
-               <font>
-                  <Font name="Impact" size="21.0" />
-               </font>
-            </Hyperlink>
             <Hyperlink fx:id="noticesLink" onAction="#noticesLinkClicked" text="Notices" textFill="WHITE">
                <font>
                   <Font name="Impact" size="21.0" />
