@@ -4,8 +4,8 @@ public class MedicalSubmission extends SubmissionDocument {
     private boolean excused;
     private String medicalRequest;
 
-    public MedicalSubmission(String docID, String issueDate, String regNumber, String docInfo) {
-        super(docID, issueDate, regNumber, docInfo);
+    public MedicalSubmission(String docID, String issueDate, String regNumber, String docInfo, String studentNumber) {
+        super(docID, issueDate, regNumber, docInfo, studentNumber);
     }
 
     public boolean isExcused() {

@@ -2,6 +2,9 @@ package app.controllers;
 
 import java.io.IOException;
 
+import app.objects.submissions.Affidavit;
+import app.objects.submissions.MedicalSubmission;
+import app.objects.submissions.SubmissionDocument;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 public class SubmissionsScreenController extends MainScreenController {
 
@@ -68,13 +72,26 @@ public class SubmissionsScreenController extends MainScreenController {
 
     @FXML
     void submitNoteBtnClick(ActionEvent event) {
-
+        SubmissionDocument doc = null;
+        if (docTypeComboBox.getSelectionModel().getSelectedItem() instanceof MedicalSubmission) {
+            doc = new MedicalSubmission(username, title, studentNumber, studentNumber, studentNumber);
+        } else {
+            doc = new Affidavit(username, title, studentNumber, studentNumber, studentNumber);
+        }
+        if (submission.addSubmissionDocument(doc)) {
+            showMessage(AlertType.INFORMATION, "Status", "Successful Submission",
+                    "Submission was Successfully Processed");
+        } else {
+            showMessage(AlertType.ERROR, "Error", "Unsuccessful Submission",
+                    "Your Submission Could Not Be Processed. Please Contact Your HOD");
+        }
     }
 
     @FXML
     void submitVoteBtnClick(ActionEvent event) {
 
     }
+
     @FXML
     void homeLinkClicked(ActionEvent event) throws IOException {
         super.homeLinkClicked(event);

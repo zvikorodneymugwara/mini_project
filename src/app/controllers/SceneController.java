@@ -18,6 +18,7 @@ public abstract class SceneController {
     protected Parent root;
     protected String title;
     protected String username;
+    protected String studentNumber;
     protected boolean loggedIn;
 
     protected void switchScene(ActionEvent event, String scenePath) throws IOException {

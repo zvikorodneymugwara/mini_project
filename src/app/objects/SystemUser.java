@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import acsse.csc03a3.Block;
 import app.objects.submissions.SubmissionDocument;
 
-public class SystemUser<T> {
+public class SystemUser {
     // list of all transactions this user has made
     private Block<SubmissionDocument> submissions;
     private String name;
     private String studentNumber;
     private ArrayList<String> notices;
 
-    public SystemUser() {
-
+    public SystemUser(String name, String studentNumber) {
+        this.name = name;
+        this.studentNumber = studentNumber;
     }
 
     public void setName(String name) {

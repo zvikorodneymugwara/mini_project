@@ -36,6 +36,7 @@ public class LoginPageController extends SceneController {
             String info = scan.next();
             String[] details = info.split(",");
             if (details[details.length - 1].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))) {
+                studentNumber = studentNumberTxt.getText();
                 username = details[1];
                 loggedIn = true;
                 showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");

@@ -2,11 +2,16 @@ package app.controllers;
 
 import java.io.IOException;
 
+import app.objects.SystemUser;
+import app.objects.submissions.Submission;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 
 public abstract class MainScreenController extends SceneController {
+
+    protected Submission submission;
+    protected SystemUser user;
 
     @FXML
     protected Hyperlink noticesLink;
@@ -22,6 +27,11 @@ public abstract class MainScreenController extends SceneController {
 
     @FXML
     protected Hyperlink myCourseLink;
+
+    public MainScreenController(){
+        submission = new Submission();
+        user = new SystemUser(username, studentNumber);
+    }
 
     @FXML
     void noticesLinkClicked(ActionEvent event) throws IOException {

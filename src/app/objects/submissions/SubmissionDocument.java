@@ -1,16 +1,28 @@
 package app.objects.submissions;
 
-public abstract class SubmissionDocument {
+import java.io.Serializable;
+
+public abstract class SubmissionDocument implements Serializable {
     protected String docID;
     protected String issueDate;
     protected String regNumber;
     protected String docInfo;
+    protected String studentNumber;
 
-    public SubmissionDocument(String docID, String issueDate, String regNumber, String docInfo) {
+    public SubmissionDocument(String docID, String issueDate, String regNumber, String docInfo, String studentNumber) {
         this.docID = docID;
         this.issueDate = issueDate;
         this.regNumber = regNumber;
         this.docInfo = docInfo;
+        this.studentNumber = studentNumber;
+    }
+
+    public String getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 
     public String getDocID() {
