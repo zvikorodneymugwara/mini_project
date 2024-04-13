@@ -21,6 +21,16 @@ public class Submissions {
         // load saved companies and submissions
         loadSavedCompanies();
         loadSavedSubmissions();
+        for (Transaction<SubmissionDocument> doc : docSubmissions.getTransactions()) {
+            for (Company company : verifiedCompanies) {
+                if (company.getDistributedNotes() == null) {
+                    company.initializeDistributedNotes();
+                }
+                if (company.getCompanyNumber().equals(doc.getSender())) {
+                    company.getDistributedNotes().getTransactions().add(doc);
+                }
+            }
+        }
         returnMessage = new String[2];
     }
 
@@ -29,13 +39,10 @@ public class Submissions {
     }
 
     public boolean addSubmissionDocument(SubmissionDocument document) {
-        if (document instanceof MedicalSubmission && processDocSubmission((MedicalSubmission) document)) {
-            return true;
-        } else if (processDocSubmission((Affidavit) document)) {
-            return true;
+        if (document instanceof MedicalSubmission) {
+            return processDocSubmission((MedicalSubmission) document);
         }
-
-        return false;
+        return processDocSubmission((Affidavit) document);
     }
 
     public String[] getReturnMessage() {
@@ -50,6 +57,7 @@ public class Submissions {
                 if (companyTransaction.getSender().equals(document.getStudentNumber())
                         && companyTransaction.getReceiver().equals(document.getRegNumber())) {
                     // the prompt message for the user and the details of the note
+                    document.setDocInfo(companyTransaction.getData().getDocInfo());
                     returnMessage[0] = "";
                     returnMessage[1] = "";
                     return true;

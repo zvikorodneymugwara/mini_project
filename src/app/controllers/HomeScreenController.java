@@ -1,11 +1,14 @@
 package app.controllers;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 
-public class HomeScreenController extends MainScreenController{
+public class HomeScreenController extends MainScreenController {
 
     @FXML
     private Hyperlink personalizeLink;
@@ -29,7 +32,6 @@ public class HomeScreenController extends MainScreenController{
 
     }
 
-
     @FXML
     void personalizeLinkClicked(ActionEvent event) {
 
@@ -38,6 +40,11 @@ public class HomeScreenController extends MainScreenController{
     @FXML
     void studentInfoLinkClicked(ActionEvent event) {
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Initializing");
     }
 
 }

@@ -1,6 +1,8 @@
 package app.controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,6 +47,10 @@ public class MyCourseScreenController extends MainScreenController {
     @FXML
     void moduleSelectComboBoxClick(ActionEvent event) {
 
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Initializing");
     }
 
     @FXML

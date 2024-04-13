@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import app.objects.Company;
-import app.objects.SystemUser;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.MedicalSubmission;
 import javafx.application.Application;

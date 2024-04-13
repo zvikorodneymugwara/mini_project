@@ -1,11 +1,14 @@
 package app.controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import acsse.csc03a3.Transaction;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.MedicalSubmission;
 import app.objects.submissions.SubmissionDocument;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -18,7 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 public class SubmissionsScreenController extends MainScreenController {
 
     @FXML
-    private ComboBox<?> candidateComboBox;
+    private ComboBox<String> candidateComboBox;
 
     @FXML
     private TextField companyNumTxt;
@@ -30,7 +33,7 @@ public class SubmissionsScreenController extends MainScreenController {
     private TextField docIdTxt;
 
     @FXML
-    private ComboBox<?> docTypeComboBox;
+    private ComboBox<String> docTypeComboBox;
 
     @FXML
     private Hyperlink homeLink;
@@ -71,11 +74,16 @@ public class SubmissionsScreenController extends MainScreenController {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        docTypeComboBox.setItems(FXCollections.observableArrayList("Medical Document", "Affidavit"));
+    }
+
     @FXML
     void submitNoteBtnClick(ActionEvent event) {
         SubmissionDocument doc = null;
-        if (docTypeComboBox.getSelectionModel().getSelectedItem() instanceof MedicalSubmission) {
-            doc = new MedicalSubmission(username, title, studentNumber, studentNumber, studentNumber);
+        if ("Medical Document".equals(docTypeComboBox.getValue())) {
+            doc = new MedicalSubmission(docIdTxt.getText(), docDatePicker.getValue().toString(), companyNumTxt.getText(), studentNumber, studentNumber);
         } else {
             doc = new Affidavit(username, title, studentNumber, studentNumber, studentNumber);
         }

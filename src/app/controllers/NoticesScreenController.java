@@ -1,6 +1,8 @@
 package app.controllers;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,5 +29,10 @@ public class NoticesScreenController  extends MainScreenController{
     @FXML
     void submissionsLinkClicked(ActionEvent event) throws IOException {
         super.submissionsLinkClicked(event);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Initializing");
     }
 }
