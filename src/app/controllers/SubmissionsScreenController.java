@@ -2,6 +2,7 @@ package app.controllers;
 
 import java.io.IOException;
 
+import acsse.csc03a3.Transaction;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.MedicalSubmission;
 import app.objects.submissions.SubmissionDocument;
@@ -78,7 +79,9 @@ public class SubmissionsScreenController extends MainScreenController {
         } else {
             doc = new Affidavit(username, title, studentNumber, studentNumber, studentNumber);
         }
-        if (submission.addSubmissionDocument(doc)) {
+        if (submissions.addSubmissionDocument(doc)) {
+            user.getSubmissions().getTransactions()
+                    .add(new Transaction<SubmissionDocument>(doc.getStudentNumber(), doc.getRegNumber(), doc));
             showMessage(AlertType.INFORMATION, "Status", "Successful Submission",
                     "Submission was Successfully Processed");
         } else {

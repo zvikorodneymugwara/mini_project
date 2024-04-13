@@ -12,14 +12,16 @@ import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
 import app.objects.Company;
 
-public class Submission {
-    Block<SubmissionDocument> docSubmissions;
-    ArrayList<Block<Company>> verifiedCompanies;
+public class Submissions {
+    private Block<SubmissionDocument> docSubmissions;
+    private ArrayList<Company> verifiedCompanies;
+    private String[] returnMessage;
 
-    public Submission() {
+    public Submissions() {
         // load saved companies and submissions
         loadSavedCompanies();
         loadSavedSubmissions();
+        returnMessage = new String[2];
     }
 
     public boolean isCompanyVerified(Company company) {
@@ -36,54 +38,61 @@ public class Submission {
         return false;
     }
 
+    public String[] getReturnMessage() {
+        return returnMessage;
+    }
+
     private boolean processDocSubmission(MedicalSubmission document) {
         // check if the document exists in the company block
-        for (Block<Company> companyBlock : verifiedCompanies) {
-            for (Transaction<Company> companyTransaction : companyBlock.getTransactions()) {
+        for (Company company : verifiedCompanies) {
+            for (Transaction<SubmissionDocument> companyTransaction : company.getDistributedNotes().getTransactions()) {
                 // check if the initial details match
                 if (companyTransaction.getSender().equals(document.getStudentNumber())
                         && companyTransaction.getReceiver().equals(document.getRegNumber())) {
-
+                    // the prompt message for the user and the details of the note
+                    returnMessage[0] = "";
+                    returnMessage[1] = "";
                     return true;
-
                 }
             }
-        }
+        } // the prompt message for the user and the details of the note
+        returnMessage[0] = "";
+        returnMessage[1] = "";
         return false;
     }
 
     private boolean processDocSubmission(Affidavit document) {
         // check if the document exists in the company block
-        for (Block<Company> companyBlock : verifiedCompanies) {
-            for (Transaction<Company> companyTransaction : companyBlock.getTransactions()) {
+        for (Company company : verifiedCompanies) {
+            for (Transaction<SubmissionDocument> companyTransaction : company.getDistributedNotes().getTransactions()) {
                 // check if the initial details match
                 if (companyTransaction.getSender().equals(document.getStudentNumber())
                         && companyTransaction.getReceiver().equals(document.getRegNumber())) {
-
+                    // the prompt message for the user and the details of the note
+                    returnMessage[0] = "";
+                    returnMessage[1] = "";
                     return true;
 
                 }
             }
-        }
+        } // the prompt message for the user and the details of the note
+        returnMessage[0] = "";
+        returnMessage[1] = "";
         return false;
     }
 
     // load objects from txt file for testing
     private void loadSavedCompanies() {
-        ArrayList<Block<Company>> arr = new ArrayList<>();
+        ArrayList<Company> arr = new ArrayList<>();
 
-        try (FileInputStream fileInputStream = new FileInputStream(new File("saved_transactions.dat"));
+        try (FileInputStream fileInputStream = new FileInputStream(new File("data/saved_companies.dat"));
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
                 ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
 
             while (true) {
                 try {
                     Object object = objectInputStream.readObject();
-                    @SuppressWarnings("unchecked")
-                    Block<Company> blk = (Block<Company>) object;
-                    if (blk != null) {
-                        arr.add(blk);
-                    }
+                    arr.add((Company) object);
                 } catch (EOFException e) {
                     break; // Reached end of file
                 }
@@ -92,8 +101,9 @@ public class Submission {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        for (Block<Company> blk : arr) {
-            verifiedCompanies.add(blk);
+        verifiedCompanies = new ArrayList<>();
+        for (Company company : arr) {
+            verifiedCompanies.add(company);
         }
     }
 
@@ -101,7 +111,7 @@ public class Submission {
     private void loadSavedSubmissions() {
         ArrayList<SubmissionDocument> arr = new ArrayList<>();
 
-        try (FileInputStream fileInputStream = new FileInputStream(new File("saved_transactions.dat"));
+        try (FileInputStream fileInputStream = new FileInputStream(new File("data/saved_submissions.dat"));
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
                 ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
 
@@ -117,6 +127,7 @@ public class Submission {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
         for (SubmissionDocument doc : arr) {
             docSubmissions.getTransactions()
                     .add(new Transaction<SubmissionDocument>(doc.studentNumber, doc.regNumber, doc));

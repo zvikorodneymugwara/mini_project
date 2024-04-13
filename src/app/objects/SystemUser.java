@@ -17,6 +17,14 @@ public class SystemUser {
         this.studentNumber = studentNumber;
     }
 
+    public Block<SubmissionDocument> getSubmissions() {
+        return submissions;
+    }
+
+    public ArrayList<String> getNotices() {
+        return notices;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

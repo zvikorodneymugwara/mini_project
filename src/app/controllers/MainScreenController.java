@@ -3,14 +3,14 @@ package app.controllers;
 import java.io.IOException;
 
 import app.objects.SystemUser;
-import app.objects.submissions.Submission;
+import app.objects.submissions.Submissions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 
 public abstract class MainScreenController extends SceneController {
 
-    protected Submission submission;
+    protected Submissions submissions;
     protected SystemUser user;
 
     @FXML
@@ -29,7 +29,7 @@ public abstract class MainScreenController extends SceneController {
     protected Hyperlink myCourseLink;
 
     public MainScreenController(){
-        submission = new Submission();
+        submissions = new Submissions();
         user = new SystemUser(username, studentNumber);
     }
 

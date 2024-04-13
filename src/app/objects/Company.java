@@ -1,15 +1,29 @@
 package app.objects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import acsse.csc03a3.Block;
+import acsse.csc03a3.Transaction;
 import app.objects.submissions.SubmissionDocument;
 
-public class Company implements Serializable{
+public class Company implements Serializable {
     private String companyNumber;
+    private String companyName;
     private Block<SubmissionDocument> distributedNotes;
 
-    public boolean findNote(SubmissionDocument document){
+    public Company(String companyNum, String compName) {
+        this.companyNumber = companyNum;
+        this.companyName = compName;
+    }
+    
+    public void initializeDistributedNotes() {
+        List<Transaction<SubmissionDocument>> list = new ArrayList<Transaction<SubmissionDocument>>();
+        this.distributedNotes = new Block<SubmissionDocument>(companyNumber + " " + companyName, list);
+    }
+
+    public boolean findNote(SubmissionDocument document) {
         return false;
     }
 
@@ -17,7 +31,11 @@ public class Company implements Serializable{
         return companyNumber;
     }
 
-    public SubmissionDocument getDocument(String docId){
+    public SubmissionDocument getDocument(String docId) {
         return null;
+    }
+
+    public Block<SubmissionDocument> getDistributedNotes() {
+        return distributedNotes;
     }
 }
