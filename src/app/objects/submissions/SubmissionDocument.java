@@ -8,13 +8,16 @@ public abstract class SubmissionDocument implements Serializable {
     protected String regNumber;
     protected String docInfo;
     protected String studentNumber;
+    private boolean submissionStatus;
 
-    public SubmissionDocument(String docID, String issueDate, String regNumber, String docInfo, String studentNumber) {
+    public SubmissionDocument(String docID, String issueDate, String regNumber, String docInfo, String studentNumber,
+            boolean submissionStatus) {
         this.docID = docID;
         this.issueDate = issueDate;
         this.regNumber = regNumber;
         this.docInfo = docInfo;
         this.studentNumber = studentNumber;
+        this.submissionStatus = submissionStatus;
     }
 
     public SubmissionDocument() {
@@ -65,5 +68,9 @@ public abstract class SubmissionDocument implements Serializable {
 
     public void setDocInfo(String docInfo) {
         this.docInfo = docInfo;
+    }
+
+    public boolean getSubmissionStatus() {
+        return submissionStatus;
     }
 }

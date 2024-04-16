@@ -41,17 +41,14 @@ public class Submissions {
     }
 
     public boolean addSubmissionDocument(SubmissionDocument document) {
-        if (document instanceof MedicalSubmission) {
-            return processDocSubmission((MedicalSubmission) document);
-        }
-        return processDocSubmission((Affidavit) document);
+        return processDocSubmission(document);
     }
 
     public String[] getReturnMessage() {
         return returnMessage;
     }
 
-    private boolean processDocSubmission(MedicalSubmission document) {
+    private boolean processDocSubmission(SubmissionDocument document) {
         // check if the document exists in the company block
         for (Company company : verifiedCompanies) {
             for (Transaction<SubmissionDocument> companyTransaction : company.getDistributedNotes().getTransactions()) {
@@ -60,34 +57,20 @@ public class Submissions {
                         && companyTransaction.getReceiver().equals(document.getRegNumber())) {
                     // the prompt message for the user and the details of the note
                     document.setDocInfo(companyTransaction.getData().getDocInfo());
-                    returnMessage[0] = "";
-                    returnMessage[1] = "";
-                    return true;
+                    if (document.getSubmissionStatus()) {
+                        returnMessage[0] = "Invalid Document";
+                        returnMessage[1] = "This document has already been submitted";
+                        return false;
+                    } else {
+                        returnMessage[0] = "Successfull Submission";
+                        returnMessage[1] = "The document has been submitted successfully";
+                        return true;
+                    }
                 }
             }
         } // the prompt message for the user and the details of the note
-        returnMessage[0] = "";
-        returnMessage[1] = "";
-        return false;
-    }
-
-    private boolean processDocSubmission(Affidavit document) {
-        // check if the document exists in the company block
-        for (Company company : verifiedCompanies) {
-            for (Transaction<SubmissionDocument> companyTransaction : company.getDistributedNotes().getTransactions()) {
-                // check if the initial details match
-                if (companyTransaction.getSender().equals(document.getStudentNumber())
-                        && companyTransaction.getReceiver().equals(document.getRegNumber())) {
-                    // the prompt message for the user and the details of the note
-                    returnMessage[0] = "";
-                    returnMessage[1] = "";
-                    return true;
-
-                }
-            }
-        } // the prompt message for the user and the details of the note
-        returnMessage[0] = "";
-        returnMessage[1] = "";
+        returnMessage[0] = "Invalid Document";
+        returnMessage[1] = "Your Submission Could Not Be Processed. Please Contact Your HOD";
         return false;
     }
 

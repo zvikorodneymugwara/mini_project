@@ -2,10 +2,13 @@ package app.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import acsse.csc03a3.Transaction;
+import app.Vote;
 import app.objects.submissions.Affidavit;
+import app.objects.submissions.Candidate;
 import app.objects.submissions.MedicalSubmission;
 import app.objects.submissions.SubmissionDocument;
 import app.objects.submissions.Submissions;
@@ -78,8 +81,14 @@ public class SubmissionsScreenController extends MainScreenController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         docTypeComboBox.setItems(FXCollections.observableArrayList("Medical Document", "Affidavit"));
+        candidateComboBox.setItems(
+                FXCollections.observableArrayList("EFF SRC", "ANC SRC", "Action SA SRC", "ZANU PF SRC", "DA SRC"));
         if (this.submissions == null) {
             this.submissions = new Submissions();
+        }
+        if (this.candidate == null) {
+            this.candidate = new Candidate();
+            this.candidate.setCandidateID("" + (new Random().nextInt(1000, 9999)));
         }
     }
 
@@ -88,25 +97,33 @@ public class SubmissionsScreenController extends MainScreenController {
         SubmissionDocument doc = null;
         if ("Medical Document".equals(docTypeComboBox.getValue())) {
             doc = new MedicalSubmission(docIdTxt.getText(), docDatePicker.getValue().toString(),
-                    companyNumTxt.getText(), "", user.getStudentNumber());
+                    companyNumTxt.getText(), "", user.getStudentNumber(), false);
         } else {
             doc = new Affidavit(docIdTxt.getText(), docDatePicker.getValue().toString(), companyNumTxt.getText(), "",
-                    user.getStudentNumber());
+                    user.getStudentNumber(), false);
         }
         if (submissions.addSubmissionDocument(doc)) {
             user.getSubmissions().getTransactions()
                     .add(new Transaction<SubmissionDocument>(doc.getStudentNumber(), doc.getRegNumber(), doc));
-            showMessage(AlertType.INFORMATION, "Status", "Successful Submission",
-                    "Submission was Successfully Processed");
+            String[] returnMessages = submissions.getReturnMessage();
+            showMessage(AlertType.INFORMATION, "Status", returnMessages[0], returnMessages[1]);
         } else {
-            showMessage(AlertType.ERROR, "Error", "Unsuccessful Submission",
-                    "Your Submission Could Not Be Processed. Please Contact Your HOD");
+            String[] returnMessages = submissions.getReturnMessage();
+            showMessage(AlertType.ERROR, "Error", returnMessages[0], returnMessages[1]);
         }
     }
 
     @FXML
     void submitVoteBtnClick(ActionEvent event) {
-
+        Vote vote = new Vote(candidateComboBox.getValue(), candidate.getCandidateID());
+        if (candidate.addVote(new Transaction<Vote>(user.getStudentNumber(), candidate.getCandidateID(), vote))) {
+            candidate.setCandidateName(candidateComboBox.getValue());
+            showMessage(AlertType.INFORMATION, "Status", "Voted Successfully",
+                    "Your vote for " + candidate.getCandidateName() + " was successfully registered");
+        } else {
+            showMessage(AlertType.ERROR, "Error", "Unable to Vote",
+                    "You have already voted for " + candidate.getCandidateName());
+        }
     }
 
     @FXML

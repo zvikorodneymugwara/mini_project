@@ -1,15 +1,15 @@
 package app.objects.submissions;
 
-
-public class MedicalSubmission extends SubmissionDocument{
+public class MedicalSubmission extends SubmissionDocument {
     private boolean excused;
     private String medicalRequest;
 
-    public MedicalSubmission(String docID, String issueDate, String regNumber, String docInfo, String studentNumber) {
-        super(docID, issueDate, regNumber, docInfo, studentNumber);
+    public MedicalSubmission(String docID, String issueDate, String regNumber, String docInfo, String studentNumber,
+            boolean submissionStatus) {
+        super(docID, issueDate, regNumber, docInfo, studentNumber, submissionStatus);
     }
 
-    public MedicalSubmission(){
+    public MedicalSubmission() {
         super();
     }
 

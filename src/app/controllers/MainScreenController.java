@@ -3,6 +3,7 @@ package app.controllers;
 import java.io.IOException;
 
 import app.objects.SystemUser;
+import app.objects.submissions.Candidate;
 import app.objects.submissions.Submissions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.control.Hyperlink;
 public abstract class MainScreenController extends SceneController implements Initializable {
 
     protected Submissions submissions;
+    protected Candidate candidate;
 
     protected SystemUser user;
 
@@ -48,5 +50,13 @@ public abstract class MainScreenController extends SceneController implements In
     @FXML
     void submissionsLinkClicked(ActionEvent event) throws IOException {
         switchScene(event, "/screens/submissions.fxml", user);
+    }
+
+    public Candidate getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
     }
 }

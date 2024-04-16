@@ -23,6 +23,10 @@ public class HelperClass {
             writeSubmissions();
         }
 
+        // if (new File("data/saved_candidates.dat").exists() == false) {
+        //     writeCandidates();
+        // }
+
         if (new File("data/saved_companies.dat").exists() == false) {
             writeCompnaines();
         }
@@ -91,9 +95,9 @@ public class HelperClass {
         // Subtract two months from the current date
         calendar.add(Calendar.MONTH, -2);
         Affidavit affidavit = new Affidavit("1", new Date().toString(), "100", "Student Was at  a Funeral",
-                "221100999");
+                "221100999", true);
         MedicalSubmission sickNote = new MedicalSubmission("2", calendar.getTime().toString(), "101",
-                "Student Had Eye Surgery", "221100999");
+                "Student Had Eye Surgery", "221100999", false);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(new File("data/saved_submissions.dat"));
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
