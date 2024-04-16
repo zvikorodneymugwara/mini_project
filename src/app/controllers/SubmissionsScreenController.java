@@ -83,7 +83,8 @@ public class SubmissionsScreenController extends MainScreenController {
     void submitNoteBtnClick(ActionEvent event) {
         SubmissionDocument doc = null;
         if ("Medical Document".equals(docTypeComboBox.getValue())) {
-            doc = new MedicalSubmission(docIdTxt.getText(), docDatePicker.getValue().toString(), companyNumTxt.getText(), studentNumber, studentNumber);
+            doc = new MedicalSubmission(docIdTxt.getText(), docDatePicker.getValue().toString(),
+                    companyNumTxt.getText(), studentNumber, studentNumber);
         } else {
             doc = new Affidavit(username, title, studentNumber, studentNumber, studentNumber);
         }
