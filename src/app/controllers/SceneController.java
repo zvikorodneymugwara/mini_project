@@ -2,6 +2,7 @@ package app.controllers;
 
 import java.io.IOException;
 
+import app.objects.SystemUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,8 +22,8 @@ public abstract class SceneController {
     protected String studentNumber;
     protected boolean loggedIn;
 
-    protected void switchScene(ActionEvent event, String scenePath) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(scenePath));
+    protected void switchScene(ActionEvent event, String scenePath, SystemUser user) throws IOException {
+        Parent root = loadUser(user, scenePath);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -31,6 +32,14 @@ public abstract class SceneController {
 
     public String getUsername() {
         return username;
+    }
+
+    public Parent loadUser(SystemUser user, String screenPath) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(screenPath));
+        Parent rootNode = loader.load();
+        MainScreenController controller = loader.getController();
+        controller.user = user;
+        return rootNode;
     }
 
     public boolean isLoggedIn() {

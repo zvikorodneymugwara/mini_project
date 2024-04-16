@@ -13,11 +13,20 @@ public class Company implements Serializable {
     private String companyName;
     private Block<SubmissionDocument> distributedNotes;
 
+    public Company() {
+
+    }
+
     public Company(String companyNum, String compName) {
         this.companyNumber = companyNum;
         this.companyName = compName;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Company Name: " + this.companyName + ", Company Numebr:" + this.companyNumber;
+    }
+
     public void initializeDistributedNotes() {
         List<Transaction<SubmissionDocument>> list = new ArrayList<Transaction<SubmissionDocument>>();
         this.distributedNotes = new Block<SubmissionDocument>(companyNumber + " " + companyName, list);

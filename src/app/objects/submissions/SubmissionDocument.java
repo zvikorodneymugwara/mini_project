@@ -17,6 +17,16 @@ public abstract class SubmissionDocument implements Serializable {
         this.studentNumber = studentNumber;
     }
 
+    public SubmissionDocument() {
+
+    }
+
+    @Override
+    public String toString() {
+        return this.docID + ", " + this.issueDate + ", " + this.regNumber + ", " + this.docInfo + ", "
+                + this.studentNumber;
+    }
+
     public String getStudentNumber() {
         return studentNumber;
     }

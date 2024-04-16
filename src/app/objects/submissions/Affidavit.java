@@ -6,6 +6,10 @@ public class Affidavit extends SubmissionDocument {
         super(docID, issueDate, regNumber, docInfo, studentNumber);
     }
 
+    public Affidavit() {
+        super();
+    }
+
     private String employeeID;
 
     public String getEmployeeID() {

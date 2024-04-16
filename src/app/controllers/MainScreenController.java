@@ -12,6 +12,7 @@ import javafx.scene.control.Hyperlink;
 public abstract class MainScreenController extends SceneController implements Initializable {
 
     protected Submissions submissions;
+
     protected SystemUser user;
 
     @FXML
@@ -29,33 +30,23 @@ public abstract class MainScreenController extends SceneController implements In
     @FXML
     protected Hyperlink myCourseLink;
 
-    public MainScreenController(){
-        submissions = new Submissions();
-        user = new SystemUser(username, studentNumber);
-    }
-
     @FXML
     void noticesLinkClicked(ActionEvent event) throws IOException {
-        switchScene(event, "/screens/notices.fxml");
-
+        switchScene(event, "/screens/notices.fxml", user);
     }
 
     @FXML
     void homeLinkClicked(ActionEvent event) throws IOException {
-        switchScene(event, "/screens/home.fxml");
-
+        switchScene(event, "/screens/home.fxml", user);
     }
 
     @FXML
     void myCourseLinkClicked(ActionEvent event) throws IOException {
-        switchScene(event, "/screens/my_course.fxml");
-
+        switchScene(event, "/screens/my_course.fxml", user);
     }
 
     @FXML
     void submissionsLinkClicked(ActionEvent event) throws IOException {
-        switchScene(event, "/screens/submissions.fxml");
-
+        switchScene(event, "/screens/submissions.fxml", user);
     }
-
 }

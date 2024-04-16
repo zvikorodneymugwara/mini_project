@@ -26,7 +26,9 @@ public class Submissions {
                 if (company.getDistributedNotes() == null) {
                     company.initializeDistributedNotes();
                 }
-                if (company.getCompanyNumber().equals(doc.getSender())) {
+                if (company.getCompanyNumber().equals(doc.getReceiver())) {
+                    System.out.println(company.toString());
+                    System.out.println(doc.toString());
                     company.getDistributedNotes().getTransactions().add(doc);
                 }
             }
@@ -126,7 +128,14 @@ public class Submissions {
             while (true) {
                 try {
                     Object object = objectInputStream.readObject();
-                    arr.add((SubmissionDocument) object);
+                    if (object instanceof Affidavit) {
+                        arr.add((Affidavit) object);
+                    } else if (object instanceof MedicalSubmission) {
+                        arr.add((MedicalSubmission) object);
+                    } else {
+                        // Handle unexpected object type (optional)
+                        System.out.println("Unknown object type: " + object.getClass());
+                    }
                 } catch (EOFException e) {
                     break; // Reached end of file
                 }

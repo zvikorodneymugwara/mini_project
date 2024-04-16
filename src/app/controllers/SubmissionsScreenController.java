@@ -8,6 +8,7 @@ import acsse.csc03a3.Transaction;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.MedicalSubmission;
 import app.objects.submissions.SubmissionDocument;
+import app.objects.submissions.Submissions;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,6 +78,9 @@ public class SubmissionsScreenController extends MainScreenController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         docTypeComboBox.setItems(FXCollections.observableArrayList("Medical Document", "Affidavit"));
+        if (this.submissions == null) {
+            this.submissions = new Submissions();
+        }
     }
 
     @FXML
@@ -84,9 +88,10 @@ public class SubmissionsScreenController extends MainScreenController {
         SubmissionDocument doc = null;
         if ("Medical Document".equals(docTypeComboBox.getValue())) {
             doc = new MedicalSubmission(docIdTxt.getText(), docDatePicker.getValue().toString(),
-                    companyNumTxt.getText(), studentNumber, studentNumber);
+                    companyNumTxt.getText(), "", user.getStudentNumber());
         } else {
-            doc = new Affidavit(username, title, studentNumber, studentNumber, studentNumber);
+            doc = new Affidavit(docIdTxt.getText(), docDatePicker.getValue().toString(), companyNumTxt.getText(), "",
+                    user.getStudentNumber());
         }
         if (submissions.addSubmissionDocument(doc)) {
             user.getSubmissions().getTransactions()

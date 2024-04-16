@@ -15,6 +15,8 @@ public class SystemUser {
     public SystemUser(String name, String studentNumber) {
         this.name = name;
         this.studentNumber = studentNumber;
+        this.submissions = new Block<SubmissionDocument>("", new ArrayList<>());
+        this.notices = new  ArrayList<>();
     }
 
     public Block<SubmissionDocument> getSubmissions() {
@@ -39,19 +41,5 @@ public class SystemUser {
 
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
-    }
-
-    // get the transactions from a txt file
-    public void saveTransactions() {
-
-    }
-
-    // get the transactions from a txt file
-    public void getTransactions() {
-
-    }
-
-    public void performTransaction() {
-
     }
 }

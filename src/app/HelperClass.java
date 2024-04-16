@@ -64,8 +64,8 @@ public class HelperClass {
     }
 
     public static void writeCompnaines() {
-        Company saps = new Company("500", "South African Police Services");
-        Company helenJoseph = new Company("501", "Helen Joseph Hospital");
+        Company saps = new Company("100", "South African Police Services");
+        Company helenJoseph = new Company("101", "Helen Joseph Hospital");
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(new File("data/saved_companies.dat"));
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);

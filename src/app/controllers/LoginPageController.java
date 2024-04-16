@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 
 import app.Secrecy;
+import app.objects.SystemUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,7 +41,7 @@ public class LoginPageController extends SceneController {
                 username = details[1];
                 loggedIn = true;
                 showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");
-                switchScene(event, "/screens/home.fxml");
+                switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber));
             } else {
                 showMessage(AlertType.ERROR, "Error", "Login Failed", "Student Number or Password Incorrect");
             }
