@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import app.Secrecy;
@@ -32,26 +33,32 @@ public class LoginPageController extends SceneController {
 
     @FXML
     void loginBtnClicked(ActionEvent event) {
+        boolean found = false;
         File file = new File("data/user_credentials.txt");
         try (Scanner scan = new Scanner(file)) {
-            do {
-                String info = scan.next();
-                String[] details = info.split(",");
+            ArrayList<String> info = new ArrayList<>();
+            while (scan.hasNext()) {
+                info.add(scan.next());
+            }
+            for (String string : info) {
+                String[] details = string.split(",");
                 if (details[details.length - 2].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))) {
                     studentNumber = studentNumberTxt.getText();
                     username = details[1];
-                    loggedIn = true;
+                    loggedIn = found = true;
                     showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");
                     if (Integer.parseInt(details[details.length - 1]) == 0) {
                         switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber));
+                        break;
                     } else {
                         switchScene(event, "/screens/admin_dashboard.fxml", new SystemUser(username, studentNumber));
+                        break;
                     }
-                    break;
                 }
-            } while (scan.hasNextLine());
-            showMessage(AlertType.ERROR, "Error", "Login Failed", "Student Number or Password Incorrect");
-
+            }
+            if (!found) {
+                showMessage(AlertType.ERROR, "Error", "Login Failed", "Student Number or Password Incorrect");
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -59,7 +66,6 @@ public class LoginPageController extends SceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 }
