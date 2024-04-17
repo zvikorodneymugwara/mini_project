@@ -1,15 +1,12 @@
 package app.objects.submissions;
 
-import java.io.BufferedInputStream;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
+import app.Admin;
+import app.HelperClass;
+import app.UserRequest;
 import app.objects.Company;
 
 public class Submissions {
@@ -40,15 +37,15 @@ public class Submissions {
         return false;
     }
 
-    public boolean addSubmissionDocument(SubmissionDocument document) {
-        return processDocSubmission(document);
+    public boolean addSubmissionDocument(SubmissionDocument document, Admin adminUser) {
+        return processDocSubmission(document, adminUser);
     }
 
     public String[] getReturnMessage() {
         return returnMessage;
     }
 
-    private boolean processDocSubmission(SubmissionDocument document) {
+    private boolean processDocSubmission(SubmissionDocument document, Admin adminUser) {
         // check if the document exists in the company block
         for (Company company : verifiedCompanies) {
             for (Transaction<SubmissionDocument> companyTransaction : company.getDistributedNotes().getTransactions()) {
@@ -57,13 +54,15 @@ public class Submissions {
                         && companyTransaction.getReceiver().equals(document.getRegNumber())) {
                     // the prompt message for the user and the details of the note
                     document.setDocInfo(companyTransaction.getData().getDocInfo());
+                    UserRequest request = new UserRequest();
                     if (document.getSubmissionStatus()) {
                         returnMessage[0] = "Invalid Document";
                         returnMessage[1] = "This document has already been submitted";
                         return false;
                     } else {
+                        sendRequest(request, adminUser);
                         returnMessage[0] = "Successfull Submission";
-                        returnMessage[1] = "The document has been submitted successfully";
+                        returnMessage[1] = "The document has been submitted successfully and is being proccessed";
                         return true;
                     }
                 }
@@ -76,61 +75,23 @@ public class Submissions {
 
     // load objects from txt file for testing
     private void loadSavedCompanies() {
-        ArrayList<Company> arr = new ArrayList<>();
-
-        try (FileInputStream fileInputStream = new FileInputStream(new File("data/saved_companies.dat"));
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
-
-            while (true) {
-                try {
-                    Object object = objectInputStream.readObject();
-                    arr.add((Company) object);
-                } catch (EOFException e) {
-                    break; // Reached end of file
-                }
-            }
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         verifiedCompanies = new ArrayList<>();
-        for (Company company : arr) {
+        for (Company company : HelperClass.readSavedCompanies()) {
             verifiedCompanies.add(company);
         }
     }
 
     // load objects from txt file for testing
     private void loadSavedSubmissions() {
-        ArrayList<SubmissionDocument> arr = new ArrayList<>();
-
-        try (FileInputStream fileInputStream = new FileInputStream(new File("data/saved_submissions.dat"));
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
-
-            while (true) {
-                try {
-                    Object object = objectInputStream.readObject();
-                    if (object instanceof Affidavit) {
-                        arr.add((Affidavit) object);
-                    } else if (object instanceof MedicalSubmission) {
-                        arr.add((MedicalSubmission) object);
-                    } else {
-                        // Handle unexpected object type (optional)
-                        System.out.println("Unknown object type: " + object.getClass());
-                    }
-                } catch (EOFException e) {
-                    break; // Reached end of file
-                }
-            }
-
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
-        for (SubmissionDocument doc : arr) {
+        for (SubmissionDocument doc : HelperClass.readSavedSubmissions()) {
             docSubmissions.getTransactions()
                     .add(new Transaction<SubmissionDocument>(doc.studentNumber, doc.regNumber, doc));
         }
+    }
+
+    // TODO networking implementation later
+    public void sendRequest(UserRequest request, Admin adminUser) {
+
     }
 }

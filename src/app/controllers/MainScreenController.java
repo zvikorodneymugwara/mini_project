@@ -2,6 +2,7 @@ package app.controllers;
 
 import java.io.IOException;
 
+import app.Admin;
 import app.objects.SystemUser;
 import app.objects.submissions.Candidate;
 import app.objects.submissions.Submissions;
@@ -16,6 +17,7 @@ public abstract class MainScreenController extends SceneController implements In
     protected Candidate candidate;
 
     protected SystemUser user;
+    protected Admin adminUser;
 
     @FXML
     protected Hyperlink noticesLink;

@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import acsse.csc03a3.Block;
+import acsse.csc03a3.Transaction;
+import app.objects.course.DegreeModule;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -35,7 +40,7 @@ public class MyCourseScreenController extends MainScreenController {
     private LineChart<?, ?> marksChart;
 
     @FXML
-    private ComboBox<?> moduleSelectComboBox;
+    private ComboBox<String> moduleSelectComboBox;
 
     @FXML
     private Label referenceIdLbl;
@@ -43,14 +48,21 @@ public class MyCourseScreenController extends MainScreenController {
     @FXML
     private Label statusLbl;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("Initializing Course Screen");
+        ObservableList<String> moduleNames = FXCollections.observableArrayList();
+
+        Block<DegreeModule> modulesBlockChain = user.getDegree().getDegreeModules();
+        for (Transaction<DegreeModule> moduleTransaction : modulesBlockChain.getTransactions()) {
+            // Add module names to the ObservableList
+            moduleNames.add(moduleTransaction.getData().getModuleCode());
+        }
+    }
 
     @FXML
     void moduleSelectComboBoxClick(ActionEvent event) {
 
-    }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Initializing");
     }
 
     @FXML

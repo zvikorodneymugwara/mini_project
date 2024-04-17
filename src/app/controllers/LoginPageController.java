@@ -34,21 +34,24 @@ public class LoginPageController extends SceneController {
     void loginBtnClicked(ActionEvent event) {
         File file = new File("data/user_credentials.txt");
         try (Scanner scan = new Scanner(file)) {
-            String info = scan.next();
-            String[] details = info.split(",");
-            if (details[details.length - 2].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))) {
-                studentNumber = studentNumberTxt.getText();
-                username = details[1];
-                loggedIn = true;
-                showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");
-                if (Integer.parseInt(details[details.length - 1]) == 0) {
-                    switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber));
-                } else {
-                    switchScene(event, "/screens/admin_dashboard.fxml", new SystemUser(username, studentNumber));
+            do {
+                String info = scan.next();
+                String[] details = info.split(",");
+                if (details[details.length - 2].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))) {
+                    studentNumber = studentNumberTxt.getText();
+                    username = details[1];
+                    loggedIn = true;
+                    showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");
+                    if (Integer.parseInt(details[details.length - 1]) == 0) {
+                        switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber));
+                    } else {
+                        switchScene(event, "/screens/admin_dashboard.fxml", new SystemUser(username, studentNumber));
+                    }
+                    break;
                 }
-            } else {
-                showMessage(AlertType.ERROR, "Error", "Login Failed", "Student Number or Password Incorrect");
-            }
+            } while (scan.hasNextLine());
+            showMessage(AlertType.ERROR, "Error", "Login Failed", "Student Number or Password Incorrect");
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -56,6 +59,7 @@ public class LoginPageController extends SceneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
 }

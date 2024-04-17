@@ -1,21 +1,22 @@
 package app.objects.course;
 
-import acsse.csc03a3.Blockchain;
+import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
+import java.util.ArrayList;
 
 public class Degree {
-    private Blockchain<Module> degreeModules;
+    private Block<DegreeModule> degreeModules;
     private String degName;
     private String degCode;
     private Transaction<String> degreeVerifier;
 
     public Degree(String sNum, String degCode) {
-        this.degreeModules = new Blockchain<Module>();
-        this.degreeVerifier = new Transaction<String>(sNum, degCode, "");
+        this.degreeModules = new Block<DegreeModule>("", new ArrayList<>());
+        this.degreeVerifier = new Transaction<String>(sNum, degCode, "In Progress");
     }
 
     public Degree() {
-        this.degreeModules = new Blockchain<Module>();
+        this.degreeModules = new Block<DegreeModule>("", new ArrayList<>());
         this.degreeVerifier = new Transaction<String>("", "", "");
     }
 
@@ -27,7 +28,7 @@ public class Degree {
         return degName;
     }
 
-    public Blockchain<Module> getDegreeModules() {
+    public Block<DegreeModule> getDegreeModules() {
         return degreeModules;
     }
 
@@ -43,7 +44,7 @@ public class Degree {
         this.degName = degName;
     }
 
-    public void setDegreeModules(Blockchain<Module> degreeModules) {
+    public void setDegreeModules(Block<DegreeModule> degreeModules) {
         this.degreeModules = degreeModules;
     }
 

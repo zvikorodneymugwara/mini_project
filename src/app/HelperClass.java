@@ -1,13 +1,18 @@
 package app;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -16,16 +21,13 @@ import java.util.regex.Pattern;
 import app.objects.Company;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.MedicalSubmission;
+import app.objects.submissions.SubmissionDocument;
 
 public class HelperClass {
     public static void init() {
         if (new File("data/saved_submissions.dat").exists() == false) {
             writeSubmissions();
         }
-
-        // if (new File("data/saved_candidates.dat").exists() == false) {
-        // writeCandidates();
-        // }
 
         if (new File("data/saved_companies.dat").exists() == false) {
             writeCompnaines();
@@ -34,7 +36,7 @@ public class HelperClass {
         if (new File("data/user_credentials.txt").exists() == false) {
             try {
                 insertUser("Bernard", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 221100999, 0);
-                insertUser("Benjamin", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 201100100, 1);
+                insertUser("Benjamin", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 201100101, 1);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -116,11 +118,65 @@ public class HelperClass {
     }
 
     public static void insertUser(String username, String hashedPassword, int studentNumber, int userType) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter("data/user_credentials.txt"))) {
-            System.out.println(username + "," + studentNumber + "," + hashedPassword + "," + userType);
-            pw.println(username + "," + studentNumber + "," + hashedPassword + "," + userType);
+        try (PrintWriter pw = new PrintWriter(new FileWriter("data/user_credentials.txt", true))) {
+            String userData = username + "," + studentNumber + "," + hashedPassword + "," + userType;
+            System.out.println(userData);
+            pw.println(userData);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // load objects from txt file for testing
+    public static ArrayList<Company> readSavedCompanies() {
+        ArrayList<Company> arr = new ArrayList<>();
+
+        try (FileInputStream fileInputStream = new FileInputStream(new File("data/saved_companies.dat"));
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
+
+            while (true) {
+                try {
+                    Object object = objectInputStream.readObject();
+                    arr.add((Company) object);
+                } catch (EOFException e) {
+                    break; // Reached end of file
+                }
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return arr;
+    }
+
+    // load objects from txt file for testing
+    public static ArrayList<SubmissionDocument> readSavedSubmissions() {
+        ArrayList<SubmissionDocument> arr = new ArrayList<>();
+
+        try (FileInputStream fileInputStream = new FileInputStream(new File("data/saved_submissions.dat"));
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
+
+            while (true) {
+                try {
+                    Object object = objectInputStream.readObject();
+                    if (object instanceof Affidavit) {
+                        arr.add((Affidavit) object);
+                    } else if (object instanceof MedicalSubmission) {
+                        arr.add((MedicalSubmission) object);
+                    } else {
+                        // Handle unexpected object type (optional)
+                        System.out.println("Unknown object type: " + object.getClass());
+                    }
+                } catch (EOFException e) {
+                    break; // Reached end of file
+                }
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return arr;
     }
 }

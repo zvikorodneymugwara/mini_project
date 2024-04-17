@@ -15,7 +15,7 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label text="Label" textFill="WHITE">
+            <Label fx:id="studentNumberLbl" text="Label" textFill="WHITE">
                <font>
                   <Font name="Impact" size="16.0" />
                </font>
@@ -29,7 +29,7 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label text="Label" textFill="WHITE">
+            <Label fx:id="student_NameLbl" text="Label" textFill="WHITE">
                <font>
                   <Font name="Impact" size="16.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label text="Label" textFill="WHITE">
+            <Label fx:id="docTypeLbl" text="Label" textFill="WHITE">
                <font>
                   <Font name="Impact" size="16.0" />
                </font>
@@ -57,7 +57,7 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label text="Label" textFill="WHITE">
+            <Label fx:id="docIDLbl" text="Label" textFill="WHITE">
                <font>
                   <Font name="Impact" size="16.0" />
                </font>
@@ -71,18 +71,18 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label text="Label" textFill="WHITE">
+            <Label fx:id="companyNameLbl" text="Label" textFill="WHITE">
                <font>
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="View Info" />
+            <Button fx:id="viewInfoBtn" mnemonicParsing="false" onAction="#viewInfoBtnClick" prefHeight="25.0" prefWidth="87.0" text="View Info" />
          </children>
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 10px; -fx-spacing: 8px;">
          <children>
-            <Button mnemonicParsing="false" text="Approve" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Decline" />
+            <Button fx:id="approveBtn" mnemonicParsing="false" onAction="#approveBtnClick" text="Approve" />
+            <Button fx:id="declineBtn" mnemonicParsing="false" onAction="#declineBtnClick" prefHeight="25.0" prefWidth="63.0" text="Decline" />
          </children>
       </VBox>
    </children>

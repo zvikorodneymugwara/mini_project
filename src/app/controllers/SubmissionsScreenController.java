@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import acsse.csc03a3.Transaction;
+import app.Admin;
 import app.Vote;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.Candidate;
@@ -87,6 +88,9 @@ public class SubmissionsScreenController extends MainScreenController {
             this.candidate = new Candidate();
             this.candidate.setCandidateID("" + (new Random().nextInt(1000, 9999)));
         }
+        if(this.adminUser == null){
+            this.adminUser = new Admin();
+        }
     }
 
     @FXML
@@ -99,7 +103,7 @@ public class SubmissionsScreenController extends MainScreenController {
             doc = new Affidavit(docIdTxt.getText(), docDatePicker.getValue().toString(), companyNumTxt.getText(), "",
                     user.getStudentNumber(), false);
         }
-        if (submissions.addSubmissionDocument(doc)) {
+        if (submissions.addSubmissionDocument(doc, adminUser)) {
             user.getSubmissions().getTransactions()
                     .add(new Transaction<SubmissionDocument>(doc.getStudentNumber(), doc.getRegNumber(), doc));
             String[] returnMessages = submissions.getReturnMessage();

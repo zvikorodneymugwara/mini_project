@@ -2,13 +2,14 @@ package app.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class NoticesScreenController  extends MainScreenController{
-    
+    ArrayList<String> notices;
     @FXML
     void homeLinkClicked(ActionEvent event) throws IOException {
         super.homeLinkClicked(event);
@@ -31,8 +32,10 @@ public class NoticesScreenController  extends MainScreenController{
         super.submissionsLinkClicked(event);
     }
 
+    //TODO networking implementation
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing");
+        notices = user.recieveOutcomes();
     }
 }
