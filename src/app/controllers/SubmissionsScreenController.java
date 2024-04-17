@@ -52,9 +52,6 @@ public class SubmissionsScreenController extends MainScreenController {
     private Hyperlink noticesLink;
 
     @FXML
-    private TextField phoneNumTxt;
-
-    @FXML
     private Hyperlink submissionsLink;
 
     @FXML
@@ -111,6 +108,11 @@ public class SubmissionsScreenController extends MainScreenController {
             String[] returnMessages = submissions.getReturnMessage();
             showMessage(AlertType.ERROR, "Error", returnMessages[0], returnMessages[1]);
         }
+        companyNumTxt.setText("");
+        docDatePicker.setValue(null);
+        docIdTxt.setText("");
+        moduleCodeTxt.setText("");
+        docTypeComboBox.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -124,6 +126,7 @@ public class SubmissionsScreenController extends MainScreenController {
             showMessage(AlertType.ERROR, "Error", "Unable to Vote",
                     "You have already voted for " + candidate.getCandidateName());
         }
+        candidateComboBox.getSelectionModel().clearSelection();
     }
 
     @FXML

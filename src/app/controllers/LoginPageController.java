@@ -36,12 +36,16 @@ public class LoginPageController extends SceneController {
         try (Scanner scan = new Scanner(file)) {
             String info = scan.next();
             String[] details = info.split(",");
-            if (details[details.length - 1].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))) {
+            if (details[details.length - 2].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))) {
                 studentNumber = studentNumberTxt.getText();
                 username = details[1];
                 loggedIn = true;
                 showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");
-                switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber));
+                if (Integer.parseInt(details[details.length - 1]) == 0) {
+                    switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber));
+                } else {
+                    switchScene(event, "/screens/admin_dashboard.fxml", new SystemUser(username, studentNumber));
+                }
             } else {
                 showMessage(AlertType.ERROR, "Error", "Login Failed", "Student Number or Password Incorrect");
             }

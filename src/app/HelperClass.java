@@ -24,7 +24,7 @@ public class HelperClass {
         }
 
         // if (new File("data/saved_candidates.dat").exists() == false) {
-        //     writeCandidates();
+        // writeCandidates();
         // }
 
         if (new File("data/saved_companies.dat").exists() == false) {
@@ -33,7 +33,8 @@ public class HelperClass {
 
         if (new File("data/user_credentials.txt").exists() == false) {
             try {
-                insertUser("Bernard", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 221100999);
+                insertUser("Bernard", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 221100999, 0);
+                insertUser("Benjamin", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 201100100, 1);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -114,10 +115,10 @@ public class HelperClass {
         }
     }
 
-    public static void insertUser(String username, String hashedPassword, int studentNumber) {
+    public static void insertUser(String username, String hashedPassword, int studentNumber, int userType) {
         try (PrintWriter pw = new PrintWriter(new FileWriter("data/user_credentials.txt"))) {
-            System.out.println(username + "," + studentNumber + "," + hashedPassword);
-            pw.println(username + "," + studentNumber + "," + hashedPassword);
+            System.out.println(username + "," + studentNumber + "," + hashedPassword + "," + userType);
+            pw.println(username + "," + studentNumber + "," + hashedPassword + "," + userType);
         } catch (IOException e) {
             e.printStackTrace();
         }

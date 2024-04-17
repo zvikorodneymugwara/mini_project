@@ -3,11 +3,13 @@ package app.objects;
 import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
+import app.objects.course.Degree;
 import app.objects.submissions.SubmissionDocument;
 
 public class SystemUser {
     // list of all transactions this user has made
     private Block<SubmissionDocument> submissions;
+    private Degree degree;
     private String name;
     private String studentNumber;
     private ArrayList<String> notices;
@@ -16,7 +18,7 @@ public class SystemUser {
         this.name = name;
         this.studentNumber = studentNumber;
         this.submissions = new Block<SubmissionDocument>("", new ArrayList<>());
-        this.notices = new  ArrayList<>();
+        this.notices = new ArrayList<>();
     }
 
     public Block<SubmissionDocument> getSubmissions() {
@@ -41,5 +43,13 @@ public class SystemUser {
 
     public void setStudentNumber(String studentNumber) {
         this.studentNumber = studentNumber;
+    }
+
+    public Degree getDegree() {
+        return degree;
+    }
+
+    public void setDegree(Degree degree) {
+        this.degree = degree;
     }
 }
