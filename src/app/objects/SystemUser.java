@@ -26,7 +26,7 @@ public class SystemUser {
         this.studentNumber = studentNumber;
         this.submissions = new Block<SubmissionDocument>("", new ArrayList<>());
         this.notices = new ArrayList<>();
-        this.degree = new Degree(studentNumber, "B2I02Q", "Science", 360);
+        this.degree = new Degree(studentNumber, "B2I02Q", "Computer Science and Informatics", "Science", 360);
         currentYear = 2;
         degree.getDegreeModules().getTransactions()
                 .add(new Transaction<DegreeModule>(studentNumber, "UJ", new DegreeModule(3, "In Progress", "IFM02A2")));

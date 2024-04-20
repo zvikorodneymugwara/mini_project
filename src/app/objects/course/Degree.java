@@ -12,11 +12,13 @@ public class Degree {
     private int credits;
     private Transaction<String> degreeVerifier;
 
-    public Degree(String sNum, String degCode, String facutly, int credits) {
+    public Degree(String sNum, String degCode, String degName, String facutly, int credits) {
         this.degreeModules = new Block<DegreeModule>("", new ArrayList<>());
         this.degreeVerifier = new Transaction<String>(sNum, degCode, "In Progress");
         this.facutly = facutly;
         this.credits = credits;
+        this.degCode = degCode;
+        this.degName = degName;
     }
 
     public Degree() {

@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -61,37 +62,37 @@
                               <Font name="Tw Cen MT Condensed Bold" size="30.0" />
                            </font>
                         </Label>
-                        <Label fx:id="degreeLbl" text="Degree:" textFill="WHITE">
+                        <Label fx:id="degreeLbl" style="-fx-wrap-text: true;" text="Degree:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="degCodeLbl" text="Degree Code:" textFill="WHITE">
+                        <Label fx:id="degCodeLbl" style="-fx-wrap-text: true;" text="Degree Code:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="facultyLbl" text="Faculty:" textFill="WHITE">
+                        <Label fx:id="facultyLbl" style="-fx-wrap-text: true;" text="Faculty:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="currentYearLbl" text="Current Year:" textFill="WHITE">
+                        <Label fx:id="currentYearLbl" style="-fx-wrap-text: true;" text="Current Year:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="statusLbl" text="Status:" textFill="WHITE">
+                        <Label fx:id="statusLbl" style="-fx-wrap-text: true;" text="Status:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="referenceIdLbl" text="Reference ID:" textFill="WHITE">
+                        <Label fx:id="referenceIdLbl" style="-fx-wrap-text: true;" text="Reference ID:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="creditsLbl" text="Credits:" textFill="WHITE">
+                        <Label fx:id="creditsLbl" style="-fx-wrap-text: true;" text="Credits:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
@@ -116,14 +117,18 @@
                               <ComboBox fx:id="moduleSelectComboBox" onAction="#moduleSelectComboBoxClick" prefHeight="25.0" prefWidth="162.0" />
                            </children>
                         </HBox>
-                        <LineChart fx:id="marksChart">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
+                        <ScrollPane prefHeight="319.0" prefWidth="278.0">
+                           <content>
+                              <LineChart fx:id="marksChart" maxHeight="284.0" maxWidth="278.0">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                           </content>
+                        </ScrollPane>
                      </children>
                   </VBox>
                </children>

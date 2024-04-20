@@ -12,9 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -40,7 +38,7 @@ public class MyCourseScreenController extends MainScreenController {
     private Hyperlink homeLink;
 
     @FXML
-    private LineChart<Number, Number> marksChart;
+    private LineChart<String, Number> marksChart;
 
     @FXML
     private ComboBox<String> moduleSelectComboBox;
@@ -55,11 +53,6 @@ public class MyCourseScreenController extends MainScreenController {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing Course Screen");
-        NumberAxis xAxis = new NumberAxis();
-        NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Semester Test");
-        yAxis.setLabel("Mark");
-        marksChart = new LineChart<>(xAxis, yAxis);
     }
 
     public void initializeScreen() {
@@ -72,6 +65,7 @@ public class MyCourseScreenController extends MainScreenController {
             }
         }
         moduleSelectComboBox.setItems(moduleNames);
+
         // initialize text
         creditsLbl.setText(creditsLbl.getText() + " " + user.getDegree().getCredits());
         currentYearLbl.setText(currentYearLbl.getText() + " " + user.getCurrentYear());
@@ -81,26 +75,33 @@ public class MyCourseScreenController extends MainScreenController {
         referenceIdLbl.setText(referenceIdLbl.getText() + " " + user.getDegree().getDegreeVerifier().hashCode());
         statusLbl.setText(statusLbl.getText() + " " + user.getDegree().getDegreeVerifier().getData());
     }
-
+    
     @FXML
+    //TODO Make this look nice
     void moduleSelectComboBoxClick(ActionEvent event) {
         int counter = 0;
         String moduleCode = moduleSelectComboBox.getValue();
-        marksChart.setTitle(moduleCode + " Marks");
-        XYChart.Series<Number, Number> series = new XYChart.Series<>();
-        series.setName(user.getStudentNumber() + " " + moduleCode + " marks");
+        XYChart.Series<String, Number> series = new XYChart.Series<>(); // Use String for X-axis labels
+        series.setName(moduleCode);
+        marksChart.getData().clear();
+
         for (Transaction<DegreeModule> module : user.getDegree().getDegreeModules().getTransactions()) {
             if (module.getData().getModuleCode().equals(moduleCode)) {
                 for (Transaction<Number> marks : module.getData().getAssessments().getTransactions()) {
                     counter++;
-                    series.getData().add(new Data<>(counter, marks.getData()));
+                    series.getData().add(new XYChart.Data<>("" + counter, marks.getData()));
                 }
                 break;
             }
         }
+        marksChart.setTitle(moduleCode + " Marks");
+        marksChart.getXAxis().setLabel("Semester Test");
+        marksChart.getYAxis().setLabel("Mark");
         marksChart.getData().add(series);
+        marksChart.layout();
     }
 
+    
     @FXML
     void homeLinkClicked(ActionEvent event) throws IOException {
         super.homeLinkClicked(event);
