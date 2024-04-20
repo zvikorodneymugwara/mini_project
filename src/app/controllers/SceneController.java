@@ -30,16 +30,22 @@ public abstract class SceneController {
         stage.show();
     }
 
-    public String getUsername() {
-        return username;
-    }
-
     public Parent loadUser(SystemUser user, String screenPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(screenPath));
         Parent rootNode = loader.load();
         MainScreenController controller = loader.getController();
         controller.user = user;
+        if (controller instanceof MyCourseScreenController) {
+            ((MyCourseScreenController) controller).initializeScreen();
+        }
+        else if(controller instanceof NoticesScreenController){
+            ((NoticesScreenController) controller).initializeNotices();
+        }
         return rootNode;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public boolean isLoggedIn() {

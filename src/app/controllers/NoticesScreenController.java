@@ -36,6 +36,9 @@ public class NoticesScreenController  extends MainScreenController{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing");
+    }
+    
+    public void initializeNotices() {
         notices = user.recieveOutcomes();
     }
 }

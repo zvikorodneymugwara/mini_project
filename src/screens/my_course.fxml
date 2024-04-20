@@ -76,7 +76,7 @@
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="currentYearLbl" text="CurrentYear:" textFill="WHITE">
+                        <Label fx:id="currentYearLbl" text="Current Year:" textFill="WHITE">
                            <font>
                               <Font name="Tw Cen MT Condensed" size="24.0" />
                            </font>

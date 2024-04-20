@@ -48,10 +48,10 @@ public class LoginPageController extends SceneController {
                     loggedIn = found = true;
                     showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");
                     if (Integer.parseInt(details[details.length - 1]) == 0) {
-                        switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber));
+                        switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber, 0));
                         break;
                     } else {
-                        switchScene(event, "/screens/admin_dashboard.fxml", new SystemUser(username, studentNumber));
+                        switchScene(event, "/screens/admin_dashboard.fxml", new SystemUser(username, studentNumber, 1));
                         break;
                     }
                 }

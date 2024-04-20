@@ -20,20 +20,24 @@ public class Admin extends Client {
         this.name = name;
         this.adminNumber = adminNumber;
         this.requests = new ArrayList<>();
+        docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
+        verifiedCompanies = new ArrayList<>();
         insertTransactions();
     }
 
-    public Admin(){
+    public Admin() {
         this.requests = new ArrayList<>();
+        verifiedCompanies = new ArrayList<>();
+        docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
         insertTransactions();
     }
 
-    public void approveRequest(UserRequest request){
+    public void approveRequest(UserRequest request) {
 
     }
 
-    public void declineRequest(UserRequest request){
-        
+    public void declineRequest(UserRequest request) {
+
     }
 
     public ArrayList<UserRequest> getRequests() {
@@ -63,11 +67,12 @@ public class Admin extends Client {
     public Block<SubmissionDocument> getDocSubmissions() {
         return docSubmissions;
     }
+
     public ArrayList<Company> getVerifiedCompanies() {
         return verifiedCompanies;
     }
 
-    private void insertTransactions(){        
+    private void insertTransactions() {
         for (Transaction<SubmissionDocument> doc : docSubmissions.getTransactions()) {
             for (Company company : verifiedCompanies) {
                 if (company.getDistributedNotes() == null) {
@@ -82,13 +87,13 @@ public class Admin extends Client {
         }
     }
 
-    //TODO Networking implementation
-    public ArrayList<String> recieveRequest(){
+    // TODO Networking implementation
+    public ArrayList<String> recieveRequest() {
         return null;
     }
-    
-    //TODO Networking implementation
-    public void sendOutcime(){
+
+    // TODO Networking implementation
+    public void sendOutcome() {
 
     }
 }

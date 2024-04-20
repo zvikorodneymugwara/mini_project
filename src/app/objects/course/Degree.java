@@ -8,11 +8,15 @@ public class Degree {
     private Block<DegreeModule> degreeModules;
     private String degName;
     private String degCode;
+    private String facutly;
+    private int credits;
     private Transaction<String> degreeVerifier;
 
-    public Degree(String sNum, String degCode) {
+    public Degree(String sNum, String degCode, String facutly, int credits) {
         this.degreeModules = new Block<DegreeModule>("", new ArrayList<>());
         this.degreeVerifier = new Transaction<String>(sNum, degCode, "In Progress");
+        this.facutly = facutly;
+        this.credits = credits;
     }
 
     public Degree() {
@@ -50,5 +54,13 @@ public class Degree {
 
     public void setDegreeVerifier(Transaction<String> degreeVerifier) {
         this.degreeVerifier = degreeVerifier;
+    }
+
+    public String getFaculty() {
+        return facutly;
+    }
+
+    public int getCredits() {
+        return credits;
     }
 }

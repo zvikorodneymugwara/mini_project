@@ -1,6 +1,7 @@
 package app.objects;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
@@ -17,13 +18,15 @@ public class SystemUser {
     private int currentYear;
     private String name;
     private String studentNumber;
+    private int userType;
 
-    public SystemUser(String name, String studentNumber) {
+    public SystemUser(String name, String studentNumber, int userType) {
+        this.userType = userType;
         this.name = name;
         this.studentNumber = studentNumber;
         this.submissions = new Block<SubmissionDocument>("", new ArrayList<>());
         this.notices = new ArrayList<>();
-        this.degree = new Degree(studentNumber, "B2I02Q");
+        this.degree = new Degree(studentNumber, "B2I02Q", "Science", 360);
         currentYear = 2;
         degree.getDegreeModules().getTransactions()
                 .add(new Transaction<DegreeModule>(studentNumber, "UJ", new DegreeModule(3, "In Progress", "IFM02A2")));
@@ -31,6 +34,17 @@ public class SystemUser {
                 .add(new Transaction<DegreeModule>(studentNumber, "UJ", new DegreeModule(3, "In Progress", "CSC02A2")));
         degree.getDegreeModules().getTransactions()
                 .add(new Transaction<DegreeModule>(studentNumber, "UJ", new DegreeModule(3, "In Progress", "ETNEE2A")));
+        for (Transaction<DegreeModule> module : degree.getDegreeModules().getTransactions()) {
+            Block<Number> block = new Block<Number>("", new ArrayList<>());
+            block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
+            block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
+            block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
+            module.getData().setAssessments(block);
+        }
+    }
+
+    public int getUserType() {
+        return userType;
     }
 
     public int getCurrentYear() {
