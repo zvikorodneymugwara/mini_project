@@ -77,7 +77,6 @@ public class MyCourseScreenController extends MainScreenController {
     }
     
     @FXML
-    //TODO Make this look nice
     void moduleSelectComboBoxClick(ActionEvent event) {
         int counter = 0;
         String moduleCode = moduleSelectComboBox.getValue();
@@ -97,6 +96,7 @@ public class MyCourseScreenController extends MainScreenController {
         marksChart.setTitle(moduleCode + " Marks");
         marksChart.getXAxis().setLabel("Semester Test");
         marksChart.getYAxis().setLabel("Mark");
+        marksChart.getYAxis().setAutoRanging(false);
         marksChart.getData().add(series);
         marksChart.layout();
     }
