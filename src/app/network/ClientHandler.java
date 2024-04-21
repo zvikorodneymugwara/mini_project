@@ -15,6 +15,7 @@ public class ClientHandler extends UserHandler {
     @Override
     public void run() {
         boolean running = true;
+        pw.println("REQUEST_ADMIN_RESPONSES");
         while (running) {
             String message;
             try {
@@ -42,7 +43,7 @@ public class ClientHandler extends UserHandler {
 
     public void sendUserRequest(SubmissionDocument doc) throws IOException {
         if (!alreadyRequested(doc)) {
-            pw.println("SENDING_USER_REQUEST."+doc+".TO_ADMIN");
+            pw.println("REQUEST_TO_ADMIN."+doc+".FROM_USER");
             objOut.writeObject(doc);
         }
     }

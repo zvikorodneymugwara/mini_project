@@ -15,6 +15,7 @@ public class AdminHandler extends UserHandler {
     @Override
     public void run() {
         boolean running = true;
+        pw.println("REQUEST_USER_RESPONSES");
         while (running) {
             String message;
             try {

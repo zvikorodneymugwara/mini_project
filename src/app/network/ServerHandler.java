@@ -56,11 +56,13 @@ public class ServerHandler extends UserHandler {
 
     public void sendRequestToAdmin(SubmissionDocument request) throws IOException {
         pw.println("SENDING_USER_REQUEST." + request + ".TO_ADMIN");
+        userRequests.add(request);
         objOut.writeObject(request);
     }
 
     public void sendResponseToUser(AdminResponse response) throws IOException {
         pw.println("SENDING_ADMIN_RESPONSE." + response + ".TO_USER");
+        adminResponses.add(response);
         objOut.writeObject(response);
     }
 
