@@ -16,18 +16,39 @@ public class ClientHandler extends UserHandler {
     public void run() {
         boolean running = true;
         while (running) {
-
+            String message;
+            try {
+                message = br.readLine();
+                String[] arr = message.split(".");
+                switch (arr[0]) {
+                    case "SENDING_ADMIN_RESPONSE":
+                        recieveAdminResponses();
+                        break;
+                    case "CLOSE":
+                        running = false;
+                        break;
+                    default:
+                        System.err.println("Invalid Message");
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+        closeAllConnections();
     }
 
     public void sendUserRequest(SubmissionDocument doc) throws IOException {
         if (!alreadyRequested(doc)) {
+            pw.println("SENDING_USER_REQUEST."+doc+".TO_ADMIN");
             objOut.writeObject(doc);
         }
     }
 
     public void recieveAdminResponses() throws ClassNotFoundException, IOException {
-        adminResponses.add((AdminResponse) objIn.readObject()); 
+        adminResponses.add((AdminResponse) objIn.readObject());
     }
 
     private boolean alreadyRequested(SubmissionDocument doc) {
