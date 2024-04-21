@@ -1,4 +1,4 @@
-package app;
+package app.objects;
 
 import app.objects.submissions.SubmissionDocument;
 

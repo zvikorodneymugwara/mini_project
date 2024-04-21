@@ -6,8 +6,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import acsse.csc03a3.Transaction;
-import app.Admin;
-import app.Vote;
+import app.objects.Admin;
+import app.objects.Vote;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.Candidate;
 import app.objects.submissions.MedicalSubmission;

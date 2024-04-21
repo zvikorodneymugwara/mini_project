@@ -1,11 +1,13 @@
 package app.objects;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
-import app.Notice;
+import app.network.ClientHandler;
 import app.objects.course.Degree;
 import app.objects.course.DegreeModule;
 import app.objects.submissions.SubmissionDocument;
@@ -19,6 +21,7 @@ public class SystemUser {
     private String name;
     private String studentNumber;
     private int userType;
+    private ClientHandler handler;
 
     public SystemUser(String name, String studentNumber, int userType) {
         this.userType = userType;
@@ -40,6 +43,11 @@ public class SystemUser {
             block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
             block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
             module.getData().setAssessments(block);
+        }
+        try {
+            handler = new ClientHandler(new Socket("localhost", 2020));
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -89,6 +97,10 @@ public class SystemUser {
 
     public void setDegree(Degree degree) {
         this.degree = degree;
+    }
+
+    public ClientHandler getHandler() {
+        return handler;
     }
 
     // TODO networking implementation later

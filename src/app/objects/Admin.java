@@ -1,16 +1,18 @@
-package app;
+package app.objects;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
-import app.objects.Company;
+import app.network.AdminHandler;
 import app.objects.submissions.SubmissionDocument;
 
 public class Admin {
-    private ArrayList<UserRequest> requests;
     private Block<SubmissionDocument> docSubmissions;
     private ArrayList<Company> verifiedCompanies;
+    private AdminHandler handler;
 
     private String name;
     private String adminNumber;
@@ -18,33 +20,28 @@ public class Admin {
     public Admin(String name, String adminNumber) {
         this.name = name;
         this.adminNumber = adminNumber;
-        this.requests = new ArrayList<>();
         docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
         verifiedCompanies = new ArrayList<>();
         insertTransactions();
+        try {
+            handler = new AdminHandler(new Socket("localhost", 2021));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Admin() {
-        this.requests = new ArrayList<>();
         verifiedCompanies = new ArrayList<>();
         docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
         insertTransactions();
     }
 
-    public void approveRequest(UserRequest request) {
+    public void approveRequest() {
 
     }
 
-    public void declineRequest(UserRequest request) {
+    public void declineRequest() {
 
-    }
-
-    public ArrayList<UserRequest> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(ArrayList<UserRequest> requests) {
-        this.requests = requests;
     }
 
     public void setName(String name) {
@@ -84,6 +81,10 @@ public class Admin {
                 }
             }
         }
+    }
+
+    public AdminHandler getHandler() {
+        return handler;
     }
 
     // TODO Networking implementation

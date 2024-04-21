@@ -2,7 +2,7 @@ package app.controllers;
 
 import java.io.IOException;
 
-import app.Admin;
+import app.objects.Admin;
 import app.objects.SystemUser;
 import app.objects.submissions.Candidate;
 import app.objects.submissions.Submissions;

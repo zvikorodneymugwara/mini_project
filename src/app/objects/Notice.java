@@ -1,4 +1,4 @@
-package app;
+package app.objects;
 
 import java.util.Date;
 
@@ -18,26 +18,32 @@ public class Notice {
     public Date getNoticeDate() {
         return noticeDate;
     }
+
     public String getNoticeDescription() {
         return noticeDescription;
     }
+
     public String getNoticeOutcome() {
         return noticeOutcome;
     }
+
     public String getNoticeTitle() {
         return noticeTitle;
     }
+
     public void setNoticeDate(Date noticeDate) {
         this.noticeDate = noticeDate;
     }
+
     public void setNoticeDescription(String noticeDescription) {
         this.noticeDescription = noticeDescription;
     }
+
     public void setNoticeOutcome(String noticeOutcome) {
         this.noticeOutcome = noticeOutcome;
     }
+
     public void setNoticeTitle(String noticeTitle) {
         this.noticeTitle = noticeTitle;
     }
 }
-

@@ -4,9 +4,8 @@ import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
-import app.Admin;
 import app.HelperClass;
-import app.UserRequest;
+import app.objects.Admin;
 import app.objects.Company;
 
 public class Submissions {
@@ -54,13 +53,12 @@ public class Submissions {
                         && companyTransaction.getReceiver().equals(document.getRegNumber())) {
                     // the prompt message for the user and the details of the note
                     document.setDocInfo(companyTransaction.getData().getDocInfo());
-                    UserRequest request = new UserRequest();
                     if (document.getSubmissionStatus()) {
                         returnMessage[0] = "Invalid Document";
                         returnMessage[1] = "This document has already been submitted";
                         return false;
                     } else {
-                        sendRequest(request, adminUser);
+                        sendRequest(adminUser);
                         returnMessage[0] = "Successfull Submission";
                         returnMessage[1] = "The document has been submitted successfully and is being proccessed";
                         return true;
@@ -91,7 +89,7 @@ public class Submissions {
     }
 
     // TODO networking implementation later
-    public void sendRequest(UserRequest request, Admin adminUser) {
+    public void sendRequest(Admin adminUser) {
 
     }
 }

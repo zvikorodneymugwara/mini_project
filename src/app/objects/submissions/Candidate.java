@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
-import app.Vote;
+import app.objects.Vote;
 
 public class Candidate implements Serializable {
     private String candidateID;
