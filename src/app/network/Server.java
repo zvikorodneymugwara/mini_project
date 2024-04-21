@@ -23,9 +23,15 @@ public class Server {
     public void runServer() {
         while (running) {
             try {
-                Thread thread = new Thread(new ClientHandler(ss.accept()));
-                thread.start();
-                System.out.println("Connected");
+                Thread serverThread = new Thread(new ServerHandler(ss.accept()));
+                serverThread.run();
+                System.out.println("Server Handler Connected");
+                Thread userThread = new Thread(new ClientHandler(ss.accept()));
+                userThread.start();
+                System.out.println("Client Connected");
+                Thread adminThread = new Thread(new AdminHandler(ss.accept()));
+                adminThread.start();
+                System.out.println("Admin Connected");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -33,7 +39,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        Server server = new Server(); // create a server instance
-        server.runServer(); // run the server instance
+        Server server = new Server();
+        server.runServer();
     }
 }

@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import app.objects.submissions.SubmissionDocument;
+
 public class ServerHandler implements Runnable {
     private Socket socket;
 
@@ -23,7 +25,6 @@ public class ServerHandler implements Runnable {
             BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
             boolean running = true;
-            
             // run the server
             while (running) {
 
@@ -38,7 +39,7 @@ public class ServerHandler implements Runnable {
 
     }
 
-    public void sendRequestToAdmin(UserRequest request) {
+    public void sendRequestToAdmin(SubmissionDocument request) {
 
     }
 
