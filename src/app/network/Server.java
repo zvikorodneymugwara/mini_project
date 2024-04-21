@@ -24,7 +24,7 @@ public class Server {
         while (running) {
             try {
                 Thread serverThread = new Thread(new ServerHandler(ss.accept()));
-                serverThread.run();
+                serverThread.start();
                 System.out.println("Server Handler Connected");
                 Thread userThread = new Thread(new ClientHandler(ss.accept()));
                 userThread.start();

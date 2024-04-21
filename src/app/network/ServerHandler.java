@@ -1,42 +1,23 @@
 package app.network;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import app.objects.submissions.SubmissionDocument;
 
-public class ServerHandler implements Runnable {
-    private Socket socket;
+public class ServerHandler extends UserHandler {
 
-    public ServerHandler(Socket socket) {
-        this.socket = socket;
+    public ServerHandler(Socket clientSocket) {
+        super(clientSocket);
     }
 
     // all server functions here
     @Override
     public void run() {
-        // initialize streams
-        try (PrintWriter pw = new PrintWriter(socket.getOutputStream(), true)) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-            boolean running = true;
-            // run the server
-            while (running) {
+        boolean running = true;
+        while (running) {
 
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
-
-    public void sendResponse() {
-
     }
 
     public void sendRequestToAdmin(SubmissionDocument request) {
@@ -47,11 +28,12 @@ public class ServerHandler implements Runnable {
 
     }
 
-    public void recieveData() {
-
-    }
-
-    public ArrayList<String> getRequests() {
-        return null;
+    public void recieveData() throws ClassNotFoundException, IOException {
+        Object o = objIn.readObject();
+        if (o instanceof SubmissionDocument) {
+            userRequests.add((SubmissionDocument) o);
+        } else if (o instanceof AdminResponse) {
+            adminResponses.add((AdminResponse) o);
+        }
     }
 }
