@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
-import app.network.Client;
 import app.objects.Company;
 import app.objects.submissions.SubmissionDocument;
 
-public class Admin extends Client {
+public class Admin {
     private ArrayList<UserRequest> requests;
     private Block<SubmissionDocument> docSubmissions;
     private ArrayList<Company> verifiedCompanies;

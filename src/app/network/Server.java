@@ -2,22 +2,38 @@ package app.network;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class Server {
-    private static int portNumber = 8080;
 
-    public static void main(String[] args) {
-        try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
-            System.out.println("Server listening on port " + portNumber);
+    private ServerSocket ss; // the server socket
+    private boolean running = false;
 
-            while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connected from: " + clientSocket.getInetAddress());
-                new ClientHandler(clientSocket).start();
-            }
+    // initialize the server socket
+    public Server() {
+        try {
+            ss = new ServerSocket(2021);
+            System.out.println("Waiting for Connections...");
+            running = true;
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // run the threaded server
+    public void runServer() {
+        while (running) {
+            try {
+                Thread thread = new Thread(new ClientHandler(ss.accept()));
+                thread.start();
+                System.out.println("Connected");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Server server = new Server(); // create a server instance
+        server.runServer(); // run the server instance
     }
 }
