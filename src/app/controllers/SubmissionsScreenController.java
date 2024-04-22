@@ -103,6 +103,11 @@ public class SubmissionsScreenController extends MainScreenController {
             doc = new Affidavit(docIdTxt.getText(), docDatePicker.getValue().toString(), companyNumTxt.getText(), "",
                     user.getStudentNumber(), false);
         }
+        try {
+            user.getHandler().sendUserRequest(doc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (submissions.addSubmissionDocument(doc, adminUser)) {
             user.getSubmissions().getTransactions()
                     .add(new Transaction<SubmissionDocument>(doc.getStudentNumber(), doc.getRegNumber(), doc));

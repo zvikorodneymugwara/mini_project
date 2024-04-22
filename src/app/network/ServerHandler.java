@@ -19,7 +19,9 @@ public class ServerHandler extends UserHandler {
             String message;
             try {
                 message = br.readLine();
-                String[] arr = message.split(".");
+                System.out.println("MESSAGE RECIEVED: " + message);
+                String[] arr = message.split("\\.");
+                System.out.println("Request: " + arr[0]);
                 switch (arr[0]) {
                     case "SENDING_DATA":
                         recieveData();

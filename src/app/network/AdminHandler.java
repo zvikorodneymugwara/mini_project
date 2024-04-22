@@ -20,7 +20,7 @@ public class AdminHandler extends UserHandler {
             String message;
             try {
                 message = br.readLine();
-                String[] arr = message.split(".");
+                String[] arr = message.split("\\.");
                 switch (arr[0]) {
                     case "SENDING_USER_REQUEST":
                         recieveRequests();

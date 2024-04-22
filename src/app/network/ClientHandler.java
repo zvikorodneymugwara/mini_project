@@ -20,7 +20,7 @@ public class ClientHandler extends UserHandler {
             String message;
             try {
                 message = br.readLine();
-                String[] arr = message.split(".");
+                String[] arr = message.split("\\.");
                 switch (arr[0]) {
                     case "SENDING_ADMIN_RESPONSE":
                         recieveAdminResponses();
@@ -44,6 +44,7 @@ public class ClientHandler extends UserHandler {
     public void sendUserRequest(SubmissionDocument doc) throws IOException {
         if (!alreadyRequested(doc)) {
             pw.println("REQUEST_TO_ADMIN."+doc+".FROM_USER");
+            System.out.println("REQUEST_TO_ADMIN."+doc+".FROM_USER");
             objOut.writeObject(doc);
         }
     }

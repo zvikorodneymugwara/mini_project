@@ -45,7 +45,7 @@ public class SystemUser {
             module.getData().setAssessments(block);
         }
         try {
-            handler = new ClientHandler(new Socket("localhost", 2020));
+            handler = new ClientHandler(new Socket("localhost", 2021));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
