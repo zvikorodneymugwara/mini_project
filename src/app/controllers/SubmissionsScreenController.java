@@ -107,9 +107,6 @@ public class SubmissionsScreenController extends MainScreenController {
         // send request over the network
         try {
             if (user.getHandler().sendUserRequest(doc)) {
-                // user.getSubmissions().getTransactions()
-                // .add(new Transaction<SubmissionDocument>(doc.getStudentNumber(),
-                // doc.getRegNumber(), doc));
                 showMessage(AlertType.INFORMATION, "Status", "Submission Successfull",
                         "Your submission is being processed");
             } else {

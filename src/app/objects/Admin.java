@@ -9,6 +9,7 @@ import acsse.csc03a3.Transaction;
 import app.network.AdminHandler;
 import app.objects.submissions.SubmissionDocument;
 
+//TODO Sort out admin functionality
 public class Admin {
     private Block<SubmissionDocument> docSubmissions;
     private ArrayList<Company> verifiedCompanies;

@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+//TODO Fix it to work like the Notices thingy, but with a button to approve or decline
 public class UserRequestCardController extends MainScreenController {
 
     @FXML

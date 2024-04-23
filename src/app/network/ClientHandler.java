@@ -57,6 +57,7 @@ public class ClientHandler extends UserHandler {
         adminResponses.add((AdminResponse) objIn.readObject());
     }
 
+    // TODO: make this work
     private boolean alreadyRequested(SubmissionDocument doc) {
         if (userRequests.size() == 0) {
             return false;

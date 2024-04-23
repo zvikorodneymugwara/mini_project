@@ -37,7 +37,7 @@ public class NoticeItemController extends MainScreenController {
             calendar.add(Calendar.MONTH, -2);
 
             System.out.println("Initializing Notice");
-            // TODO add more notice details
+            // TODO add more notice details and format nicley
             String s = "";
             if (response.getResponseStatus()) {
                 s = "Submission Approved";
