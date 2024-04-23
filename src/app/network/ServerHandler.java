@@ -23,22 +23,21 @@ public class ServerHandler extends UserHandler {
                 String[] arr = message.split("\\.");
                 System.out.println("Request: " + arr[0]);
                 switch (arr[0]) {
-                    case "SENDING_DATA":
-                        recieveData();
-                        break;
                     case "REQUEST_ADMIN_RESPONSES":
-                        sendRequests();
-                        break;
-                    case "REQUEST_USER_RESPONSES":
                         sendRespones();
+                        break;
+                    case "REQUEST_USER_SUBMISSIONS":
+                        sendRequests();
                         break;
                     case "RESPONSE_TO_USER":
                         AdminResponse response = (AdminResponse) objIn.readObject();
-                        sendResponseToUser(response);
+                        adminResponses.add(response);
+                        // sendResponseToUser(response);
                         break;
                     case "REQUEST_TO_ADMIN":
                         SubmissionDocument reqDocument = (SubmissionDocument) objIn.readObject();
-                        sendRequestToAdmin(reqDocument);
+                        userRequests.add(reqDocument);
+                        // sendRequestToAdmin(reqDocument);
                         break;
                     case "CLOSE":
                         running = false;
@@ -56,38 +55,41 @@ public class ServerHandler extends UserHandler {
         closeAllConnections();
     }
 
-    public void sendRequestToAdmin(SubmissionDocument request) throws IOException {
-        pw.println("SENDING_USER_REQUEST." + request + ".TO_ADMIN");
-        userRequests.add(request);
-        objOut.writeObject(request);
-    }
-
-    public void sendResponseToUser(AdminResponse response) throws IOException {
-        pw.println("SENDING_ADMIN_RESPONSE." + response + ".TO_USER");
-        adminResponses.add(response);
-        objOut.writeObject(response);
-    }
-
-    public void sendRespones() throws IOException {
+    private void sendRespones() throws IOException {
         for (AdminResponse res : adminResponses) {
             pw.println("SENDING_RESPONSE." + res + ".TO_USER");
+            System.out.println("SENDING_RESPONSE." + res + ".TO_USER");
             objOut.writeObject(res);
         }
     }
 
-    public void sendRequests() throws IOException {
+    private void sendRequests() throws IOException {
         for (SubmissionDocument req : userRequests) {
             pw.println("SENDING_USER_REQUEST." + req + ".TO_ADMIN");
+            System.out.println("SENDING_USER_REQUEST." + req + ".TO_ADMIN");
             objOut.writeObject(req);
         }
     }
 
-    public void recieveData() throws ClassNotFoundException, IOException {
-        Object o = objIn.readObject();
-        if (o instanceof SubmissionDocument) {
-            userRequests.add((SubmissionDocument) o);
-        } else if (o instanceof AdminResponse) {
-            adminResponses.add((AdminResponse) o);
-        }
-    }
+    // public void sendRequestToAdmin(SubmissionDocument request) throws IOException
+    // {
+    // pw.println("SENDING_USER_REQUEST." + request + ".TO_ADMIN");
+    // System.out.println("SENDING_USER_REQUEST." + request + ".TO_ADMIN");
+    // objOut.writeObject(request);
+    // }
+
+    // public void sendResponseToUser(AdminResponse response) throws IOException {
+    // pw.println("SENDING_ADMIN_RESPONSE." + response + ".TO_USER");
+    // System.out.println("SENDING_ADMIN_RESPONSE." + response + ".TO_USER");
+    // objOut.writeObject(response);
+    // }
+
+    // public void recieveData() throws ClassNotFoundException, IOException {
+    // Object o = objIn.readObject();
+    // if (o instanceof SubmissionDocument) {
+    // userRequests.add((SubmissionDocument) o);
+    // } else if (o instanceof AdminResponse) {
+    // adminResponses.add((AdminResponse) o);
+    // }
+    // }
 }

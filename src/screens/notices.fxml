@@ -48,9 +48,9 @@
                   <Font name="Impact" size="30.0" />
                </font>
             </Label>
-            <ScrollPane prefHeight="503.0" prefWidth="601.0" style="-fx-background-color: #141414;">
+            <ScrollPane maxWidth="601.0" prefHeight="503.0" prefWidth="601.0" style="-fx-background-color: #141414;">
                <content>
-                  <VBox prefHeight="383.0" prefWidth="599.0" style="-fx-background-color: #141414;" />
+                  <VBox fx:id="noticesPane" maxWidth="599.0" prefHeight="383.0" prefWidth="599.0" style="-fx-background-color: #141414; -fx-spacing: 10px;" />
                </content></ScrollPane>
             <AnchorPane prefHeight="50.0" prefWidth="448.0">
                <children>

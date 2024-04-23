@@ -2,6 +2,7 @@ package app.network;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import app.objects.submissions.SubmissionDocument;
 
@@ -41,12 +42,14 @@ public class ClientHandler extends UserHandler {
         closeAllConnections();
     }
 
-    public void sendUserRequest(SubmissionDocument doc) throws IOException {
+    public boolean sendUserRequest(SubmissionDocument doc) throws IOException {
         if (!alreadyRequested(doc)) {
-            pw.println("REQUEST_TO_ADMIN."+doc+".FROM_USER");
-            System.out.println("REQUEST_TO_ADMIN."+doc+".FROM_USER");
+            pw.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
+            System.out.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
             objOut.writeObject(doc);
+            return true;
         }
+        return false;
     }
 
     public void recieveAdminResponses() throws ClassNotFoundException, IOException {
@@ -64,5 +67,9 @@ public class ClientHandler extends UserHandler {
             }
         }
         return false;
+    }
+
+    public ArrayList<AdminResponse> getAdminResponses(){
+        return adminResponses;
     }
 }

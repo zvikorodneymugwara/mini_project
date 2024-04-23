@@ -15,7 +15,7 @@ public class AdminHandler extends UserHandler {
     @Override
     public void run() {
         boolean running = true;
-        pw.println("REQUEST_USER_RESPONSES");
+        pw.println("REQUEST_USER_SUBMISSIONS");
         while (running) {
             String message;
             try {
@@ -40,16 +40,19 @@ public class AdminHandler extends UserHandler {
         }
         closeAllConnections();
     }
+    // TODO: Admin GUI will help process this request
 
     public void sendResponse(AdminResponse response) throws IOException {
-        pw.println("RESPONSE_TO_USER."+response+".FROM_ADMIN");
+        pw.println("RESPONSE_TO_USER." + response + ".FROM_ADMIN");
+        System.out.println("RESPONSE_TO_USER." + response + ".FROM_ADMIN");
         objOut.writeObject(processResponse(response));
     }
 
-    public void recieveRequests() throws ClassNotFoundException, IOException {
+    private void recieveRequests() throws ClassNotFoundException, IOException {
         this.userRequests.add((SubmissionDocument) objIn.readObject());
     }
 
+    // TODO: Admin GUI will help process this request
     public AdminResponse processResponse(AdminResponse res) {
         return res;
     }

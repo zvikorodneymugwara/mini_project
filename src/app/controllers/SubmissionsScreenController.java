@@ -88,7 +88,7 @@ public class SubmissionsScreenController extends MainScreenController {
             this.candidate = new Candidate();
             this.candidate.setCandidateID("" + (new Random().nextInt(1000, 9999)));
         }
-        if(this.adminUser == null){
+        if (this.adminUser == null) {
             this.adminUser = new Admin();
         }
     }
@@ -103,20 +103,23 @@ public class SubmissionsScreenController extends MainScreenController {
             doc = new Affidavit(docIdTxt.getText(), docDatePicker.getValue().toString(), companyNumTxt.getText(), "",
                     user.getStudentNumber(), false);
         }
+
+        // send request over the network
         try {
-            user.getHandler().sendUserRequest(doc);
+            if (user.getHandler().sendUserRequest(doc)) {
+                // user.getSubmissions().getTransactions()
+                // .add(new Transaction<SubmissionDocument>(doc.getStudentNumber(),
+                // doc.getRegNumber(), doc));
+                showMessage(AlertType.INFORMATION, "Status", "Submission Successfull",
+                        "Your submission is being processed");
+            } else {
+                showMessage(AlertType.ERROR, "Error", "Document Already Submitted",
+                        "You have Already Submitted this Document!");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (submissions.addSubmissionDocument(doc, adminUser)) {
-            user.getSubmissions().getTransactions()
-                    .add(new Transaction<SubmissionDocument>(doc.getStudentNumber(), doc.getRegNumber(), doc));
-            String[] returnMessages = submissions.getReturnMessage();
-            showMessage(AlertType.INFORMATION, "Status", returnMessages[0], returnMessages[1]);
-        } else {
-            String[] returnMessages = submissions.getReturnMessage();
-            showMessage(AlertType.ERROR, "Error", returnMessages[0], returnMessages[1]);
-        }
+
         companyNumTxt.setText("");
         docDatePicker.setValue(null);
         docIdTxt.setText("");

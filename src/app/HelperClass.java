@@ -91,12 +91,9 @@ public class HelperClass {
 
     public static void writeSubmissions() {
         Calendar calendar = Calendar.getInstance();
-
-        // Set the calendar to the current date and time
         calendar.setTime(new Date());
-
-        // Subtract two months from the current date
         calendar.add(Calendar.MONTH, -2);
+        
         Affidavit affidavit = new Affidavit("1", new Date().toString(), "100", "Student Was at  a Funeral",
                 "221100999", true);
         MedicalSubmission sickNote = new MedicalSubmission("2", calendar.getTime().toString(), "101",
