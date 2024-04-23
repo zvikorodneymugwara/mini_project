@@ -43,9 +43,10 @@ public class ClientHandler extends UserHandler {
     }
 
     public boolean sendUserRequest(SubmissionDocument doc) throws IOException {
-        if (!alreadyRequested(doc)) {
+        if (alreadyRequested(doc) == false) {
             pw.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
             System.out.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
+            userRequests.add((SubmissionDocument) doc);
             objOut.writeObject(doc);
             return true;
         }
@@ -59,17 +60,20 @@ public class ClientHandler extends UserHandler {
     private boolean alreadyRequested(SubmissionDocument doc) {
         if (userRequests.size() == 0) {
             return false;
-        } else {
-            for (SubmissionDocument sDocument : userRequests) {
-                if (sDocument.equals(doc)) {
-                    return true;
-                }
+        }
+        for (SubmissionDocument sDocument : userRequests) {
+            if (sDocument.getDocID() == doc.getDocID()) {
+                return true;
             }
         }
         return false;
     }
 
-    public ArrayList<AdminResponse> getAdminResponses(){
+    public ArrayList<AdminResponse> getAdminResponses() {
         return adminResponses;
+    }
+
+    public ArrayList<SubmissionDocument> getUserRequests() {
+        return userRequests;
     }
 }
