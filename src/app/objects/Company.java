@@ -40,6 +40,10 @@ public class Company implements Serializable {
         return companyNumber;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
     public SubmissionDocument getDocument(String docId) {
         return null;
     }

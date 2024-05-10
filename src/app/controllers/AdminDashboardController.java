@@ -12,6 +12,9 @@ import javafx.scene.control.Label;
 public class AdminDashboardController extends MainScreenController {
 
     @FXML
+    private Hyperlink homeLink;
+
+    @FXML
     private Hyperlink logoutLink;
 
     @FXML
@@ -24,11 +27,9 @@ public class AdminDashboardController extends MainScreenController {
     private Hyperlink submissionsLink;
 
     @FXML
-    private Hyperlink submissionsLink1;
-
-    @FXML
     private Label welcomeLbl;
 
+    // TODO logout functionality
     @FXML
     void logoutLinkClicked(ActionEvent event) {
 
@@ -54,4 +55,8 @@ public class AdminDashboardController extends MainScreenController {
         System.out.println("Initializing Admin Dashboard");
     }
 
+    @FXML
+    void homeLinkClicked(ActionEvent event) throws IOException {
+        switchScene(event, "/screens/admin_dashboard.fxml", user);
+    }
 }

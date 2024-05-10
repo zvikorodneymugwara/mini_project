@@ -44,6 +44,10 @@ public class Submissions {
         return returnMessage;
     }
 
+    public ArrayList<Company> getVerifiedCompanies(){
+        return verifiedCompanies;
+    }
+
     private boolean processDocSubmission(SubmissionDocument document, Admin adminUser) {
         // check if the document exists in the company block
         for (Company company : verifiedCompanies) {

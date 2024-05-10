@@ -137,7 +137,7 @@ public class HelperClass {
                     Object object = objectInputStream.readObject();
                     arr.add((Company) object);
                 } catch (EOFException e) {
-                    break; // Reached end of file
+                    break;
                 }
             }
 

@@ -6,11 +6,13 @@ import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
+import app.HelperClass;
 import app.network.AdminHandler;
+import app.network.AdminResponse;
 import app.objects.submissions.SubmissionDocument;
 
 //TODO Sort out admin functionality
-public class Admin {
+public class Admin extends SystemUser {
     private Block<SubmissionDocument> docSubmissions;
     private ArrayList<Company> verifiedCompanies;
     private AdminHandler handler;
@@ -19,10 +21,11 @@ public class Admin {
     private String adminNumber;
 
     public Admin(String name, String adminNumber) {
+        super(name, adminNumber, 1);
         this.name = name;
         this.adminNumber = adminNumber;
         docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
-        verifiedCompanies = new ArrayList<>();
+        verifiedCompanies = HelperClass.readSavedCompanies();
         insertTransactions();
         try {
             handler = new AdminHandler(new Socket("localhost", 2021));
@@ -32,7 +35,8 @@ public class Admin {
     }
 
     public Admin() {
-        verifiedCompanies = new ArrayList<>();
+        super();
+        verifiedCompanies = HelperClass.readSavedCompanies();
         docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
         insertTransactions();
     }
@@ -94,7 +98,12 @@ public class Admin {
     }
 
     // TODO Networking implementation
-    public void sendOutcome() {
-
+    public void sendOutcome(boolean status, String response) {
+        AdminResponse res = new AdminResponse(status, response);
+        try {
+            handler.sendResponse(handler.processResponse(res));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

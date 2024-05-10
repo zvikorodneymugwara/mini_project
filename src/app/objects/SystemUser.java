@@ -26,7 +26,11 @@ public class SystemUser {
 
     // handler will handle all network communications
     private UserHandler handler;
+    
+    public SystemUser(){
 
+    }
+    
     public SystemUser(String name, String studentNumber, int userType) {
         this.userType = userType;
         this.name = name;

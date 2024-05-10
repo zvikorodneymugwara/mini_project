@@ -20,12 +20,12 @@
                   <Image url="@../img/admin.jpg" />
                </image>
             </ImageView>
-            <Hyperlink fx:id="submissionsLink" onAction="#submissionsLinkClicked" prefHeight="37.0" prefWidth="64.0" style="-fx-wrap-text: true; -fx-text-alignment: center;" text="Home" textFill="WHITE">
+            <Hyperlink fx:id="homeLink" onAction="#homeLinkClicked" prefHeight="37.0" prefWidth="64.0" style="-fx-wrap-text: true; -fx-text-alignment: center;" text="Home" textFill="WHITE">
                <font>
                   <Font name="Impact" size="21.0" />
                </font>
             </Hyperlink>
-            <Hyperlink fx:id="submissionsLink1" onAction="#submissionsLinkClicked" prefWidth="187.0" style="-fx-wrap-text: true; -fx-text-alignment: center;" text="Defferred Test Applications" textFill="WHITE">
+            <Hyperlink fx:id="submissionsLink" onAction="#submissionsLinkClicked" prefWidth="187.0" style="-fx-wrap-text: true; -fx-text-alignment: center;" text="Defferred Test Applications" textFill="WHITE">
                <font>
                   <Font name="Impact" size="21.0" />
                </font>

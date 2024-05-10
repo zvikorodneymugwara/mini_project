@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import app.Secrecy;
+import app.objects.Admin;
 import app.objects.SystemUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -52,7 +53,7 @@ public class LoginPageController extends SceneController {
                         switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber, 0));
                         break;
                     } else {
-                        switchScene(event, "/screens/admin_dashboard.fxml", new SystemUser(username, studentNumber, 1));
+                        switchScene(event, "/screens/admin_dashboard.fxml", new Admin(username, studentNumber));
                         break;
                     }
                 }

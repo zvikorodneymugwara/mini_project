@@ -16,8 +16,8 @@ public class NoticesScreenController extends MainScreenController {
     @FXML
     private VBox noticesPane;
 
-    ArrayList<AdminResponse> notices;
-    ArrayList<SubmissionDocument> requests;
+    private ArrayList<AdminResponse> notices;
+    private ArrayList<SubmissionDocument> requests;
 
     // TODO networking implementation
     @Override

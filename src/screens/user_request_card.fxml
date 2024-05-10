@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="100.0" prefWidth="619.0" style="-fx-background-color: #242424; -fx-background-radius: 10px; -fx-spacing: 10px; -fx-alignment: center; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<HBox prefHeight="100.0" prefWidth="619.0" style="-fx-background-color: #242424; -fx-background-radius: 10px; -fx-spacing: 10px; -fx-alignment: center; -fx-border-color: white; -fx-border-width: 2px; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.UserRequestCardController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-padding: 10px; -fx-spacing: 8px;">
          <children>
@@ -15,9 +15,9 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="studentNumberLbl" text="Label" textFill="WHITE">
+            <Label fx:id="studentNumberLbl" style="-fx-wrap-text: true;" text="Label" textFill="WHITE">
                <font>
-                  <Font name="Impact" size="16.0" />
+                  <Font name="Impact" size="12.0" />
                </font>
             </Label>
          </children>
@@ -29,9 +29,9 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="student_NameLbl" text="Label" textFill="WHITE">
+            <Label fx:id="student_NameLbl" style="-fx-wrap-text: true;" text="Label" textFill="WHITE">
                <font>
-                  <Font name="Impact" size="16.0" />
+                  <Font name="Impact" size="12.0" />
                </font>
             </Label>
          </children>
@@ -43,9 +43,9 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="docTypeLbl" text="Label" textFill="WHITE">
+            <Label fx:id="docTypeLbl" style="-fx-wrap-text: true;" text="Label" textFill="WHITE">
                <font>
-                  <Font name="Impact" size="16.0" />
+                  <Font name="Impact" size="12.0" />
                </font>
             </Label>
          </children>
@@ -57,9 +57,9 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="docIDLbl" text="Label" textFill="WHITE">
+            <Label fx:id="docIDLbl" style="-fx-wrap-text: true;" text="Label" textFill="WHITE">
                <font>
-                  <Font name="Impact" size="16.0" />
+                  <Font name="Impact" size="12.0" />
                </font>
             </Label>
          </children>
@@ -71,9 +71,9 @@
                   <Font name="Impact" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="companyNameLbl" text="Label" textFill="WHITE">
+            <Label fx:id="companyNameLbl" style="-fx-wrap-text: true;" text="Label" textFill="WHITE">
                <font>
-                  <Font name="Impact" size="16.0" />
+                  <Font name="Impact" size="12.0" />
                </font>
             </Label>
             <Button fx:id="viewInfoBtn" mnemonicParsing="false" onAction="#viewInfoBtnClick" prefHeight="25.0" prefWidth="87.0" text="View Info" />

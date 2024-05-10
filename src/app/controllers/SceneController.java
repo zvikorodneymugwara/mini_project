@@ -2,6 +2,7 @@ package app.controllers;
 
 import java.io.IOException;
 
+import app.objects.Admin;
 import app.objects.SystemUser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -34,12 +35,19 @@ public abstract class SceneController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(screenPath));
         Parent rootNode = loader.load();
         MainScreenController controller = loader.getController();
-        controller.user = user;
+        if (user instanceof Admin) {
+            controller.adminUser = (Admin) user;
+            if(controller.user == null){
+                controller.user = new SystemUser();
+            }
+        }
+            controller.user = user;
         if (controller instanceof MyCourseScreenController) {
             ((MyCourseScreenController) controller).initializeScreen();
-        }
-        else if(controller instanceof NoticesScreenController){
+        } else if (controller instanceof NoticesScreenController) {
             ((NoticesScreenController) controller).initializeNotices();
+        } else if (controller instanceof AdminSubmissionsScreenController) {
+            ((AdminSubmissionsScreenController) controller).initilizeUserRequestsScreen();
         }
         return rootNode;
     }
