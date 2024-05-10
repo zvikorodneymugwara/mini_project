@@ -7,7 +7,9 @@ import java.util.Random;
 
 import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
+import app.network.AdminHandler;
 import app.network.ClientHandler;
+import app.network.UserHandler;
 import app.objects.course.Degree;
 import app.objects.course.DegreeModule;
 import app.objects.submissions.SubmissionDocument;
@@ -21,7 +23,9 @@ public class SystemUser {
     private String name;
     private String studentNumber;
     private int userType;
-    private ClientHandler handler;
+
+    // handler will handle all network communications
+    private UserHandler handler;
 
     public SystemUser(String name, String studentNumber, int userType) {
         this.userType = userType;
@@ -45,7 +49,11 @@ public class SystemUser {
             module.getData().setAssessments(block);
         }
         try {
-            handler = new ClientHandler(new Socket("localhost", 2021));
+            if (userType == 0) {
+                handler = new ClientHandler(new Socket("localhost", 2021));
+            } else {
+                handler = new AdminHandler(new Socket("localhost", 2021));
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -99,12 +107,7 @@ public class SystemUser {
         this.degree = degree;
     }
 
-    public ClientHandler getHandler() {
+    public UserHandler getHandler() {
         return handler;
-    }
-
-    // TODO networking implementation later
-    public ArrayList<String> recieveOutcomes() {
-        return null;
     }
 }

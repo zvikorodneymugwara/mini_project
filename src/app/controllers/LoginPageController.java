@@ -42,7 +42,8 @@ public class LoginPageController extends SceneController {
             }
             for (String string : info) {
                 String[] details = string.split(",");
-                if (details[details.length - 2].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))) {
+                if (details[details.length - 2].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))
+                        && studentNumberTxt.getText().equals(details[details.length - 3])) {
                     studentNumber = studentNumberTxt.getText();
                     username = details[1];
                     loggedIn = found = true;

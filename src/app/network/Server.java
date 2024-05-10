@@ -25,13 +25,13 @@ public class Server {
             try {
                 Thread serverThread = new Thread(new ServerHandler(ss.accept()));
                 serverThread.start();
-                System.out.println("Server Handler Connected");
-                Thread userThread = new Thread(new ClientHandler(ss.accept()));
-                userThread.start();
-                System.out.println("Client Connected");
-                Thread adminThread = new Thread(new AdminHandler(ss.accept()));
-                adminThread.start();
-                System.out.println("Admin Connected");
+                System.out.println("Connected");
+                // Thread userThread = new Thread(new ClientHandler(ss.accept()));
+                // userThread.start();
+                // System.out.println("Client Connected");
+                // Thread adminThread = new Thread(new AdminHandler(ss.accept()));
+                // adminThread.start();
+                // System.out.println("Admin Connected");
             } catch (IOException e) {
                 e.printStackTrace();
             }

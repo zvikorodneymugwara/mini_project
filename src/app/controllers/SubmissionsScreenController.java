@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import acsse.csc03a3.Transaction;
+import app.network.ClientHandler;
 import app.objects.Admin;
 import app.objects.Vote;
 import app.objects.submissions.Affidavit;
@@ -106,7 +107,7 @@ public class SubmissionsScreenController extends MainScreenController {
 
         // send request over the network
         try {
-            if (user.getHandler().sendUserRequest(doc)) {
+            if (((ClientHandler) user.getHandler()).sendUserRequest(doc)) {
                 showMessage(AlertType.INFORMATION, "Status", "Submission Successfull",
                         "Your submission is being processed");
             } else {

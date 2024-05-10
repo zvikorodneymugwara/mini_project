@@ -59,4 +59,12 @@ public abstract class UserHandler implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<AdminResponse> getAdminResponses() {
+        return adminResponses;
+    }
+
+    public ArrayList<SubmissionDocument> getUserRequests() {
+        return userRequests;
+    }
 }
