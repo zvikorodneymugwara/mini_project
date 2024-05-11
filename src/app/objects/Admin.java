@@ -41,14 +41,6 @@ public class Admin extends SystemUser {
         insertTransactions();
     }
 
-    public void approveRequest() {
-
-    }
-
-    public void declineRequest() {
-
-    }
-
     public void setName(String name) {
         this.name = name;
     }

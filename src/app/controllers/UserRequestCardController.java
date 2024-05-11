@@ -47,6 +47,10 @@ public class UserRequestCardController extends MainScreenController {
 
     @FXML
     private Button viewInfoBtn;
+
+    @FXML
+    private Button viewDocInfoBtn;
+
     Company company;
     SubmissionDocument reqDocument;
     boolean companyRegistered = false;
@@ -65,6 +69,11 @@ public class UserRequestCardController extends MainScreenController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void viewDocInfoBtnClick(ActionEvent event) {
+        showMessage(AlertType.INFORMATION, "Document Information", "Document Information", reqDocument.toString());
     }
 
     @FXML

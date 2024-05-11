@@ -29,10 +29,9 @@ public class AdminDashboardController extends MainScreenController {
     @FXML
     private Label welcomeLbl;
 
-    // TODO logout functionality
     @FXML
-    void logoutLinkClicked(ActionEvent event) {
-
+    void logoutLinkClicked(ActionEvent event) throws IOException {
+        switchScene(event, "/screens/login_page.fxml", adminUser);
     }
 
     @FXML

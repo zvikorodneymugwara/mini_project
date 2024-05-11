@@ -2,6 +2,7 @@ package app.controllers;
 
 import java.io.IOException;
 
+import app.network.AdminHandler;
 import app.objects.Admin;
 import app.objects.SystemUser;
 import javafx.event.ActionEvent;
@@ -22,6 +23,8 @@ public abstract class SceneController {
     protected String username;
     protected String studentNumber;
     protected boolean loggedIn;
+    protected SystemUser user;
+    protected Admin adminUser;
 
     protected void switchScene(ActionEvent event, String scenePath, SystemUser user) throws IOException {
         Parent root = loadUser(user, scenePath);
@@ -34,14 +37,21 @@ public abstract class SceneController {
     public Parent loadUser(SystemUser user, String screenPath) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(screenPath));
         Parent rootNode = loader.load();
-        MainScreenController controller = loader.getController();
+        SceneController controller = loader.getController();
         if (user instanceof Admin) {
-            controller.adminUser = (Admin) user;
-            if(controller.user == null){
+            if (controller.adminUser == null) {
+                controller.adminUser = (Admin) user;
+            } else {
+                AdminHandler handler = controller.adminUser.getHandler();
+                controller.adminUser = null;
+                user.setHandler(handler);
+                controller.adminUser = (Admin) user;
+            }
+            if (controller.user == null) {
                 controller.user = new SystemUser();
             }
         }
-            controller.user = user;
+        controller.user = user;
         if (controller instanceof MyCourseScreenController) {
             ((MyCourseScreenController) controller).initializeScreen();
         } else if (controller instanceof NoticesScreenController) {

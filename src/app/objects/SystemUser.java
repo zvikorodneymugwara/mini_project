@@ -114,4 +114,9 @@ public class SystemUser {
     public UserHandler getHandler() {
         return handler;
     }
+    
+    public void setHandler(AdminHandler handler) {
+        this.handler = handler;
+    }
+
 }

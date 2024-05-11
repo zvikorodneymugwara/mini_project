@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,8 +29,8 @@ public class HomeScreenController extends MainScreenController {
     }
 
     @FXML
-    void logoutLinkClicked(ActionEvent event) {
-
+    void logoutLinkClicked(ActionEvent event) throws IOException {
+        switchScene(event, "/screens/login_page.fxml", user);
     }
 
     @FXML
