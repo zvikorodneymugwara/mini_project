@@ -38,14 +38,16 @@ public class AdminSubmissionsScreenController extends HomeScreenController {
         requests = adminUser.getHandler().getUserRequests();
         if (requests != null) {
             for (SubmissionDocument doc : requests) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/user_request_card.fxml"));
-                Parent root = loader.load();
-                MainScreenController controller = loader.getController();
-                ((UserRequestCardController) controller).setRequest(doc);
-                ((UserRequestCardController) controller).adminUser = adminUser;
-                ((UserRequestCardController) controller).setCompany(adminUser.getVerifiedCompanies());
-                ((UserRequestCardController) controller).init();
-                userRequestsPane.getChildren().add(root);
+                if (!doc.getProcessed()) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/user_request_card.fxml"));
+                    Parent root = loader.load();
+                    MainScreenController controller = loader.getController();
+                    ((UserRequestCardController) controller).setRequest(doc);
+                    ((UserRequestCardController) controller).adminUser = adminUser;
+                    ((UserRequestCardController) controller).setCompany(adminUser.getVerifiedCompanies());
+                    ((UserRequestCardController) controller).init();
+                    userRequestsPane.getChildren().add(root);
+                }
             }
         }
     }

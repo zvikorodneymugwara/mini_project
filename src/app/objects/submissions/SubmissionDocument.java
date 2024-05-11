@@ -9,6 +9,7 @@ public abstract class SubmissionDocument implements Serializable {
     protected String docInfo;
     protected String studentNumber;
     private boolean submissionStatus;
+    private boolean processed;
 
     public SubmissionDocument(String docID, String issueDate, String regNumber, String docInfo, String studentNumber,
             boolean submissionStatus) {
@@ -72,5 +73,17 @@ public abstract class SubmissionDocument implements Serializable {
 
     public boolean getSubmissionStatus() {
         return submissionStatus;
+    }
+
+    public void setSubmissionStatus(boolean submissionStatus) {
+        this.submissionStatus = submissionStatus;
+    }
+
+    public boolean getProcessed(){
+        return processed;
+    }
+
+    public void setProcessed(boolean processed) {
+        this.processed = processed;
     }
 }

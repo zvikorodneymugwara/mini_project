@@ -47,10 +47,10 @@ public class UserRequestCardController extends MainScreenController {
 
     @FXML
     private Button viewInfoBtn;
-
     Company company;
     SubmissionDocument reqDocument;
     boolean companyRegistered = false;
+    boolean processed = false;
 
     @FXML
     void approveBtnClick(ActionEvent event) {
@@ -59,6 +59,9 @@ public class UserRequestCardController extends MainScreenController {
         try {
             adminUser.getHandler().sendResponse(res);
             showMessage(AlertType.INFORMATION, "Request Approved", "Request Approved", str);
+            processed = true;
+            changeProcessedStatus(adminUser.getHandler().getUserRequests());
+            switchScene(event, "/screens/admin_submissions.fxml", adminUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,6 +81,9 @@ public class UserRequestCardController extends MainScreenController {
 
         try {
             adminUser.getHandler().sendResponse(res);
+            processed = true;
+            changeProcessedStatus(adminUser.getHandler().getUserRequests());
+            switchScene(event, "/screens/admin_submissions.fxml", adminUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -149,4 +155,12 @@ public class UserRequestCardController extends MainScreenController {
         reqDocument = doc;
     }
 
+    private void changeProcessedStatus(ArrayList<SubmissionDocument> docs) {
+        for (SubmissionDocument doc : docs) {
+            if (doc.getDocID().equals(reqDocument.getDocID())) {
+                doc.setProcessed(this.processed);
+                break;
+            }
+        }
+    }
 }
