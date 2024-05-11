@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import app.HelperClass;
 import app.objects.submissions.SubmissionDocument;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +36,9 @@ public class AdminSubmissionsScreenController extends HomeScreenController {
     }
 
     public void initilizeUserRequestsScreen() throws IOException {
-        requests = adminUser.getHandler().getUserRequests();
+        requests = HelperClass.readUserRequests();
+        ArrayList<SubmissionDocument> arr = new ArrayList<>();
+        
         if (requests != null) {
             for (SubmissionDocument doc : requests) {
                 if (!doc.getProcessed()) {
@@ -47,9 +50,12 @@ public class AdminSubmissionsScreenController extends HomeScreenController {
                     ((UserRequestCardController) controller).setCompany(adminUser.getVerifiedCompanies());
                     ((UserRequestCardController) controller).init();
                     userRequestsPane.getChildren().add(root);
+                }else{
+                    arr.add(doc);
                 }
             }
-        }
+        }        
+        HelperClass.writeUserRequests(arr);
     }
 
     @FXML

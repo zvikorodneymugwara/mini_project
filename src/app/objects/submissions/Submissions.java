@@ -62,7 +62,6 @@ public class Submissions {
                         returnMessage[1] = "This document has already been submitted";
                         return false;
                     } else {
-                        sendRequest(adminUser);
                         returnMessage[0] = "Successfull Submission";
                         returnMessage[1] = "The document has been submitted successfully and is being proccessed";
                         return true;
@@ -90,10 +89,5 @@ public class Submissions {
             docSubmissions.getTransactions()
                     .add(new Transaction<SubmissionDocument>(doc.studentNumber, doc.regNumber, doc));
         }
-    }
-
-    // TODO networking implementation later
-    public void sendRequest(Admin adminUser) {
-
     }
 }

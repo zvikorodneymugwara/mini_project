@@ -45,6 +45,11 @@ public class Company implements Serializable {
     }
 
     public SubmissionDocument getDocument(String docId) {
+        for (Transaction<SubmissionDocument> document : distributedNotes.getTransactions()) {
+            if(docId.equals(document.getData().getDocID())){
+                return document.getData();
+            }
+        }
         return null;
     }
 

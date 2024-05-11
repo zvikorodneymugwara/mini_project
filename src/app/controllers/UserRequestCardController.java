@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import app.HelperClass;
 import app.network.AdminResponse;
 import app.objects.Company;
 import app.objects.submissions.Affidavit;
@@ -21,7 +22,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 
-//TODO add view details button to the document
 public class UserRequestCardController extends MainScreenController {
 
     @FXML
@@ -51,15 +51,18 @@ public class UserRequestCardController extends MainScreenController {
     @FXML
     private Button viewDocInfoBtn;
 
-    Company company;
-    SubmissionDocument reqDocument;
-    boolean companyRegistered = false;
-    boolean processed = false;
+    private Company company;
+    private SubmissionDocument reqDocument;
+    private boolean companyRegistered = false;
+    private boolean processed = false;
 
     @FXML
     void approveBtnClick(ActionEvent event) {
         String str = "Submission of " + reqDocument.toString() + " Approved";
         AdminResponse res = new AdminResponse(true, str);
+        ArrayList<AdminResponse> arr = new ArrayList<>();
+        arr.add(res);
+        HelperClass.writeAdminResponses(arr);
         try {
             adminUser.getHandler().sendResponse(res);
             showMessage(AlertType.INFORMATION, "Request Approved", "Request Approved", str);
@@ -87,6 +90,9 @@ public class UserRequestCardController extends MainScreenController {
         String userInput = ta.getText();
         System.out.println("User input: " + userInput);
         AdminResponse res = new AdminResponse(false, userInput);
+        ArrayList<AdminResponse> arr = new ArrayList<>();
+        arr.add(res);
+        HelperClass.writeAdminResponses(arr);
 
         try {
             adminUser.getHandler().sendResponse(res);
@@ -155,9 +161,19 @@ public class UserRequestCardController extends MainScreenController {
             if (reqDocument.getRegNumber().equals(co.getCompanyNumber())) {
                 this.company = co;
                 companyRegistered = true;
-                break;
+
+                String info = "";
+                for (Company c : submissions.getVerifiedCompanies()) {
+                    info = c.getDocument(reqDocument.getDocID()).getDocInfo();
+                }
+                if (info == null || info == "") {
+                    info = "No Valid Document Information";
+                }
+                reqDocument.setDocID(info);
+                return;
             }
         }
+        company = new Company(reqDocument.getRegNumber(), "Unknown");
     }
 
     public void setRequest(SubmissionDocument doc) {

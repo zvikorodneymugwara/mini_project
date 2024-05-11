@@ -2,19 +2,21 @@ package app.network;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+
 import app.objects.submissions.SubmissionDocument;
 
 public class AdminHandler extends UserHandler {
 
     public AdminHandler(Socket clientSocket) {
         super(clientSocket);
+        // pw.println("REQUEST_USER_SUBMISSIONS");
     }
 
     // will facilitate communication with server
     @Override
     public void run() {
         boolean running = true;
-        pw.println("REQUEST_USER_SUBMISSIONS");
         while (running) {
             String message;
             try {
@@ -45,10 +47,15 @@ public class AdminHandler extends UserHandler {
         pw.println("RESPONSE_TO_USER." + response + ".FROM_ADMIN");
         System.out.println("RESPONSE_TO_USER." + response + ".FROM_ADMIN");
         objOut.writeObject(processResponse(response));
+        objOut.flush();
     }
 
+    @SuppressWarnings("unchecked")
     private void recieveRequests() throws ClassNotFoundException, IOException {
-        this.userRequests.add((SubmissionDocument) objIn.readObject());
+        System.out.println("Recieving requests");
+        Object o = objIn.readObject();
+        this.userRequests = (ArrayList<SubmissionDocument>) o;
+        System.out.println("The Requests: "+userRequests);
     }
 
     // TODO: Admin GUI will help process this request

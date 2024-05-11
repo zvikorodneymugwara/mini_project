@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import app.HelperClass;
 import app.objects.submissions.SubmissionDocument;
 
 public class ClientHandler extends UserHandler {
@@ -43,11 +44,13 @@ public class ClientHandler extends UserHandler {
     }
 
     public boolean sendUserRequest(SubmissionDocument doc) throws IOException {
-        if (alreadyRequested(doc) == false) {
-            pw.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
+        if (!alreadyRequested(doc)) {
             System.out.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
-            userRequests.add((SubmissionDocument) doc);
+            pw.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
             objOut.writeObject(doc);
+            objOut.flush();
+            userRequests.add((SubmissionDocument) doc);
+            HelperClass.writeUserRequests(userRequests);
             return true;
         }
         return false;
@@ -57,13 +60,12 @@ public class ClientHandler extends UserHandler {
         adminResponses.add((AdminResponse) objIn.readObject());
     }
 
-    // TODO: make this work
     private boolean alreadyRequested(SubmissionDocument doc) {
         if (userRequests.size() == 0) {
             return false;
         }
         for (SubmissionDocument sDocument : userRequests) {
-            if (sDocument.getDocID() == doc.getDocID()) {
+            if (sDocument.getDocID().equals(doc.getDocID())) {
                 return true;
             }
         }

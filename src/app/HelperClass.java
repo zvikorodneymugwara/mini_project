@@ -15,9 +15,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
+import app.network.AdminResponse;
 import app.objects.Company;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.MedicalSubmission;
@@ -43,19 +42,6 @@ public class HelperClass {
         }
     }
 
-    public static String getSceneName(String filePath) {
-        Pattern pattern = Pattern.compile("[^/]+(?=\\.fxml$)");
-        Matcher matcher = pattern.matcher(filePath);
-        StringBuilder result = new StringBuilder();
-        while (matcher.find()) {
-            String fileName = matcher.group();
-            fileName = fileName.replaceAll("_", " ");
-            fileName = fileName.replaceAll("(\\p{Ll})(\\p{Lu})", "$1 $2");
-            result.append(fileName.substring(0, 1).toUpperCase()).append(fileName.substring(1)).append(" ");
-        }
-        return capitalize(result.toString());
-    }
-
     public static String capitalize(String sentence) {
         if (sentence == null || sentence.isEmpty()) {
             return "";
@@ -78,7 +64,6 @@ public class HelperClass {
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream)) {
 
-            // Write the Company objects to the ObjectOutputStream
             objectOutputStream.writeObject(saps);
             objectOutputStream.writeObject(helenJoseph);
 
@@ -93,7 +78,7 @@ public class HelperClass {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.add(Calendar.MONTH, -2);
-        
+
         Affidavit affidavit = new Affidavit("1", new Date().toString(), "100", "Student Was at  a Funeral",
                 "221100999", true);
         MedicalSubmission sickNote = new MedicalSubmission("2", calendar.getTime().toString(), "101",
@@ -103,7 +88,6 @@ public class HelperClass {
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream)) {
 
-            // Write the Company objects to the ObjectOutputStream
             objectOutputStream.writeObject(affidavit);
             objectOutputStream.writeObject(sickNote);
 
@@ -124,7 +108,6 @@ public class HelperClass {
         }
     }
 
-    // load objects from txt file for testing
     public static ArrayList<Company> readSavedCompanies() {
         ArrayList<Company> arr = new ArrayList<>();
 
@@ -162,17 +145,107 @@ public class HelperClass {
                         arr.add((Affidavit) object);
                     } else if (object instanceof MedicalSubmission) {
                         arr.add((MedicalSubmission) object);
-                    } else {
-                        // Handle unexpected object type (optional)
-                        System.out.println("Unknown object type: " + object.getClass());
                     }
                 } catch (EOFException e) {
-                    break; // Reached end of file
+                    break;
                 }
             }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+        }
+        return arr;
+    }
+
+    public static void writeUserRequests(ArrayList<SubmissionDocument> docs) {
+        File file = new File("data/submissions/saved_submissions.dat");
+        // Check if the file exists before creating streams
+        if (!file.exists()) {
+            // Create the file if it doesn't exist
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file);
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream)) {
+            for (SubmissionDocument doc : docs) {
+                objectOutputStream.writeObject(doc);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<SubmissionDocument> readUserRequests() {
+        ArrayList<SubmissionDocument> arr = new ArrayList<>();
+        try (FileInputStream fileInputStream = new FileInputStream(new File("data/submissions/saved_submissions.dat"));
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
+
+            while (true) {
+                try {
+                    Object object = objectInputStream.readObject();
+                    if (object instanceof Affidavit) {
+                        arr.add((Affidavit) object);
+                    } else if (object instanceof MedicalSubmission) {
+                        arr.add((MedicalSubmission) object);
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    break;
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return arr;
+
+    }
+
+    public static void writeAdminResponses(ArrayList<AdminResponse> responses) {
+        File file = new File("data/submissions/saved_respones.dat");
+        // Check if the file exists before creating streams
+        if (!file.exists()) {
+            // Create the file if it doesn't exist
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file);
+                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream)) {
+            for (AdminResponse res : responses) {
+                objectOutputStream.writeObject(res);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<AdminResponse> readAdminResponses() {
+        ArrayList<AdminResponse> arr = new ArrayList<>();
+
+        try (FileInputStream fileInputStream = new FileInputStream(new File("data/submissions/saved_respones.dat"));
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
+
+            while (true) {
+                try {
+                    Object object = objectInputStream.readObject();
+                    arr.add((AdminResponse) object);
+                } catch (EOFException | ClassNotFoundException e) {
+                    break;
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         return arr;
     }

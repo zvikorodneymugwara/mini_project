@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import app.HelperClass;
 import app.network.AdminResponse;
 import app.objects.submissions.SubmissionDocument;
 import javafx.fxml.FXML;
@@ -19,15 +20,14 @@ public class NoticesScreenController extends MainScreenController {
     private ArrayList<AdminResponse> notices;
     private ArrayList<SubmissionDocument> requests;
 
-    // TODO networking implementation
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing");
     }
 
     public void initializeNotices() throws IOException {
-        notices = user.getHandler().getAdminResponses();
-        requests = user.getHandler().getUserRequests();
+        notices = HelperClass.readAdminResponses();
+        requests = HelperClass.readUserRequests();
         if (notices != null) {
             for (AdminResponse response : this.notices) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/notice_item.fxml"));
