@@ -10,6 +10,9 @@ import app.objects.Vote;
 public class Candidate implements Serializable {
     private String candidateID;
     private String candidateName;
+    /**
+     * candidate has a block of votes where each vote is a transaction
+     */
     private Block<Vote> votes;
 
     public Candidate() {
@@ -21,6 +24,8 @@ public class Candidate implements Serializable {
         this.candidateName = name;
         this.votes = new Block<Vote>("", new ArrayList<>());
     }
+
+    // getters and setters
 
     public String getCandidateName() {
         return candidateName;
@@ -46,6 +51,12 @@ public class Candidate implements Serializable {
         this.votes = votes;
     }
 
+    /**
+     * adds a vote to the block of votes of the candidate if it is valid
+     * 
+     * @param vote
+     * @return
+     */
     public boolean addVote(Transaction<Vote> vote) {
         if (validateVote(vote)) {
             votes.getTransactions().add(vote);
@@ -54,7 +65,14 @@ public class Candidate implements Serializable {
         return false;
     }
 
+    /**
+     * validates the given vote
+     * 
+     * @param vote
+     * @return
+     */
     private boolean validateVote(Transaction<Vote> vote) {
+        // send if the vote has not already been submitted
         for (Transaction<Vote> entry : votes.getTransactions()) {
             if (vote.getSender().equals(entry.getSender())) {
                 return false;

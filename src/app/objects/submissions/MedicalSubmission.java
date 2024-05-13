@@ -1,5 +1,6 @@
 package app.objects.submissions;
 
+// medical submissions inherit from SubmissionDocument
 public class MedicalSubmission extends SubmissionDocument {
     private boolean excused;
     private String medicalRequest;

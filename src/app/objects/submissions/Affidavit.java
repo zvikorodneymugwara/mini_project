@@ -1,5 +1,6 @@
 package app.objects.submissions;
 
+//affidavits inherit from SubmissionDocument
 public class Affidavit extends SubmissionDocument {
 
     public Affidavit(String docID, String issueDate, String regNumber, String docInfo, String studentNumber,

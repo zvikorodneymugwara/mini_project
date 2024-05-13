@@ -10,6 +10,7 @@ import app.network.AdminResponse;
 import app.objects.Company;
 import app.objects.submissions.Affidavit;
 import app.objects.submissions.SubmissionDocument;
+import app.objects.submissions.Submissions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -22,6 +23,9 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * User request card for the admin
+ */
 public class UserRequestCardController extends MainScreenController {
 
     @FXML
@@ -51,29 +55,46 @@ public class UserRequestCardController extends MainScreenController {
     @FXML
     private Button viewDocInfoBtn;
 
+    /**
+     * the request card will have the associated company that sent the documents,
+     * the document itself, and some checks to see if the company is registered and
+     * if the request has been processed or not
+     */
     private Company company;
     private SubmissionDocument reqDocument;
     private boolean companyRegistered = false;
     private boolean processed = false;
 
+    /**
+     * Method to approve the user's request
+     * 
+     * @param event
+     */
     @FXML
     void approveBtnClick(ActionEvent event) {
-        String str = "Submission of " + reqDocument.toString() + " Approved";
+        String str = "Submission of " + reqDocument.toString() + " Approved"; // notification message
         AdminResponse res = new AdminResponse(true, str);
         ArrayList<AdminResponse> arr = new ArrayList<>();
         arr.add(res);
-        HelperClass.writeAdminResponses(arr);
+        HelperClass.writeAdminResponses(arr); // write the response
         try {
+            // send response to user over network
             adminUser.getHandler().sendResponse(res);
             showMessage(AlertType.INFORMATION, "Request Approved", "Request Approved", str);
             processed = true;
             changeProcessedStatus(adminUser.getHandler().getUserRequests());
+            // reload the screen
             switchScene(event, "/screens/admin_submissions.fxml", adminUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Method to display the information about the document from the reqeust
+     * 
+     * @param event
+     */
     @FXML
     void viewDocInfoBtnClick(ActionEvent event) {
         showMessage(AlertType.INFORMATION, "Document Information", "Document Information", reqDocument.toString());
@@ -104,6 +125,12 @@ public class UserRequestCardController extends MainScreenController {
         }
     }
 
+    /**
+     * Creates the pop up for the admin to specify why the request was denied
+     * 
+     * @param stage
+     * @return
+     */
     private TextArea createPopUp(Stage stage) {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Enter Details");
@@ -122,8 +149,14 @@ public class UserRequestCardController extends MainScreenController {
         return textArea;
     }
 
+    /**
+     * Shows the company information to the admin
+     * 
+     * @param event
+     */
     @FXML
     void viewInfoBtnClick(ActionEvent event) {
+        // different messages if the company is not on the list of verified companies
         if (!companyRegistered) {
             showMessage(AlertType.ERROR, "Invalid Company Information", "Comany Information",
                     "Company Data Is Not Registered: \n\n" + company.toString());
@@ -137,6 +170,9 @@ public class UserRequestCardController extends MainScreenController {
         System.out.println("Initializing Request Cards");
     }
 
+    /**
+     * Method sets the text of the request card when loaded
+     */
     public void init() {
         if (reqDocument != null) {
             companyNameLbl.setText(company.getCompanyName());
@@ -153,33 +189,61 @@ public class UserRequestCardController extends MainScreenController {
         }
     }
 
+    /**
+     * Method to set the company of the request card
+     * 
+     * @param companies
+     */
     public void setCompany(ArrayList<Company> companies) {
+        // iterate throught the list of verified companies
+        System.out.println(companies);
         for (Company co : companies) {
-            System.out.println("Document Company Number " + reqDocument.getRegNumber());
-            System.out.println("Company Number " + co.getCompanyNumber());
-            System.out.println(reqDocument.getRegNumber().equals(co.getCompanyNumber()));
+            /*
+             * if the company number matches the request document's company number, set the
+             * company to that company
+             */
             if (reqDocument.getRegNumber().equals(co.getCompanyNumber())) {
                 this.company = co;
                 companyRegistered = true;
 
                 String info = "";
-                for (Company c : submissions.getVerifiedCompanies()) {
-                    info = c.getDocument(reqDocument.getDocID()).getDocInfo();
+                if (submissions == null) {
+                    submissions = new Submissions();
                 }
-                if (info == null || info == "") {
-                    info = "No Valid Document Information";
+                for (Company c : submissions.getVerifiedCompanies()) {
+                    SubmissionDocument d = c.getDocument(reqDocument.getDocID());
+                    if (d != null) {
+                        info = d.getDocInfo();
+                    } else if (d == null || info == null || info == "") {
+                        info = "No Valid Document Information";
+                    }
                 }
                 reqDocument.setDocID(info);
                 return;
             }
         }
+        /*
+         * if the company is not on the list of verified companies, set the company to
+         * an unknown company
+         */
         company = new Company(reqDocument.getRegNumber(), "Unknown");
     }
 
+    /**
+     * sets the document of the requesrt card
+     * 
+     * @param doc
+     */
     public void setRequest(SubmissionDocument doc) {
         reqDocument = doc;
     }
 
+    /**
+     * iterate throught the list of documents, and if there is a match, set the
+     * document of the request card to that document
+     * 
+     * @param docs
+     */
     private void changeProcessedStatus(ArrayList<SubmissionDocument> docs) {
         for (SubmissionDocument doc : docs) {
             if (doc.getDocID().equals(reqDocument.getDocID())) {

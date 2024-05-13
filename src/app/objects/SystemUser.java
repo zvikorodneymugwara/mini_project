@@ -17,8 +17,8 @@ import app.objects.submissions.SubmissionDocument;
 public class SystemUser {
     // list of all transactions this user has made
     private Block<SubmissionDocument> submissions;
+    // the degree the user is doing
     private Degree degree;
-    private ArrayList<Notice> notices;
     private int currentYear;
     private String name;
     private String studentNumber;
@@ -26,32 +26,37 @@ public class SystemUser {
 
     // handler will handle all network communications
     private UserHandler handler;
-    
-    public SystemUser(){
 
+    public SystemUser() {
     }
-    
+
     public SystemUser(String name, String studentNumber, int userType) {
         this.userType = userType;
         this.name = name;
         this.studentNumber = studentNumber;
-        this.submissions = new Block<SubmissionDocument>("", new ArrayList<>());
-        this.notices = new ArrayList<>();
-        this.degree = new Degree(studentNumber, "B2I02Q", "Computer Science and Informatics", "Science", 360);
-        currentYear = 2;
-        degree.getDegreeModules().getTransactions()
-                .add(new Transaction<DegreeModule>(studentNumber, "UJ", new DegreeModule(3, "In Progress", "IFM02A2")));
-        degree.getDegreeModules().getTransactions()
-                .add(new Transaction<DegreeModule>(studentNumber, "UJ", new DegreeModule(3, "In Progress", "CSC02A2")));
-        degree.getDegreeModules().getTransactions()
-                .add(new Transaction<DegreeModule>(studentNumber, "UJ", new DegreeModule(3, "In Progress", "ETNEE2A")));
-        for (Transaction<DegreeModule> module : degree.getDegreeModules().getTransactions()) {
-            Block<Number> block = new Block<Number>("", new ArrayList<>());
-            block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
-            block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
-            block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
-            module.getData().setAssessments(block);
+        // only students need this data
+        if (userType == 0) {
+            this.submissions = new Block<SubmissionDocument>("", new ArrayList<>());
+            this.degree = new Degree(studentNumber, "B2I02Q", "Computer Science and Informatics", "Science", 360);
+            currentYear = 2;
+            degree.getDegreeModules().getTransactions()
+                    .add(new Transaction<DegreeModule>(studentNumber, "UJ",
+                            new DegreeModule(3, "In Progress", "IFM02A2")));
+            degree.getDegreeModules().getTransactions()
+                    .add(new Transaction<DegreeModule>(studentNumber, "UJ",
+                            new DegreeModule(3, "In Progress", "CSC02A2")));
+            degree.getDegreeModules().getTransactions()
+                    .add(new Transaction<DegreeModule>(studentNumber, "UJ",
+                            new DegreeModule(3, "In Progress", "ETNEE2A")));
+            for (Transaction<DegreeModule> module : degree.getDegreeModules().getTransactions()) {
+                Block<Number> block = new Block<Number>("", new ArrayList<>());
+                block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
+                block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
+                block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
+                module.getData().setAssessments(block);
+            }
         }
+        // different handlers for different user types
         try {
             if (userType == 0) {
                 handler = new ClientHandler(new Socket("localhost", 2021));
@@ -62,6 +67,8 @@ public class SystemUser {
             ex.printStackTrace();
         }
     }
+
+    // getters and setters
 
     public int getUserType() {
         return userType;
@@ -77,14 +84,6 @@ public class SystemUser {
 
     public Block<SubmissionDocument> getSubmissions() {
         return submissions;
-    }
-
-    public void addNotice(Notice notice) {
-        notices.add(notice);
-    }
-
-    public ArrayList<Notice> getNotices() {
-        return notices;
     }
 
     public void setName(String name) {
@@ -114,7 +113,7 @@ public class SystemUser {
     public UserHandler getHandler() {
         return handler;
     }
-    
+
     public void setHandler(AdminHandler handler) {
         this.handler = handler;
     }

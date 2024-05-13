@@ -1,13 +1,11 @@
 package app.controllers;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import app.Secrecy;
+import app.HelperClass;
 import app.objects.Admin;
 import app.objects.SystemUser;
 import javafx.event.ActionEvent;
@@ -34,21 +32,23 @@ public class LoginPageController extends SceneController {
 
     @FXML
     void loginBtnClicked(ActionEvent event) {
-        boolean found = false;
+        boolean found = false; // checks if user has been found in the below file
         File file = new File("data/user_credentials.txt");
+
         try (Scanner scan = new Scanner(file)) {
-            ArrayList<String> info = new ArrayList<>();
             while (scan.hasNext()) {
-                info.add(scan.next());
-            }
-            for (String string : info) {
-                String[] details = string.split(",");
-                if (details[details.length - 2].equals(Secrecy.bytesToHex(Secrecy.getSHA256(passwordTxt.getText())))
+                String info = scan.next();
+                String[] details = info.split(",");
+                // if the details match
+                if (details[details.length - 2].equals(HelperClass.bytesToHex(HelperClass.getSHA256(passwordTxt.getText())))
                         && studentNumberTxt.getText().equals(details[details.length - 3])) {
                     studentNumber = studentNumberTxt.getText();
                     username = details[1];
-                    loggedIn = found = true;
+                    loggedIn = found = true; // the user has been found and logged in
+                    // show pop up
                     showMessage(AlertType.CONFIRMATION, "Success", "Login Successfull", "Login Successfull");
+
+                    // user type determines the UI that will be loaded
                     if (Integer.parseInt(details[details.length - 1]) == 0) {
                         switchScene(event, "/screens/home.fxml", new SystemUser(username, studentNumber, 0));
                         break;
@@ -58,14 +58,10 @@ public class LoginPageController extends SceneController {
                     }
                 }
             }
-            if (!found) {
+            if (!found) { // wrong credentials
                 showMessage(AlertType.ERROR, "Error", "Login Failed", "Student Number or Password Incorrect");
             }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
     }

@@ -24,6 +24,9 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * All user submissions will occur on this screen
+ */
 public class SubmissionsScreenController extends MainScreenController {
 
     @FXML
@@ -77,6 +80,7 @@ public class SubmissionsScreenController extends MainScreenController {
 
     }
 
+    // initializes the list of candidates that the user can vote for
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         docTypeComboBox.setItems(FXCollections.observableArrayList("Medical Document", "Affidavit"));
@@ -94,9 +98,16 @@ public class SubmissionsScreenController extends MainScreenController {
         }
     }
 
+    /**
+     * Method that submits a document for processing when clicked
+     * 
+     * @param event
+     */
     @FXML
     void submitNoteBtnClick(ActionEvent event) {
         SubmissionDocument doc = null;
+
+        // get the document selection from the user
         if ("Medical Document".equals(docTypeComboBox.getValue())) {
             doc = new MedicalSubmission(docIdTxt.getText(), docDatePicker.getValue().toString(),
                     companyNumTxt.getText(), "", user.getStudentNumber(), false);
@@ -118,6 +129,7 @@ public class SubmissionsScreenController extends MainScreenController {
             e.printStackTrace();
         }
 
+        // clear the selection
         companyNumTxt.setText("");
         docDatePicker.setValue(null);
         docIdTxt.setText("");
@@ -125,9 +137,15 @@ public class SubmissionsScreenController extends MainScreenController {
         docTypeComboBox.getSelectionModel().clearSelection();
     }
 
+    /**
+     * Method that submits a vote when clicked
+     * 
+     * @param event
+     */
     @FXML
     void submitVoteBtnClick(ActionEvent event) {
         Vote vote = new Vote(candidateComboBox.getValue(), candidate.getCandidateID());
+        // vote will be added to the candidate if the user has not voted already
         if (candidate.addVote(new Transaction<Vote>(user.getStudentNumber(), candidate.getCandidateID(), vote))) {
             candidate.setCandidateName(candidateComboBox.getValue());
             showMessage(AlertType.INFORMATION, "Status", "Voted Successfully",
@@ -136,28 +154,8 @@ public class SubmissionsScreenController extends MainScreenController {
             showMessage(AlertType.ERROR, "Error", "Unable to Vote",
                     "You have already voted for " + candidate.getCandidateName());
         }
+
+        // clear the selection
         candidateComboBox.getSelectionModel().clearSelection();
     }
-
-    @FXML
-    void homeLinkClicked(ActionEvent event) throws IOException {
-        super.homeLinkClicked(event);
-    }
-
-    @FXML
-    void myCourseLinkClicked(ActionEvent event) throws IOException {
-        super.myCourseLinkClicked(event);
-
-    }
-
-    @FXML
-    void noticesLinkClicked(ActionEvent event) throws IOException {
-        super.noticesLinkClicked(event);
-    }
-
-    @FXML
-    void submissionsLinkClicked(ActionEvent event) throws IOException {
-        super.submissionsLinkClicked(event);
-    }
-
 }

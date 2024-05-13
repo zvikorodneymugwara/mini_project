@@ -35,11 +35,11 @@ public class HomeScreenController extends MainScreenController {
 
     @FXML
     void personalizeLinkClicked(ActionEvent event) {
-
     }
 
     @FXML
-    void studentInfoLinkClicked(ActionEvent event) {
+    void studentInfoLinkClicked(ActionEvent event) throws IOException {
+        super.myCourseLinkClicked(event);
 
     }
 

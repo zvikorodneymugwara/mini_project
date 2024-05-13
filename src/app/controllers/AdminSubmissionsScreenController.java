@@ -14,6 +14,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.VBox;
 
+/**
+ * submission screen for the admin
+ */
 public class AdminSubmissionsScreenController extends HomeScreenController {
 
     @FXML
@@ -35,13 +38,18 @@ public class AdminSubmissionsScreenController extends HomeScreenController {
         super.initialize(location, resources);
     }
 
+    /**
+     * Inititializes all user requests for admin to view and process
+     * 
+     * @throws IOException
+     */
     public void initilizeUserRequestsScreen() throws IOException {
         requests = HelperClass.readUserRequests();
         ArrayList<SubmissionDocument> arr = new ArrayList<>();
-        
-        if (requests != null) {
+
+        if (requests != null) { // if there are requests
             for (SubmissionDocument doc : requests) {
-                if (!doc.getProcessed()) {
+                if (!doc.getProcessed()) { // if the document has not been proccessed
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/user_request_card.fxml"));
                     Parent root = loader.load();
                     MainScreenController controller = loader.getController();
@@ -49,18 +57,19 @@ public class AdminSubmissionsScreenController extends HomeScreenController {
                     ((UserRequestCardController) controller).adminUser = adminUser;
                     ((UserRequestCardController) controller).setCompany(adminUser.getVerifiedCompanies());
                     ((UserRequestCardController) controller).init();
+                    // display the request
                     userRequestsPane.getChildren().add(root);
-                }else{
+                } else {
                     arr.add(doc);
                 }
             }
-        }        
+        }
+        // load the user requests
         HelperClass.writeUserRequests(arr);
     }
 
     @FXML
     void personalizeLinkClicked(ActionEvent event) {
-
     }
 
     @FXML

@@ -4,14 +4,27 @@ import acsse.csc03a3.Block;
 import acsse.csc03a3.Transaction;
 import java.util.ArrayList;
 
+/**
+ * Degree object
+ */
 public class Degree {
+    //stores a block of degree modules
     private Block<DegreeModule> degreeModules;
     private String degName;
     private String degCode;
     private String facutly;
     private int credits;
+    //stores a transaction of the student number and the degree code and the status of the degree verification
     private Transaction<String> degreeVerifier;
 
+    /**
+     * constructor
+     * @param sNum
+     * @param degCode
+     * @param degName
+     * @param facutly
+     * @param credits
+     */
     public Degree(String sNum, String degCode, String degName, String facutly, int credits) {
         this.degreeModules = new Block<DegreeModule>("", new ArrayList<>());
         this.degreeVerifier = new Transaction<String>(sNum, degCode, "In Progress");
@@ -25,6 +38,8 @@ public class Degree {
         this.degreeModules = new Block<DegreeModule>("", new ArrayList<>());
         this.degreeVerifier = new Transaction<String>("", "", "");
     }
+
+    //getters and setters
 
     public String getDegCode() {
         return degCode;

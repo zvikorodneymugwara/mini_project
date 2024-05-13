@@ -2,7 +2,6 @@ package app.network;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import app.HelperClass;
 import app.objects.submissions.SubmissionDocument;
@@ -17,6 +16,7 @@ public class ClientHandler extends UserHandler {
     @Override
     public void run() {
         boolean running = true;
+        // requesting all admin responses
         pw.println("REQUEST_ADMIN_RESPONSES");
         while (running) {
             String message;
@@ -24,6 +24,7 @@ public class ClientHandler extends UserHandler {
                 message = br.readLine();
                 String[] arr = message.split("\\.");
                 switch (arr[0]) {
+                    // server is sending admin response
                     case "SENDING_ADMIN_RESPONSE":
                         recieveAdminResponses();
                         break;
@@ -34,15 +35,19 @@ public class ClientHandler extends UserHandler {
                         System.err.println("Invalid Message");
                         break;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
         closeAllConnections();
     }
 
+    /**
+     * 
+     * @param doc
+     * @return
+     * @throws IOException
+     */
     public boolean sendUserRequest(SubmissionDocument doc) throws IOException {
         if (!alreadyRequested(doc)) {
             System.out.println("REQUEST_TO_ADMIN." + doc + ".FROM_USER");
@@ -56,12 +61,23 @@ public class ClientHandler extends UserHandler {
         return false;
     }
 
+    /**
+     * read in objects sent over the network
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public void recieveAdminResponses() throws ClassNotFoundException, IOException {
         adminResponses.add((AdminResponse) objIn.readObject());
     }
 
+    /**
+     * check if the document has already been requested
+     * 
+     * @param doc
+     * @return
+     */
     private boolean alreadyRequested(SubmissionDocument doc) {
-        if (userRequests.size() == 0) {
+        if (userRequests.size() == 0) { // there are no requests
             return false;
         }
         for (SubmissionDocument sDocument : userRequests) {
@@ -70,13 +86,5 @@ public class ClientHandler extends UserHandler {
             }
         }
         return false;
-    }
-
-    public ArrayList<AdminResponse> getAdminResponses() {
-        return adminResponses;
-    }
-
-    public ArrayList<SubmissionDocument> getUserRequests() {
-        return userRequests;
     }
 }

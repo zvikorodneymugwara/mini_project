@@ -8,7 +8,6 @@ public class Vote extends SubmissionDocument {
     private String voterId;
 
     public Vote(){
-
     }
 
     public Vote(String candidateName, String candidateID){

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 
 public class AdminDashboardController extends MainScreenController {
 
@@ -41,7 +42,8 @@ public class AdminDashboardController extends MainScreenController {
 
     @FXML
     void studentInfoLinkClicked(ActionEvent event) {
-
+        // show user information
+        showMessage(AlertType.INFORMATION, "User Information", "User Information", adminUser.toString());
     }
 
     @FXML

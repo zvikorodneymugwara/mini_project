@@ -11,6 +11,9 @@ import app.objects.submissions.SubmissionDocument;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+/**
+ * Controller for each displayed notice item
+ */
 public class NoticeItemController extends MainScreenController {
 
     @FXML
@@ -22,6 +25,7 @@ public class NoticeItemController extends MainScreenController {
     @FXML
     private Label noticeTitleLbl;
 
+    // the notice data can either be a response or a request
     private AdminResponse response;
     private SubmissionDocument request;
 
@@ -30,20 +34,27 @@ public class NoticeItemController extends MainScreenController {
         System.out.println("Initializing Notice");
     }
 
+    /**
+     * This method initializes the notice item with the specified data of the
+     * response from the admin
+     */
     public void init() {
         if (response != null) {
+            // get date of response
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new Date());
             calendar.add(Calendar.MONTH, -2);
 
             System.out.println("Initializing Notice");
-            // TODO add more notice details and format nicley
+
             String s = "";
             if (response.getResponseStatus()) {
                 s = "Submission Approved";
             } else {
                 s = "Submission Declined";
             }
+
+            // set the text of the notice item
             noticeTitleLbl.setText(s);
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             noticeDateLbl.setText(dateFormat.format(new Date()));
@@ -56,10 +67,20 @@ public class NoticeItemController extends MainScreenController {
         }
     }
 
+    /**
+     * Sets the response of the notice item
+     * 
+     * @param response
+     */
     public void setResponse(AdminResponse response) {
         this.response = response;
     }
 
+    /**
+     * Sets the request document of the notice item
+     * 
+     * @param reqDocument
+     */
     public void setRequest(SubmissionDocument reqDocument) {
         this.request = reqDocument;
     }

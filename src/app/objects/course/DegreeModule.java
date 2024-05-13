@@ -2,9 +2,17 @@ package app.objects.course;
 
 import acsse.csc03a3.Block;
 
+/**
+ * Degree modules class
+ */
 public class DegreeModule {
-    private int numAssessments;
+    private int numAssessments; // number of assessments
     private boolean examEntrance;
+
+    /*
+     * block of assessments holds transactions which will be the marks of each
+     * assessment
+     */
     private Block<Number> assessments;
     private String status;
     private String moduleCode;
@@ -17,6 +25,7 @@ public class DegreeModule {
         this.status = status;
         this.moduleCode = moduleCode;
     }
+    // getters and setters
 
     public Block<Number> getAssessments() {
         return assessments;

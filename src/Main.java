@@ -16,10 +16,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        // initialize variables
         HelperClass.init();
         Image icon = new Image(getClass().getResourceAsStream("img/uj.png"));
         String path = "screens/login_page.fxml";
         try {
+            // load login page
             Parent root = FXMLLoader.load(getClass().getResource(path));
             Scene scene = new Scene(root);
             stage.setTitle("Student Portal");

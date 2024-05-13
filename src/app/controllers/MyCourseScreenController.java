@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -17,6 +16,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 
+/**
+ * Controller for My Course screen
+ */
 public class MyCourseScreenController extends MainScreenController {
 
     @FXML
@@ -66,7 +68,7 @@ public class MyCourseScreenController extends MainScreenController {
         }
         moduleSelectComboBox.setItems(moduleNames);
 
-        // initialize text
+        // initialize text on screen
         creditsLbl.setText(creditsLbl.getText() + " " + user.getDegree().getCredits());
         currentYearLbl.setText(currentYearLbl.getText() + " " + user.getCurrentYear());
         degCodeLbl.setText(degCodeLbl.getText() + " " + user.getDegree().getDegCode());
@@ -76,6 +78,10 @@ public class MyCourseScreenController extends MainScreenController {
         statusLbl.setText(statusLbl.getText() + " " + user.getDegree().getDegreeVerifier().getData());
     }
     
+    /**
+     * Drop down menu for user to select the module to view performance
+     * @param event
+     */
     @FXML
     void moduleSelectComboBoxClick(ActionEvent event) {
         int counter = 0;
@@ -84,6 +90,7 @@ public class MyCourseScreenController extends MainScreenController {
         series.setName(moduleCode);
         marksChart.getData().clear();
 
+        // Get the marks for the selected module and add them to the chart series
         for (Transaction<DegreeModule> module : user.getDegree().getDegreeModules().getTransactions()) {
             if (module.getData().getModuleCode().equals(moduleCode)) {
                 for (Transaction<Number> marks : module.getData().getAssessments().getTransactions()) {
@@ -100,27 +107,4 @@ public class MyCourseScreenController extends MainScreenController {
         marksChart.getData().add(series);
         marksChart.layout();
     }
-
-    
-    @FXML
-    void homeLinkClicked(ActionEvent event) throws IOException {
-        super.homeLinkClicked(event);
-    }
-
-    @FXML
-    void myCourseLinkClicked(ActionEvent event) throws IOException {
-        super.myCourseLinkClicked(event);
-
-    }
-
-    @FXML
-    void noticesLinkClicked(ActionEvent event) throws IOException {
-        super.noticesLinkClicked(event);
-    }
-
-    @FXML
-    void submissionsLinkClicked(ActionEvent event) throws IOException {
-        super.submissionsLinkClicked(event);
-    }
-
 }

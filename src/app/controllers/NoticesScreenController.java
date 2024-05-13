@@ -17,6 +17,7 @@ public class NoticesScreenController extends MainScreenController {
     @FXML
     private VBox noticesPane;
 
+    // notices screen has a list of submission notices and requests
     private ArrayList<AdminResponse> notices;
     private ArrayList<SubmissionDocument> requests;
 
@@ -25,9 +26,18 @@ public class NoticesScreenController extends MainScreenController {
         System.out.println("Initializing");
     }
 
+    /**
+     * Method initializes the notices screen with any notices. Notices can either be
+     * a response from the admin or a notification of a submission pending
+     * 
+     * @throws IOException
+     */
     public void initializeNotices() throws IOException {
+        // load the responses and requests
         notices = HelperClass.readAdminResponses();
         requests = HelperClass.readUserRequests();
+
+        // create the notices items
         if (notices != null) {
             for (AdminResponse response : this.notices) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/notice_item.fxml"));
@@ -38,6 +48,8 @@ public class NoticesScreenController extends MainScreenController {
                 noticesPane.getChildren().add(root);
             }
         }
+
+        // create the request items
         if (requests != null) {
             for (SubmissionDocument reqDocument : this.requests) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/notice_item.fxml"));

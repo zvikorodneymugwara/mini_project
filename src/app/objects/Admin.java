@@ -11,7 +11,6 @@ import app.network.AdminHandler;
 import app.network.AdminResponse;
 import app.objects.submissions.SubmissionDocument;
 
-//TODO Sort out admin functionality
 public class Admin extends SystemUser {
     private Block<SubmissionDocument> docSubmissions;
     private ArrayList<Company> verifiedCompanies;
@@ -19,6 +18,8 @@ public class Admin extends SystemUser {
 
     private String name;
     private String adminNumber;
+
+    // constructors
 
     public Admin(String name, String adminNumber) {
         super(name, adminNumber, 1);
@@ -40,6 +41,8 @@ public class Admin extends SystemUser {
         docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
         insertTransactions();
     }
+
+    // getters and setters
 
     public void setName(String name) {
         this.name = name;
@@ -65,6 +68,14 @@ public class Admin extends SystemUser {
         return verifiedCompanies;
     }
 
+    public AdminHandler getHandler() {
+        return handler;
+    }
+
+    /**
+     * after vetting, the document is added to the block of the company in the
+     * verified companies list
+     */
     private void insertTransactions() {
         for (Transaction<SubmissionDocument> doc : docSubmissions.getTransactions()) {
             for (Company company : verifiedCompanies) {
@@ -72,28 +83,22 @@ public class Admin extends SystemUser {
                     company.initializeDistributedNotes();
                 }
                 if (company.getCompanyNumber().equals(doc.getReceiver())) {
-                    System.out.println(company.toString());
-                    System.out.println(doc.toString());
                     company.getDistributedNotes().getTransactions().add(doc);
                 }
             }
         }
     }
 
-    public AdminHandler getHandler() {
-        return handler;
-    }
-
-    // TODO Networking implementation
-    public ArrayList<String> recieveRequest() {
-        return null;
-    }
-
-    // TODO Networking implementation
+    /**
+     * sends the outcome of the processing of the request
+     * 
+     * @param status
+     * @param response
+     */
     public void sendOutcome(boolean status, String response) {
         AdminResponse res = new AdminResponse(status, response);
         try {
-            handler.sendResponse(handler.processResponse(res));
+            handler.sendResponse(res);
         } catch (IOException e) {
             e.printStackTrace();
         }

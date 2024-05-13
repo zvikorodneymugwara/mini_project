@@ -2,12 +2,13 @@ package app.objects.submissions;
 
 import java.io.Serializable;
 
+// submission document parent class is abstract
 public abstract class SubmissionDocument implements Serializable {
     protected String docID;
     protected String issueDate;
-    protected String regNumber;
+    protected String regNumber; // issuing company registration number
     protected String docInfo;
-    protected String studentNumber;
+    protected String studentNumber; // links the document to the student
     private boolean submissionStatus;
     private boolean processed;
 
@@ -22,7 +23,6 @@ public abstract class SubmissionDocument implements Serializable {
     }
 
     public SubmissionDocument() {
-
     }
 
     @Override
@@ -30,6 +30,8 @@ public abstract class SubmissionDocument implements Serializable {
         return this.docID + ", " + this.issueDate + ", " + this.regNumber + ", " + this.docInfo + ", "
                 + this.studentNumber;
     }
+
+    // getters and setters
 
     public String getStudentNumber() {
         return studentNumber;
@@ -79,7 +81,7 @@ public abstract class SubmissionDocument implements Serializable {
         this.submissionStatus = submissionStatus;
     }
 
-    public boolean getProcessed(){
+    public boolean getProcessed() {
         return processed;
     }
 

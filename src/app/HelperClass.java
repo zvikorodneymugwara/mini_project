@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,7 +23,13 @@ import app.objects.submissions.Affidavit;
 import app.objects.submissions.MedicalSubmission;
 import app.objects.submissions.SubmissionDocument;
 
+/**
+ * Helper class has a bunch of methods that are used to make the program run
+ * properly. These methods don't belong to any particular class, but are used
+ * all aound the application.
+ */
 public class HelperClass {
+    // initializes binary and text files if they don't exist
     public static void init() {
         if (new File("data/saved_submissions.dat").exists() == false) {
             writeSubmissions();
@@ -34,28 +41,15 @@ public class HelperClass {
 
         if (new File("data/user_credentials.txt").exists() == false) {
             try {
-                insertUser("Bernard", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 221100999, 0);
-                insertUser("Benjamin", Secrecy.bytesToHex(Secrecy.getSHA256("hashed_password")), 201100101, 1);
+                insertUser("Bernard", bytesToHex(getSHA256("hashed_password")), 221100999, 0);
+                insertUser("Benjamin", bytesToHex(getSHA256("hashed_password")), 201100101, 1);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static String capitalize(String sentence) {
-        if (sentence == null || sentence.isEmpty()) {
-            return "";
-        }
-        StringBuilder result = new StringBuilder();
-        String[] words = sentence.split("\\s+");
-        for (String word : words) {
-            if (!word.isEmpty()) {
-                result.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
-            }
-        }
-        return result.toString().trim();
-    }
-
+    // writes companies to the binary files
     public static void writeCompnaines() {
         Company saps = new Company("100", "South African Police Services");
         Company helenJoseph = new Company("101", "Helen Joseph Hospital");
@@ -74,6 +68,7 @@ public class HelperClass {
         }
     }
 
+    // writes submissions to binary files
     public static void writeSubmissions() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -98,6 +93,7 @@ public class HelperClass {
         }
     }
 
+    // writes users to file
     public static void insertUser(String username, String hashedPassword, int studentNumber, int userType) {
         try (PrintWriter pw = new PrintWriter(new FileWriter("data/user_credentials.txt", true))) {
             String userData = username + "," + studentNumber + "," + hashedPassword + "," + userType;
@@ -108,6 +104,7 @@ public class HelperClass {
         }
     }
 
+    // reads companies from binary file
     public static ArrayList<Company> readSavedCompanies() {
         ArrayList<Company> arr = new ArrayList<>();
 
@@ -130,7 +127,7 @@ public class HelperClass {
         return arr;
     }
 
-    // load objects from txt file for testing
+    // load submissions from binary file
     public static ArrayList<SubmissionDocument> readSavedSubmissions() {
         ArrayList<SubmissionDocument> arr = new ArrayList<>();
 
@@ -180,32 +177,44 @@ public class HelperClass {
         }
     }
 
+    /**
+     * reads the saved user requests
+     * 
+     * @return all user requests
+     */
     public static ArrayList<SubmissionDocument> readUserRequests() {
-        ArrayList<SubmissionDocument> arr = new ArrayList<>();
-        try (FileInputStream fileInputStream = new FileInputStream(new File("data/submissions/saved_submissions.dat"));
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
+        ArrayList<SubmissionDocument> arr = null;
+        File file = new File("data/submissions/saved_submissions.dat");
+        if (file.exists()) {
+            arr = new ArrayList<>();
+            try (FileInputStream fileInputStream = new FileInputStream(file);
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                    ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
 
-            while (true) {
-                try {
-                    Object object = objectInputStream.readObject();
-                    if (object instanceof Affidavit) {
-                        arr.add((Affidavit) object);
-                    } else if (object instanceof MedicalSubmission) {
-                        arr.add((MedicalSubmission) object);
+                while (true) {
+                    try {
+                        Object object = objectInputStream.readObject();
+                        if (object instanceof Affidavit) {
+                            arr.add((Affidavit) object);
+                        } else if (object instanceof MedicalSubmission) {
+                            arr.add((MedicalSubmission) object);
+                        }
+                    } catch (IOException | ClassNotFoundException e) {
+                        break;
                     }
-                } catch (IOException | ClassNotFoundException e) {
-                    break;
                 }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
-
         return arr;
-
     }
 
+    /**
+     * writes admin responses to file
+     * 
+     * @param responses
+     */
     public static void writeAdminResponses(ArrayList<AdminResponse> responses) {
         File file = new File("data/submissions/saved_respones.dat");
         // Check if the file exists before creating streams
@@ -229,24 +238,51 @@ public class HelperClass {
         }
     }
 
+    /**
+     * reads admin responses from file
+     * 
+     * @return the read responses from the file
+     */
     public static ArrayList<AdminResponse> readAdminResponses() {
-        ArrayList<AdminResponse> arr = new ArrayList<>();
+        ArrayList<AdminResponse> arr = null;
+        File file = new File("data/submissions/saved_respones.dat");
+        if (file.exists()) {
+            arr = new ArrayList<>();
+            try (FileInputStream fileInputStream = new FileInputStream(file);
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                    ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
 
-        try (FileInputStream fileInputStream = new FileInputStream(new File("data/submissions/saved_respones.dat"));
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-                ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream)) {
-
-            while (true) {
-                try {
-                    Object object = objectInputStream.readObject();
-                    arr.add((AdminResponse) object);
-                } catch (EOFException | ClassNotFoundException e) {
-                    break;
+                while (true) {
+                    try {
+                        Object object = objectInputStream.readObject();
+                        arr.add((AdminResponse) object);
+                    } catch (EOFException | ClassNotFoundException e) {
+                        break;
+                    }
                 }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
         return arr;
+    }
+
+    // hashes the string for the password
+    public static byte[] getSHA256(String input) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        return digest.digest(input.getBytes());
+    }
+
+    // converts the hashed bytes into a string
+    public static String bytesToHex(byte[] hash) {
+        StringBuilder hexString = new StringBuilder();
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 }

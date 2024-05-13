@@ -8,10 +8,13 @@ import app.HelperClass;
 import app.objects.Admin;
 import app.objects.Company;
 
+/**
+ * a submissions objects tracks all the submissions and verified companies to
+ * compare to and verify submissions against
+ */
 public class Submissions {
     private Block<SubmissionDocument> docSubmissions;
     private ArrayList<Company> verifiedCompanies;
-    private String[] returnMessage;
 
     public Submissions() {
         // load saved companies and submissions
@@ -29,8 +32,9 @@ public class Submissions {
                 }
             }
         }
-        returnMessage = new String[2];
     }
+
+    // getters and setters
 
     public boolean isCompanyVerified(Company company) {
         return false;
@@ -40,11 +44,7 @@ public class Submissions {
         return processDocSubmission(document, adminUser);
     }
 
-    public String[] getReturnMessage() {
-        return returnMessage;
-    }
-
-    public ArrayList<Company> getVerifiedCompanies(){
+    public ArrayList<Company> getVerifiedCompanies() {
         return verifiedCompanies;
     }
 
@@ -58,23 +58,17 @@ public class Submissions {
                     // the prompt message for the user and the details of the note
                     document.setDocInfo(companyTransaction.getData().getDocInfo());
                     if (document.getSubmissionStatus()) {
-                        returnMessage[0] = "Invalid Document";
-                        returnMessage[1] = "This document has already been submitted";
                         return false;
                     } else {
-                        returnMessage[0] = "Successfull Submission";
-                        returnMessage[1] = "The document has been submitted successfully and is being proccessed";
                         return true;
                     }
                 }
             }
-        } // the prompt message for the user and the details of the note
-        returnMessage[0] = "Invalid Document";
-        returnMessage[1] = "Your Submission Could Not Be Processed. Please Contact Your HOD";
+        }
         return false;
     }
 
-    // load objects from txt file for testing
+    // load objects from dat file for testing
     private void loadSavedCompanies() {
         verifiedCompanies = new ArrayList<>();
         for (Company company : HelperClass.readSavedCompanies()) {
@@ -82,7 +76,7 @@ public class Submissions {
         }
     }
 
-    // load objects from txt file for testing
+    // load objects from dat file for testing
     private void loadSavedSubmissions() {
         docSubmissions = new Block<SubmissionDocument>("", new ArrayList<>());
         for (SubmissionDocument doc : HelperClass.readSavedSubmissions()) {

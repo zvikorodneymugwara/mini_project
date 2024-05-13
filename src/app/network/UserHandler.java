@@ -12,6 +12,10 @@ import java.io.ObjectOutputStream;
 
 import app.objects.submissions.SubmissionDocument;
 
+/**
+ * Mulit threaded handler class is the parent class of all handlers in the
+ * system
+ */
 public abstract class UserHandler implements Runnable {
     protected Socket clientSocket;
     protected BufferedReader in;
@@ -29,9 +33,12 @@ public abstract class UserHandler implements Runnable {
 
     public UserHandler(Socket socket) {
         this.clientSocket = socket;
+
+        // responses and requests are stored by each handler
         adminResponses = new ArrayList<>();
         userRequests = new ArrayList<>();
 
+        // initialize all streams, readers and writers
         try {
             objOut = new ObjectOutputStream(this.clientSocket.getOutputStream());
             objIn = new ObjectInputStream(this.clientSocket.getInputStream());
@@ -45,6 +52,9 @@ public abstract class UserHandler implements Runnable {
         }
     }
 
+    /**
+     * close all streams
+     */
     public void closeAllConnections() {
         try {
             objOut.close();
@@ -59,6 +69,7 @@ public abstract class UserHandler implements Runnable {
             e.printStackTrace();
         }
     }
+    // getters
 
     public ArrayList<AdminResponse> getAdminResponses() {
         return adminResponses;
