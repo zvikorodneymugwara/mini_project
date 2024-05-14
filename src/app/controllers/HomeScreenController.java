@@ -30,6 +30,12 @@ public class HomeScreenController extends MainScreenController {
 
     @FXML
     void logoutLinkClicked(ActionEvent event) throws IOException {
+        if(user != null){
+            user.getHandler().closeAllConnections();
+        }
+        if(adminUser != null){
+            adminUser.getHandler().closeAllConnections();
+        }
         switchScene(event, "/screens/login_page.fxml", user);
     }
 

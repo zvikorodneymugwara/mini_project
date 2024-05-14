@@ -63,7 +63,6 @@ public class UserRequestCardController extends MainScreenController {
     private Company company;
     private SubmissionDocument reqDocument;
     private boolean companyRegistered = false;
-    private boolean processed = false;
 
     /**
      * Method to approve the user's request
@@ -74,15 +73,11 @@ public class UserRequestCardController extends MainScreenController {
     void approveBtnClick(ActionEvent event) {
         String str = "Submission of " + reqDocument.toString() + " Approved"; // notification message
         AdminResponse res = new AdminResponse(true, str);
-        ArrayList<AdminResponse> arr = new ArrayList<>();
-        arr.add(res);
-        HelperClass.writeAdminResponses(arr); // write the response
+        updateDocuments(res);
         try {
             // send response to user over network
             adminUser.getHandler().sendResponse(res);
             showMessage(AlertType.INFORMATION, "Request Approved", "Request Approved", str);
-            processed = true;
-            changeProcessedStatus(adminUser.getHandler().getUserRequests());
             // reload the screen
             switchScene(event, "/screens/admin_submissions.fxml", adminUser);
         } catch (IOException e) {
@@ -109,16 +104,10 @@ public class UserRequestCardController extends MainScreenController {
         stage.showAndWait();
 
         String userInput = ta.getText();
-        System.out.println("User input: " + userInput);
         AdminResponse res = new AdminResponse(false, userInput);
-        ArrayList<AdminResponse> arr = new ArrayList<>();
-        arr.add(res);
-        HelperClass.writeAdminResponses(arr);
-
+        updateDocuments(res);
         try {
             adminUser.getHandler().sendResponse(res);
-            processed = true;
-            changeProcessedStatus(adminUser.getHandler().getUserRequests());
             switchScene(event, "/screens/admin_submissions.fxml", adminUser);
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,7 +207,7 @@ public class UserRequestCardController extends MainScreenController {
                         info = "No Valid Document Information";
                     }
                 }
-                reqDocument.setDocID(info);
+                reqDocument.setDocInfo(info);
                 return;
             }
         }
@@ -246,10 +235,58 @@ public class UserRequestCardController extends MainScreenController {
      */
     private void changeProcessedStatus(ArrayList<SubmissionDocument> docs) {
         for (SubmissionDocument doc : docs) {
+            System.out.println(doc.getDocID().equals(reqDocument.getDocID()));
             if (doc.getDocID().equals(reqDocument.getDocID())) {
-                doc.setProcessed(this.processed);
+                doc.setProcessed(true);
                 break;
             }
         }
+    }
+
+    /**
+     * Updates all the documents in the list of requests based onthe response of the
+     * admin
+     * 
+     * @param res the response from the admin
+     */
+    private void updateDocuments(AdminResponse res) {
+        res.setDocId(reqDocument.getDocID());
+        ArrayList<AdminResponse> arr = HelperClass.readAdminResponses();
+        ArrayList<SubmissionDocument> arr2 = HelperClass.readUserRequests();
+        changeProcessedStatus(arr2);
+
+        boolean resFound = false;
+        if (arr == null) {
+            arr = new ArrayList<>();
+            resFound = true;
+            arr.add(res);
+        } else {
+            for (AdminResponse ar : arr) {
+                if (ar.getDocId().equals(reqDocument.getDocID())) {
+                    ar = res;
+                    resFound = true;
+                    break;
+                }
+            }
+        }
+
+        boolean docFound = false;
+        for (SubmissionDocument doc : arr2) {
+            if (doc.getDocID().equals(reqDocument.getDocID())) {
+                doc.setProcessed(true);
+                docFound = true;
+                break;
+            }
+        }
+
+        reqDocument.setProcessed(true);
+        if (!docFound) {
+            arr2.add(reqDocument);
+        }
+        if (!resFound) {
+            arr.add(res);
+        }
+        HelperClass.writeAdminResponses(arr);
+        HelperClass.writeUserRequests(arr2);
     }
 }

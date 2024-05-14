@@ -39,7 +39,7 @@ public class NoticesScreenController extends MainScreenController {
 
         // create the notices items
         if (notices != null) {
-            for (AdminResponse response : this.notices) {
+            for (AdminResponse response : notices) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/notice_item.fxml"));
                 Parent root = loader.load();
                 MainScreenController controller = loader.getController();
@@ -51,13 +51,15 @@ public class NoticesScreenController extends MainScreenController {
 
         // create the request items
         if (requests != null) {
-            for (SubmissionDocument reqDocument : this.requests) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/notice_item.fxml"));
-                Parent root = loader.load();
-                MainScreenController controller = loader.getController();
-                ((NoticeItemController) controller).setRequest(reqDocument);
-                ((NoticeItemController) controller).init();
-                noticesPane.getChildren().add(root);
+            for (SubmissionDocument reqDocument : requests) {
+                if(!reqDocument.getProcessed()){
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/notice_item.fxml"));
+                    Parent root = loader.load();
+                    MainScreenController controller = loader.getController();
+                    ((NoticeItemController) controller).setRequest(reqDocument);
+                    ((NoticeItemController) controller).init();
+                    noticesPane.getChildren().add(root);
+                }
             }
         }
     }

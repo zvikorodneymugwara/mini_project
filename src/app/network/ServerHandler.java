@@ -19,35 +19,37 @@ public class ServerHandler extends UserHandler {
             String message;
             try {
                 message = br.readLine();
-                System.out.println("MESSAGE RECIEVED: " + message);
-                String[] arr = message.split("\\.");
-                System.out.println("Request: " + arr[0]);
-                switch (arr[0].strip()) {
-                    // client requests admin responses
-                    case "REQUEST_ADMIN_RESPONSES":
-                        sendResponses();
-                        break;
-                    // admin requests user submissions
-                    case "REQUEST_USER_SUBMISSIONS":
-                        sendRequests();
-                        break;
-                    // admin sent response to user submission
-                    case "RESPONSE_TO_USER":
-                        receiveData();
-                        System.out.println("Admin Responses: " + adminResponses);
-                        break;
-                    // user sent request to admin
-                    case "REQUEST_TO_ADMIN":
-                        receiveData();
-                        System.out.println("User Requests: " + userRequests);
-                        sendRequests();
-                        break;
-                    case "CLOSE":
-                        running = false;
-                        break;
-                    default:
-                        System.err.println("Invalid Message");
-                        break;
+                if(message != null){
+                    System.out.println("MESSAGE RECIEVED: " + message);
+                    String[] arr = message.split("\\.");
+                    System.out.println("Request: " + arr[0]);
+                    switch (arr[0].strip()) {
+                        // client requests admin responses
+                        case "REQUEST_ADMIN_RESPONSES":
+                            sendResponses();
+                            break;
+                        // admin requests user submissions
+                        case "REQUEST_USER_SUBMISSIONS":
+                            sendRequests();
+                            break;
+                        // admin sent response to user submission
+                        case "RESPONSE_TO_USER":
+                            receiveData();
+                            System.out.println("Admin Responses: " + adminResponses);
+                            break;
+                        // user sent request to admin
+                        case "REQUEST_TO_ADMIN":
+                            receiveData();
+                            System.out.println("User Requests: " + userRequests);
+                            sendRequests();
+                            break;
+                        case "CLOSE":
+                            running = false;
+                            break;
+                        default:
+                            System.err.println("Invalid Message");
+                            break;
+                    }
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

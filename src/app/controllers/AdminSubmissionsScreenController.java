@@ -45,11 +45,9 @@ public class AdminSubmissionsScreenController extends HomeScreenController {
      */
     public void initilizeUserRequestsScreen() throws IOException {
         requests = HelperClass.readUserRequests();
-        ArrayList<SubmissionDocument> arr = new ArrayList<>();
-
         if (requests != null) { // if there are requests
             for (SubmissionDocument doc : requests) {
-                if (!doc.getProcessed()) { // if the document has not been proccessed
+                if (doc.getProcessed() == false) { // if the document has not been proccessed
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/screens/user_request_card.fxml"));
                     Parent root = loader.load();
                     MainScreenController controller = loader.getController();
@@ -59,13 +57,9 @@ public class AdminSubmissionsScreenController extends HomeScreenController {
                     ((UserRequestCardController) controller).init();
                     // display the request
                     userRequestsPane.getChildren().add(root);
-                } else {
-                    arr.add(doc);
                 }
             }
         }
-        // load the user requests
-        HelperClass.writeUserRequests(arr);
     }
 
     @FXML

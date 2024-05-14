@@ -18,7 +18,7 @@ public class AdminHandler extends UserHandler {
     // will facilitate communication with server
     @Override
     public void run() {
-        boolean running = true;
+        running = true;
         // send request to server for user requests
         pw.println("REQUEST_USER_SUBMISSIONS");
         while (running) {

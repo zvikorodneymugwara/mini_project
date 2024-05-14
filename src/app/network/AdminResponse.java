@@ -21,6 +21,11 @@ public class AdminResponse implements Serializable {
         this.response = response;
     }
 
+    @Override
+    public String toString() {
+        return "Process Status: " + responseStatus + ", Info: " + response;
+    }
+
     // getters and setters
 
     public String getDocId() {

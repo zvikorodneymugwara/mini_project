@@ -15,7 +15,7 @@ public class ClientHandler extends UserHandler {
     // will facilitate communication with server
     @Override
     public void run() {
-        boolean running = true;
+        running = true;
         // requesting all admin responses
         pw.println("REQUEST_ADMIN_RESPONSES");
         while (running) {

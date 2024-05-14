@@ -172,7 +172,7 @@ public class HelperClass {
             for (SubmissionDocument doc : docs) {
                 objectOutputStream.writeObject(doc);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -199,7 +199,7 @@ public class HelperClass {
                         } else if (object instanceof MedicalSubmission) {
                             arr.add((MedicalSubmission) object);
                         }
-                    } catch (IOException | ClassNotFoundException e) {
+                    } catch (EOFException | ClassNotFoundException e) {
                         break;
                     }
                 }
@@ -216,8 +216,8 @@ public class HelperClass {
      * @param responses
      */
     public static void writeAdminResponses(ArrayList<AdminResponse> responses) {
-        File file = new File("data/submissions/saved_respones.dat");
         // Check if the file exists before creating streams
+        File file = new File("data/submissions/saved_requests.dat");
         if (!file.exists()) {
             // Create the file if it doesn't exist
             try {
@@ -233,7 +233,7 @@ public class HelperClass {
             for (AdminResponse res : responses) {
                 objectOutputStream.writeObject(res);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -245,7 +245,7 @@ public class HelperClass {
      */
     public static ArrayList<AdminResponse> readAdminResponses() {
         ArrayList<AdminResponse> arr = null;
-        File file = new File("data/submissions/saved_respones.dat");
+        File file = new File("data/submissions/saved_requests.dat");
         if (file.exists()) {
             arr = new ArrayList<>();
             try (FileInputStream fileInputStream = new FileInputStream(file);

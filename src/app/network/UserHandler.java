@@ -27,6 +27,7 @@ public abstract class UserHandler implements Runnable {
     protected PrintWriter pw;
     protected BufferedReader br;
     protected DataOutputStream dos;
+    protected boolean running = false;
 
     public UserHandler() {
     }
@@ -57,6 +58,9 @@ public abstract class UserHandler implements Runnable {
      */
     public void closeAllConnections() {
         try {
+            if (running) {
+                running = false;
+            }
             objOut.close();
             objIn.close();
             out.close();
