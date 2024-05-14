@@ -78,7 +78,7 @@ public class HelperClass {
                 "221100999", true);
         MedicalSubmission sickNote = new MedicalSubmission("2", calendar.getTime().toString(), "101",
                 "Student Had Eye Surgery", "221100999", false);
-
+                
         try (FileOutputStream fileOutputStream = new FileOutputStream(new File("data/saved_submissions.dat"));
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(bufferedOutputStream)) {

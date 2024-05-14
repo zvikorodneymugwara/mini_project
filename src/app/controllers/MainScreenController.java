@@ -23,9 +23,6 @@ public abstract class MainScreenController extends SceneController implements In
     protected Hyperlink noticesLink;
 
     @FXML
-    protected Hyperlink helpLink;
-
-    @FXML
     protected Hyperlink homeLink;
 
     @FXML
