@@ -1,6 +1,10 @@
 package app.objects.course;
 
+import java.util.List;
+
 import acsse.csc03a3.Block;
+import acsse.csc03a3.Blockchain;
+import acsse.csc03a3.Transaction;
 
 /**
  * Degree modules class
@@ -16,14 +20,19 @@ public class DegreeModule {
     private Block<Number> assessments;
     private String status;
     private String moduleCode;
+    private Blockchain<Number> assessmentBlockchain;
 
     public DegreeModule() {
+        assessmentBlockchain = new Blockchain<>();
+        assessmentBlockchain.registerStake("201100101", 10);
     }
-
+    
     public DegreeModule(int numAssessments, String status, String moduleCode) {
         this.numAssessments = numAssessments;
         this.status = status;
         this.moduleCode = moduleCode;
+        assessmentBlockchain = new Blockchain<>();
+        assessmentBlockchain.registerStake("201100101", 10);
     }
     // getters and setters
 
@@ -61,5 +70,13 @@ public class DegreeModule {
 
     public String getModuleCode() {
         return moduleCode;
+    }
+
+    /**
+     * Adds the assessment marks to the module's assessment blockchain
+     * @param assessments
+     */
+    public void addAssessmentsToBlockChain(List<Transaction<Number>> assessments){
+        assessmentBlockchain.addBlock(assessments);
     }
 }

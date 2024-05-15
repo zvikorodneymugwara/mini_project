@@ -6,10 +6,9 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Server",
+            "name": "Current File",
             "request": "launch",
-            "mainClass": "app.network.Server",
-            "projectName": "mini_project_5f91bac1"
+            "mainClass": "${file}"
         },
         {
             "type": "java",
@@ -21,25 +20,10 @@
         },
         {
             "type": "java",
-            "name": "Current File",
+            "name": "Server",
             "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "Main",
-            "projectName": "mini_project_f09399c4",
-            "vmArgs": "--module-path C:\\javafx-sdk-21.0.2\\lib --add-modules javafx.controls,javafx.fxml"
-        },
-        {
-            "type": "java",
-            "name": "UserCredentialsTxt",
-            "request": "launch",
-            "mainClass": "UserCredentialsTxt",
-            "projectName": "mini_project_f09399c4",
-            "vmArgs": "--module-path C:\\javafx-sdk-21.0.2\\lib --add-modules javafx.controls,javafx.fxml"
+            "mainClass": "app.network.Server",
+            "projectName": "mini_project_5f91bac1"
         }
     ]
 }

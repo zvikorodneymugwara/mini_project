@@ -118,6 +118,7 @@ public class SubmissionsScreenController extends MainScreenController {
 
         // send request over the network
         try {
+            user.addSubmissionToBlockChain(doc);
             if (((ClientHandler) user.getHandler()).sendUserRequest(doc)) {
                 showMessage(AlertType.INFORMATION, "Status", "Submission Successfull",
                         "Your submission is being processed");

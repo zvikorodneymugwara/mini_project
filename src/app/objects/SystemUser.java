@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import acsse.csc03a3.Block;
+import acsse.csc03a3.Blockchain;
 import acsse.csc03a3.Transaction;
 import app.network.AdminHandler;
 import app.network.ClientHandler;
@@ -24,16 +25,23 @@ public class SystemUser {
     private String studentNumber;
     private int userType;
 
+    // the blockchains
+    protected Blockchain<SubmissionDocument> submissionsBlockchain;
+    protected Blockchain<Degree> degreeBlockchain;
+
     // handler will handle all network communications
     private UserHandler handler;
 
     public SystemUser() {
+        createBlockchain();
     }
 
     public SystemUser(String name, String studentNumber, int userType) {
+        createBlockchain();
         this.userType = userType;
         this.name = name;
         this.studentNumber = studentNumber;
+
         // only students need this data
         if (userType == 0) {
             this.submissions = new Block<SubmissionDocument>("", new ArrayList<>());
@@ -50,10 +58,14 @@ public class SystemUser {
                             new DegreeModule(3, "In Progress", "ETNEE2A")));
             for (Transaction<DegreeModule> module : degree.getDegreeModules().getTransactions()) {
                 Block<Number> block = new Block<Number>("", new ArrayList<>());
-                block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
-                block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
-                block.getTransactions().add(new Transaction<Number>("", "", new Random().nextInt(40, 99)));
+                block.getTransactions().add(new Transaction<Number>(studentNumber, module.getData().getModuleCode(),
+                        new Random().nextInt(40, 99)));
+                block.getTransactions().add(new Transaction<Number>(studentNumber, module.getData().getModuleCode(),
+                        new Random().nextInt(40, 99)));
+                block.getTransactions().add(new Transaction<Number>(studentNumber, module.getData().getModuleCode(),
+                        new Random().nextInt(40, 99)));
                 module.getData().setAssessments(block);
+                module.getData().addAssessmentsToBlockChain(block.getTransactions());
             }
         }
         // different handlers for different user types
@@ -65,6 +77,17 @@ public class SystemUser {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private void createBlockchain() {
+        if (submissionsBlockchain == null) {
+            submissionsBlockchain = new Blockchain<>();
+            submissionsBlockchain.registerStake("201100101", 10);
+        }
+        if (degreeBlockchain == null) {
+            degreeBlockchain = new Blockchain<>();
+            degreeBlockchain.registerStake("201100101", 10);
         }
     }
 
@@ -116,6 +139,16 @@ public class SystemUser {
 
     public void setHandler(AdminHandler handler) {
         this.handler = handler;
+    }
+
+    /**
+     * adds the current document to the blockchain of submissions
+     * 
+     * @param doc
+     */
+    public void addSubmissionToBlockChain(SubmissionDocument doc) {
+        submissions.getTransactions().add(new Transaction<SubmissionDocument>(studentNumber, "Admin", doc));
+        submissionsBlockchain.addBlock(submissions.getTransactions());
     }
 
 }

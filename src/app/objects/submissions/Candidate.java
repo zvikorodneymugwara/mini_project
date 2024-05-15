@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import acsse.csc03a3.Block;
+import acsse.csc03a3.Blockchain;
 import acsse.csc03a3.Transaction;
 import app.objects.Vote;
 
@@ -14,9 +15,14 @@ public class Candidate implements Serializable {
      * candidate has a block of votes where each vote is a transaction
      */
     private Block<Vote> votes;
+    protected Blockchain<Vote> votingBlockCBlockchain;
 
     public Candidate() {
         this.votes = new Block<Vote>("", new ArrayList<>());
+        if (votingBlockCBlockchain == null) {
+            votingBlockCBlockchain = new Blockchain<>();
+            votingBlockCBlockchain.registerStake("201100101", 10);
+        }
     }
 
     public Candidate(String id, String name) {
@@ -60,6 +66,8 @@ public class Candidate implements Serializable {
     public boolean addVote(Transaction<Vote> vote) {
         if (validateVote(vote)) {
             votes.getTransactions().add(vote);
+            // adds to blockchain
+            votingBlockCBlockchain.addBlock(votes.getTransactions());
             return true;
         }
         return false;
